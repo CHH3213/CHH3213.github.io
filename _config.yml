@@ -103,5 +103,5 @@ theme: next
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
   type: git
-  repository: git@gitee.com:caohuanhui/chh3213.git
+  repository: https://gitee.com/caohuanhui/caohuanhui.git
   branch: master
