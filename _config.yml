@@ -97,11 +97,13 @@ ignore:
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: next
+theme: yilia
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
+# url: https://caohuanhui.gitee.io/caohuanhui  # 修改为 github io 的地址
+# root: /caohuanhui/  # 要将资源映射到仓库名
 deploy:
   type: git
   repository: https://gitee.com/caohuanhui/caohuanhui.git
-  branch: master
+  branch: pages
