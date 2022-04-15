@@ -105,5 +105,5 @@ theme: yilia
 # root: /caohuanhui/  # 要将资源映射到仓库名
 deploy:
   type: git
-  repository: https://gitee.com/caohuanhui/caohuanhui.git
-  branch: pages
+  repository: https://github.com/CHH3213/CHH3213.github.io.git
+  branch: master
