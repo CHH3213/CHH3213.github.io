@@ -2,6 +2,10 @@
 title: windows下配置Qv2ray
 tags: VPN
 date: 2022-04-15 22:45:54
+category: VPN教程
+cover: http://api.mtyqx.cn/tapi/random.php?123
+coverWidth: 1200
+coverHeight: 750
 ---
 
 ## 参考资料
