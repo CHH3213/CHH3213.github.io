@@ -30,7 +30,7 @@ menu:
     回到首页:
         - /
         - icon-home
-    文章归档:
+    归档分类:
         - /archive.html
         - icon-container
     # 我的朋友:
@@ -85,7 +85,7 @@ widgets:
             #     - rgb(231, 106, 141)
             #     - rgba(231, 106, 141, .1)
     - name: category
-      enable: true
+      enable: false
     - name: tagcloud
       enable: true
       options: 
