@@ -3,17 +3,17 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: 一半是火一半是光
+title: 一半是火一半是光的博客
 subtitle: ''
-description: ''
-keywords:
+description: 给自己的知识一片栖息之地
+keywords: "强化学习,自动驾驶,规划控制,编程,C++,Java"
 author: chh3213
 language: zh-CN
 timezone: ''
 
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
-url: http://example.com
+url: https://chh3213.github.io/
 permalink: :year/:month/:day/:title/
 permalink_defaults:
 pretty_urls:
@@ -56,6 +56,10 @@ prismjs:
   line_number: true
   tab_replace: ''
 
+
+
+
+
 # Home page setting
 # path: Root path for your blogs index page. (default = '')
 # per_page: Posts displayed per page. (0 = disable pagination)
@@ -94,6 +98,12 @@ include:
 exclude:
 ignore:
 
+# # 在站点配置文件 _config.yml 当中写入如下配置，即可为全站的文档生成索引文件：
+# search:
+#   path: search.xml
+#   field: post
+
+
 # music
 aplayer:
   meting: true
@@ -101,6 +111,7 @@ aplayer:
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
 theme: nexmoe
+# theme: yilia
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
