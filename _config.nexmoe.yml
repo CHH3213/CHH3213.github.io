@@ -194,7 +194,11 @@ gitment:
   clientSecret: 20342a99dc08db6dbaa9d696c38404352353ad3a # GitHub Client Secret
   # lazy: true
 
-
+# Math Equations Render Support
+math:
+  enable: true
+  per_page: true
+  engine: mathjax
 
 slotCopyright: '<strong>版权声明：</strong>本文采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/cn/deed.zh" target="_blank">CC BY-NC-SA 3.0 CN</a> 协议进行许可'
 
