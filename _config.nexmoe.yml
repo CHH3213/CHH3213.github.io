@@ -186,6 +186,7 @@ slotComment: gitment # 评论框，目前支持 gitalk,gitment,valine,disqus,dis
 #   repo: nexmoe.github.io # 存放评论的 issue 所在的 repo
 #   clientID: xxx # GitHub Client ID
 #   clientSecret: xxx # GitHub Client Secret
+comment: gitment
 gitment:
   enable: true
   owner: CHH3213 # 持有该 repo 的 GitHub username
@@ -199,6 +200,10 @@ math:
   enable: true
   per_page: true
   engine: mathjax
+
+# # 公式
+# plugins:
+# - hexo-renderer-mathjax
 
 slotCopyright: '<strong>版权声明：</strong>本文采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/cn/deed.zh" target="_blank">CC BY-NC-SA 3.0 CN</a> 协议进行许可'
 

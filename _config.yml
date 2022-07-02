@@ -57,7 +57,9 @@ prismjs:
   tab_replace: ''
 
 
-
+# # 公式
+plugins:
+- hexo-renderer-mathjax
 
 
 # Home page setting
