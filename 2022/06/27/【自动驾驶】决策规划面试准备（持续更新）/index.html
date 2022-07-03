@@ -13,7 +13,7 @@
     <meta name="description" content="1. Frenet坐标系介绍1.1 Cartesian坐标系 一般情况下，我们使用Cartesian坐标系（笛卡尔坐标系）来描述物体的坐标，但对于车辆来说，笛卡尔坐标系并不是最佳选择。因为即使知道了笛卡尔坐标系下车辆的位置信息，也难以表达车辆与道路之间的相对位置，导致二者之间的相对关系不明确。  因此，传统规划算法在笛卡尔坐标系下规划出的路径对于开放道路有良好的效果，但是对于公路环境，忽略车道信息">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【自动驾驶】决策规划面试准备（持续更新）">
-<meta property="og:url" content="https://chh3213.github.io/2022/06/24/%E3%80%90%E8%87%AA%E5%8A%A8%E9%A9%BE%E9%A9%B6%E3%80%91%E5%86%B3%E7%AD%96%E8%A7%84%E5%88%92%E9%9D%A2%E8%AF%95%E5%87%86%E5%A4%87%EF%BC%88%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%EF%BC%89/index.html">
+<meta property="og:url" content="https://chh3213.github.io/2022/06/27/%E3%80%90%E8%87%AA%E5%8A%A8%E9%A9%BE%E9%A9%B6%E3%80%91%E5%86%B3%E7%AD%96%E8%A7%84%E5%88%92%E9%9D%A2%E8%AF%95%E5%87%86%E5%A4%87%EF%BC%88%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%EF%BC%89/index.html">
 <meta property="og:site_name" content="一半是火一半是光的博客">
 <meta property="og:description" content="1. Frenet坐标系介绍1.1 Cartesian坐标系 一般情况下，我们使用Cartesian坐标系（笛卡尔坐标系）来描述物体的坐标，但对于车辆来说，笛卡尔坐标系并不是最佳选择。因为即使知道了笛卡尔坐标系下车辆的位置信息，也难以表达车辆与道路之间的相对位置，导致二者之间的相对关系不明确。  因此，传统规划算法在笛卡尔坐标系下规划出的路径对于开放道路有良好的效果，但是对于公路环境，忽略车道信息">
 <meta property="og:locale" content="zh_CN">
@@ -24,8 +24,8 @@
 <meta property="og:image" content="https://img-blog.csdnimg.cn/08da3f0d60f24a81a24e33eb2ce81028.png">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/9da0378f8e204c31ae1344b65425b8dd.png">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/3ef126eee7be436382d3de0dde911a51.png">
-<meta property="article:published_time" content="2022-06-24T14:00:06.778Z">
-<meta property="article:modified_time" content="2022-07-02T06:09:13.415Z">
+<meta property="article:published_time" content="2022-06-27T02:16:35.000Z">
+<meta property="article:modified_time" content="2022-07-03T02:22:45.565Z">
 <meta property="article:author" content="chh3213">
 <meta property="article:tag" content="决策规划">
 <meta name="twitter:card" content="summary">
@@ -36,15 +36,15 @@
 <link rel="stylesheet" href="/lib/mdui_043tiny/mdui.css">
 
 
-    <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1656742925608">
+    <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1656815049295">
     
         <link rel="stylesheet" href="//at.alicdn.com/t/font_1038733_0xvrvpg9c0r.css">
     
-    <link rel="stylesheet" href="/css/style.css?v=1656742925608">
+    <link rel="stylesheet" href="/css/style.css?v=1656815049295">
 
     
         
-            <link rel="stylesheet" href="/custom.css?v=1656742925608">
+            <link rel="stylesheet" href="/custom.css?v=1656815049295">
         
     
 <meta name="generator" content="Hexo 6.1.0"><style>mjx-container[jax="SVG"] {
@@ -181,7 +181,7 @@ mjx-container[display="true"] + br {
         </a>
     </div>
     <div class="nexmoe-count">
-        <div><span>文章</span>6</div>
+        <div><span>文章</span>7</div>
         <div><span>标签</span>5</div>
         <div><span>分类</span>4</div>
     </div>
@@ -277,7 +277,7 @@ mjx-container[display="true"] + br {
 </div>
 
 
-	<script async src="/js/search.js?v=1656742925609"></script>
+	<script async src="/js/search.js?v=1656815049297"></script>
 
 
 
@@ -334,7 +334,7 @@ mjx-container[display="true"] + br {
         
   <div class="nexmoe-widget-wrap">
     <div id="randomtagcloud" class="nexmoe-widget tagcloud nexmoe-rainbow">
-      <a href="/tags/VPN/" style="font-size: 20px;">VPN</a> <a href="/tags/mood/" style="font-size: 10px;">mood</a> <a href="/tags/%E4%B8%BB%E9%A1%B5/" style="font-size: 10px;">主页</a> <a href="/tags/%E5%86%B3%E7%AD%96%E8%A7%84%E5%88%92/" style="font-size: 10px;">决策规划</a> <a href="/tags/%E7%BE%8E%E5%8C%96/" style="font-size: 10px;">美化</a>
+      <a href="/tags/VPN/" style="font-size: 20px;">VPN</a> <a href="/tags/mood/" style="font-size: 20px;">mood</a> <a href="/tags/%E4%B8%BB%E9%A1%B5/" style="font-size: 10px;">主页</a> <a href="/tags/%E5%86%B3%E7%AD%96%E8%A7%84%E5%88%92/" style="font-size: 10px;">决策规划</a> <a href="/tags/%E7%BE%8E%E5%8C%96/" style="font-size: 10px;">美化</a>
     </div>
     
       <script>
@@ -361,7 +361,7 @@ mjx-container[display="true"] + br {
   <div class="nexmoe-widget-wrap">
     <h3 class="nexmoe-widget-title">文章归档</h3>
     <div class="nexmoe-widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/">2022</a><span class="archive-list-count">6</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/">2022</a><span class="archive-list-count">7</span></li></ul>
     </div>
   </div>
 
@@ -376,11 +376,15 @@ mjx-container[display="true"] + br {
       <ul>
         
           <li>
-            <a href="/2022/07/02/%E6%AF%8F%E6%97%A5%E5%BF%83%E6%83%85/">面完亿嘉和面试后的一天</a>
+            <a href="/2022/07/03/%E5%8F%8D%E6%80%9D%E4%B8%8E%E5%86%B3%E5%BF%83/">反思与决心</a>
           </li>
         
           <li>
-            <a href="/2022/06/24/%E3%80%90%E8%87%AA%E5%8A%A8%E9%A9%BE%E9%A9%B6%E3%80%91%E5%86%B3%E7%AD%96%E8%A7%84%E5%88%92%E9%9D%A2%E8%AF%95%E5%87%86%E5%A4%87%EF%BC%88%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%EF%BC%89/">【自动驾驶】决策规划面试准备（持续更新）</a>
+            <a href="/2022/07/02/%E9%9D%A2%E5%AE%8C%E4%BA%BF%E5%98%89%E5%92%8C%E9%9D%A2%E8%AF%95%E5%90%8E%E7%9A%84%E4%B8%80%E5%A4%A9/">面完亿嘉和面试后的一天</a>
+          </li>
+        
+          <li>
+            <a href="/2022/06/27/%E3%80%90%E8%87%AA%E5%8A%A8%E9%A9%BE%E9%A9%B6%E3%80%91%E5%86%B3%E7%AD%96%E8%A7%84%E5%88%92%E9%9D%A2%E8%AF%95%E5%87%86%E5%A4%87%EF%BC%88%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%EF%BC%89/">【自动驾驶】决策规划面试准备（持续更新）</a>
           </li>
         
           <li>
@@ -389,10 +393,6 @@ mjx-container[display="true"] + br {
         
           <li>
             <a href="/2022/06/12/Github%E4%B8%BB%E9%A1%B5%E7%BE%8E%E5%8C%96/">Github主页美化</a>
-          </li>
-        
-          <li>
-            <a href="/2022/04/15/ubuntu20-04%E9%85%8D%E7%BD%AEQv2ray/">ubuntu20.04配置Qv2ray</a>
           </li>
         
       </ul>
@@ -433,7 +433,7 @@ mjx-container[display="true"] + br {
       
       
       <div class="nexmoe-post-meta nexmoe-rainbow" style="margin:10px 0!important;">
-    <a><i class="nexmoefont icon-calendar-fill"></i>2022年06月24日</a>
+    <a><i class="nexmoefont icon-calendar-fill"></i>2022年06月27日</a>
 </div>
       
     <a><i class="nexmoefont icon-areachart"></i>约10k字</a>
@@ -796,7 +796,7 @@ y(t)=b_{0}+b_{1} t+b_{2} t^{2}+b_{3} t^{3}+b_{4} t^{4}+b_{5} t^{5}+b_{6} t^{6}+b
       
     <div class="nexmoe-post-copyright">
         <strong>本文作者：</strong>chh3213<br>
-        <strong>本文链接：</strong><a href="https://chh3213.github.io/2022/06/24/%E3%80%90%E8%87%AA%E5%8A%A8%E9%A9%BE%E9%A9%B6%E3%80%91%E5%86%B3%E7%AD%96%E8%A7%84%E5%88%92%E9%9D%A2%E8%AF%95%E5%87%86%E5%A4%87%EF%BC%88%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%EF%BC%89/" title="https:&#x2F;&#x2F;chh3213.github.io&#x2F;2022&#x2F;06&#x2F;24&#x2F;%E3%80%90%E8%87%AA%E5%8A%A8%E9%A9%BE%E9%A9%B6%E3%80%91%E5%86%B3%E7%AD%96%E8%A7%84%E5%88%92%E9%9D%A2%E8%AF%95%E5%87%86%E5%A4%87%EF%BC%88%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%EF%BC%89&#x2F;" target="_blank" rel="noopener">https:&#x2F;&#x2F;chh3213.github.io&#x2F;2022&#x2F;06&#x2F;24&#x2F;%E3%80%90%E8%87%AA%E5%8A%A8%E9%A9%BE%E9%A9%B6%E3%80%91%E5%86%B3%E7%AD%96%E8%A7%84%E5%88%92%E9%9D%A2%E8%AF%95%E5%87%86%E5%A4%87%EF%BC%88%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%EF%BC%89&#x2F;</a><br>
+        <strong>本文链接：</strong><a href="https://chh3213.github.io/2022/06/27/%E3%80%90%E8%87%AA%E5%8A%A8%E9%A9%BE%E9%A9%B6%E3%80%91%E5%86%B3%E7%AD%96%E8%A7%84%E5%88%92%E9%9D%A2%E8%AF%95%E5%87%86%E5%A4%87%EF%BC%88%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%EF%BC%89/" title="https:&#x2F;&#x2F;chh3213.github.io&#x2F;2022&#x2F;06&#x2F;27&#x2F;%E3%80%90%E8%87%AA%E5%8A%A8%E9%A9%BE%E9%A9%B6%E3%80%91%E5%86%B3%E7%AD%96%E8%A7%84%E5%88%92%E9%9D%A2%E8%AF%95%E5%87%86%E5%A4%87%EF%BC%88%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%EF%BC%89&#x2F;" target="_blank" rel="noopener">https:&#x2F;&#x2F;chh3213.github.io&#x2F;2022&#x2F;06&#x2F;27&#x2F;%E3%80%90%E8%87%AA%E5%8A%A8%E9%A9%BE%E9%A9%B6%E3%80%91%E5%86%B3%E7%AD%96%E8%A7%84%E5%88%92%E9%9D%A2%E8%AF%95%E5%87%86%E5%A4%87%EF%BC%88%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%EF%BC%89&#x2F;</a><br>
         
             <strong>版权声明：</strong>本文采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/cn/deed.zh" target="_blank">CC BY-NC-SA 3.0 CN</a> 协议进行许可
         
@@ -870,7 +870,7 @@ y(t)=b_{0}+b_{1} t+b_{2} t^{2}+b_{3} t^{3}+b_{4} t^{4}+b_{5} t^{5}+b_{6} t^{6}+b
 
  
 
-<script async src="/js/app.js?v=1656742925643"></script>
+<script async src="/js/app.js?v=1656815049313"></script>
 
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2058306854838448" crossorigin="anonymous"></script>
 
@@ -881,6 +881,22 @@ y(t)=b_{0}+b_{1} t+b_{2} t^{2}+b_{3} t^{3}+b_{4} t^{4}+b_{5} t^{5}+b_{6} t^{6}+b
 	});
 </script>
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<!-- <script src="http://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script> -->
 </body>
 
 </html>
