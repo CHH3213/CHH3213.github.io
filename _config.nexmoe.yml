@@ -27,8 +27,12 @@ customStyles:
   - custom.css
   
 # 附加图标库 使用说明：https://docs.nexmoe.com/config/icon
-iconlib:  //at.alicdn.com/t/font_1038733_0xvrvpg9c0r.css
-      //at.alicdn.com/t/c/font_3495394_5s305rn2vxh.css
+iconlib: //at.alicdn.com/t/c/font_3495394_enbrz0a58y.css
+
+ 
+#iconlib:  //at.alicdn.com/t/font_1038733_0xvrvpg9c0r.css
+
+     # //at.alicdn.com/t/c/font_3495394_5s305rn2vxh.css
 menu:
     回到首页:
         - /
@@ -75,7 +79,7 @@ widgets:
 
             CSDN:
                 - https://blog.csdn.net/weixin_42301220
-                - 
+                - icon-csdn1 
                 - rgb(247, 132, 34)
                 - rgba(247, 132, 34, .1)
             邮箱:
