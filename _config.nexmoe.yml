@@ -28,7 +28,7 @@ customStyles:
   
 # 附加图标库 使用说明：https://docs.nexmoe.com/config/icon
 iconlib:  //at.alicdn.com/t/font_1038733_0xvrvpg9c0r.css
-
+      //at.alicdn.com/t/c/font_3495394_5s305rn2vxh.css
 menu:
     回到首页:
         - /
@@ -75,7 +75,7 @@ widgets:
 
             CSDN:
                 - https://blog.csdn.net/weixin_42301220
-                - icon-rss
+                - 
                 - rgb(247, 132, 34)
                 - rgba(247, 132, 34, .1)
             邮箱:
@@ -209,6 +209,5 @@ slotCopyright: '<strong>版权声明：</strong>本文采用 <a href="https://cr
 
 # slotArticleEnd: '<p><img data-fancybox="gallery" src="https://i.dawnlab.me/53a8c7cf3ad77a0f0a456ce2c6afe88a.png" 
 # alt="53a8c7cf3ad77a0f0a456ce2c6afe88a.png" data-caption="53a8c7cf3ad77a0f0a456ce2c6afe88a.png" loading="lazy"></p>'
-
 
 
