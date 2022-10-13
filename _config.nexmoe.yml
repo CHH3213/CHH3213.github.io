@@ -106,13 +106,13 @@ widgets:
             #     - icon-bilibili
             #     - rgb(231, 106, 141)
             #     - rgba(231, 106, 141, .1)
-    - name: category
-      enable: false
+    - name: category  # 主页是否显示分类
+      enable: true
     - name: tagcloud
       enable: true
       options: 
         maxTagcloud: 17  # 标签云组件显示的标签数量，0 表示不限制
-    - name: archive #settings: widgetAchive
+    - name: archive #是否显示文章归档 settings: widgetAchive
       enable: true
       options:
         widgetAchive: #文章归档组件
@@ -192,7 +192,9 @@ cdn: # 这里可以修改站点使用的库的CDN
 #     js: https://cdn.jsdelivr.net/npm/valine
 
 # 评论框插槽
-slotComment: gitment # 评论框，目前支持 gitalk,gitment,valine,disqus,disqusjs,changyan,livere,DiscussBot
+
+# slotComment: gitment # 评论框，目前支持 gitalk,gitment,valine,disqus,disqusjs,changyan,livere,DiscussBot
+comment: gitalk
 gitment:
   enable: true
   owner: CHH3213 # 持有该 repo 的 GitHub username
@@ -200,13 +202,19 @@ gitment:
   clientID: 55ea9dc4a0241f57729b # GitHub Client ID
   clientSecret: 20342a99dc08db6dbaa9d696c38404352353ad3a # GitHub Client Secret
   # lazy: true
-# gitalk:
-#   admin: nexmoe # 拥有对该repo进行操作的 GitHub username
-#   owner: nexmoe # 持有该 repo 的 GitHub username
-#   repo: nexmoe.github.io # 存放评论的 issue 所在的 repo
-#   clientID: xxx # GitHub Client ID
-#   clientSecret: xxx # GitHub Client Secret
-
+gitalk:
+  admin: CHH3213 # 拥有对该repo进行操作的 GitHub username
+  owner: CHH3213 # 持有该 repo 的 GitHub username
+  repo: CHH3213.github.io # 存放评论的 issue 所在的 repo
+  clientID: 55ea9dc4a0241f57729b # GitHub Client ID
+  clientSecret: 20342a99dc08db6dbaa9d696c38404352353ad3a # GitHub Client Secret
+DiscussBot:
+  id: <id> # 站点id
+  comments: 5 # 可能是限制每位用户单页面评论最多条数？
+  color: # 评论框主色调
+  dislike: 0 # 显示差评按钮
+  icons: 0 # 图标主题
+  diff: 0 # 每位用户name不同颜色
 
 # Math Equations Render Support
 math:
@@ -222,5 +230,4 @@ slotCopyright: '<strong>版权声明：</strong>本文采用 <a href="https://cr
 
 # slotArticleEnd: '<p><img data-fancybox="gallery" src="https://i.dawnlab.me/53a8c7cf3ad77a0f0a456ce2c6afe88a.png" 
 # alt="53a8c7cf3ad77a0f0a456ce2c6afe88a.png" data-caption="53a8c7cf3ad77a0f0a456ce2c6afe88a.png" loading="lazy"></p>'
-
 
