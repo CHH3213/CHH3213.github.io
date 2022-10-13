@@ -46,6 +46,9 @@ menu:
     # 思维导图:
     #     - /xmind
     #     - icon-coffee
+    创意白板:
+        - https://wbo.ophir.dev/boards/chh3213
+        - icon-eye-fill
     关于博主:
         - /about.html
         - icon-info-circle
@@ -87,6 +90,12 @@ widgets:
                 - icon-mail-fill
                 - rgb(29, 161, 242)
                 - rgba(29, 161, 242, .1)
+            RSS:
+                - /atom.xml
+                - icon-rss
+                - rgb(235, 152, 0)
+                - rgba(235, 152, 0, .15)  
+
             # QQ群: 
             #     - https://jq.qq.com/?_wv=1027&k=5CfKHun
             #     - icon-QQ
@@ -184,13 +193,6 @@ cdn: # 这里可以修改站点使用的库的CDN
 
 # 评论框插槽
 slotComment: gitment # 评论框，目前支持 gitalk,gitment,valine,disqus,disqusjs,changyan,livere,DiscussBot
-# gitalk:
-#   admin: nexmoe # 拥有对该repo进行操作的 GitHub username
-#   owner: nexmoe # 持有该 repo 的 GitHub username
-#   repo: nexmoe.github.io # 存放评论的 issue 所在的 repo
-#   clientID: xxx # GitHub Client ID
-#   clientSecret: xxx # GitHub Client Secret
-comment: gitment
 gitment:
   enable: true
   owner: CHH3213 # 持有该 repo 的 GitHub username
@@ -198,6 +200,13 @@ gitment:
   clientID: 55ea9dc4a0241f57729b # GitHub Client ID
   clientSecret: 20342a99dc08db6dbaa9d696c38404352353ad3a # GitHub Client Secret
   # lazy: true
+# gitalk:
+#   admin: nexmoe # 拥有对该repo进行操作的 GitHub username
+#   owner: nexmoe # 持有该 repo 的 GitHub username
+#   repo: nexmoe.github.io # 存放评论的 issue 所在的 repo
+#   clientID: xxx # GitHub Client ID
+#   clientSecret: xxx # GitHub Client Secret
+
 
 # Math Equations Render Support
 math:
