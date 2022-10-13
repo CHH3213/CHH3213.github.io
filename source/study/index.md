@@ -36,9 +36,10 @@ title: 我的学习之路
 
 
 
-![就业蓄力.png](https://s2.loli.net/2022/06/11/qIfuYjhyUk97rdt.png)
+<!-- ![就业蓄力.png](https://s2.loli.net/2022/06/11/qIfuYjhyUk97rdt.png) -->
 
 
+{% pdf ../pdf/career.pdf %}
 
 
 
@@ -58,15 +59,19 @@ title: 我的学习之路
 
 下面是总结的导图
 
-![RL](https://s2.loli.net/2022/06/12/KpJmMrUEI5BvuZ9.png)
+<!-- ![RL](https://s2.loli.net/2022/06/12/KpJmMrUEI5BvuZ9.png) -->
 
+{% pdf ../pdf/RL.pdf %}
 
 
 
 
 ## 自动驾驶
 
-![self-driving](https://s2.loli.net/2022/06/12/3j8Tk4eDKlHiXVF.png)
+<!-- ![self-driving](https://s2.loli.net/2022/06/12/3j8Tk4eDKlHiXVF.png) -->
+
+{% pdf ../pdf/self-driving.pdf %}
+
 
 主要聚焦于决策控制这一块。
 
