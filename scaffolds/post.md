@@ -2,7 +2,7 @@
 title: {{ title }}
 date: {{ date }}
 top: false
-cover: false
+cover: http://api.mtyqx.cn/tapi/random.php?
 coverWidth: 1200
 coverHeight: 750
 toc: true
