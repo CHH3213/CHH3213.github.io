@@ -7,19 +7,19 @@ coverHeight: 750
 toc: true
 mathjax: true
 date: 2022-10-15 12:04:44
-tags:
-category:
+tags: 工具
+category: 实用工具
 ---
 
-## SakuraFrp简单介绍
+## 😋SakuraFrp简单介绍
 
 
 [SakuraFrp](https://www.natfrp.com/user/)是一个内网穿透工具，使用它就可以轻松的实现在不是同一个局域网下的远程连接☺️。
 内网穿透的基本原理可以戳[此处](https://doc.natfrp.com/#/basics)。
 
-## 被控端电脑接入步骤
+## 😋被控端电脑接入步骤
 
-### Sakura frp账号注册
+### 😉Sakura frp账号注册
 
 首先在[官网](https://www.natfrp.com/user/)注册Sakura frp账号。注册完成后需要进行实名认证:
 
@@ -32,7 +32,7 @@ category:
 ![](SakuraFrp内网穿透工具/访问密钥.png#pic_center)
 
 
-### windows被控端设置
+### 😉windows被控端设置
 
 点击`穿透`下的`软件下载`按钮
 
@@ -71,7 +71,8 @@ category:
 
 至此，内网穿透全部搞定，被控电脑全部设置完毕。
 
-### 远程连接被控端
+### 😉远程连接被控端
+
 上面创建内网穿透的过程其实就是分配了一个公网IP，所以接下来我们可以通过这个公网IP来访问我们的电脑；
 
 win10提供了相当给力的远程连接工具：“远程桌面连接”。可以在windows系统之间进行远程控制。
@@ -99,7 +100,7 @@ win10提供了相当给力的远程连接工具：“远程桌面连接”。可
     ![](SakuraFrp内网穿透工具/远程桌面.png#pic_center)
 
 
-### ubuntu被控端设置
+### 😉ubuntu被控端设置
 
 ubuntu被控端需要下载`frpc`客户端，点击`穿透`下的`软件下载`按钮，进入后选择`linux系统`
 
@@ -161,7 +162,8 @@ md5sum frpc
 ```bash
 frpc -v
 ```
-### ubutnu 使用 frpc
+
+### 😉ubutnu 使用 frpc
 
 通过上节安装完成后，在终端使用命令开启frpc，注意加root权限：
 ```bash
