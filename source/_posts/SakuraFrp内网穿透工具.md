@@ -190,3 +190,24 @@ sudo frpc
 
 
 至此，ubuntu的被控端部分设置完毕，远程只需要填入得到的公网ip或者域名即可。
+
+
+例如，隧道启动成功后，使用vscode的远程remote插件连接ssh，那么只需要打开
+
+![](SakuraFrp内网穿透工具/vscode_ssh.png#pic_center)  
+
+然后输入对应的ip和端口
+
+![](SakuraFrp内网穿透工具/20221015201032.png#pic_center)  
+
+如：
+```bash
+ssh YHS@2.tcp.vip.cpolar.cn -p 14884
+```
+
+`YHS`为被控电脑的用户名，`2.tcp.vip.cpolar.cn`为公网ip，`14884`为远程端口号。
+这样就可以连接上ssh了。
+
+
+
+
