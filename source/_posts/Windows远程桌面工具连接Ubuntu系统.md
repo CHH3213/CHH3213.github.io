@@ -55,6 +55,11 @@ sudo apt install xrdp
 sudo systemctl status xrdp
 ```
 
+可以将xrdp设为开机启动
+```bash
+sudo systemctl enable xrdp
+```
+
 默认情况下，xrdp 使用`/etc/ssl/private/ssl-cert-snakeoil.key`，它仅仅对ssl-cert用户组成语可读，所以需要运行下面的命令，将xrdp用户添加到这个用户组：
 
 ```bash
