@@ -1,7 +1,7 @@
 ---
 title: Windows远程桌面工具连接Ubuntu系统
 top: false
-cover: http://api.mtyqx.cn/tapi/random.php?
+cover: http://api.mtyqx.cn/tapi/random.php?461316
 coverWidth: 1200
 coverHeight: 750
 toc: true
