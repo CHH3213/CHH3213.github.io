@@ -61,17 +61,16 @@ linux系统官网已经给了一键自动安装脚本
 ![](内网穿透工具——cpolar/token.png#pic_center)
 
 然后终端输入：
-
 ```
 cpolar authtoken 输入token数字xxxxxxxxxxxxxxxxxx
 ```
 
 - 如果需要配置cpolar开机自启动:
-    ```bash
+    ``` bash
     sudo systemctl enable cpolar
     ```
 - 启动服务时输入命令：
-    ```bash
+    ``` bash
     sudo systemctl start cpolar
     ```
 - 通过查看服务状态来检查是否启动成功：

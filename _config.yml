@@ -43,19 +43,13 @@ render_drafts: false
 post_asset_folder: true #生成对应文件夹
 relative_link: false
 future: true
+# _config.yml
+highlight_theme: night bright
 highlight:
   enable: true
   line_number: true
   auto_detect: true
-  tab_replace: ''
-  wrap: true
-  hljs: true
-prismjs:
-  enable: false
-  preprocess: true
-  line_number: true
-  tab_replace: ''
-
+  tab_replace: false
 
 # # 公式
 plugins:
