@@ -6,6 +6,7 @@ category: VPN教程
 cover: http://api.mtyqx.cn/tapi/random.php?456
 coverWidth: 1200
 coverHeight: 750
+coments: true
 ---
 
 
