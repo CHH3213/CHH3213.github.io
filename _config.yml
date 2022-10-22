@@ -44,12 +44,13 @@ post_asset_folder: true #生成对应文件夹
 relative_link: false
 future: true
 # _config.yml
-highlight_theme: night bright
 highlight:
   enable: true
   line_number: true
   auto_detect: true
   tab_replace: false
+
+
 
 # # 公式
 plugins:
