@@ -205,7 +205,7 @@ const gitalk = new Gitalk({
   repo: "CHH3213.github.io",      
   owner: "CHH3213",
   admin: "CHH3213",
-  id: window.location.pathname    
+  id: decodeURI(window.location.pathname)    
 });
 gitalk.render("gitalk-container")
 </script>
