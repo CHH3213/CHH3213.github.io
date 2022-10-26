@@ -12,10 +12,13 @@ category: 实用技巧
 coments: true
 ---
 
+[SakuraFrp](https://www.natfrp.com/user/)是一个内网穿透工具，使用它就可以轻松的实现在不是同一个局域网下的远程连接☺️。
+<!--more-->
 ## 😋SakuraFrp简单介绍
 
 
-[SakuraFrp](https://www.natfrp.com/user/)是一个内网穿透工具，使用它就可以轻松的实现在不是同一个局域网下的远程连接☺️。
+
+
 内网穿透的基本原理可以戳[此处](https://doc.natfrp.com/#/basics)。
 
 ## 😋被控端电脑接入步骤

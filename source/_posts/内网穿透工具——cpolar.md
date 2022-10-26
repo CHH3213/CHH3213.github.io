@@ -14,6 +14,7 @@ coments: true
 
 在之前介绍了[SakuraFrp](https://chh3213.github.io/2022/10/15/SakuraFrp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7/)内网穿透工具，后来又发现了一个也比较好的内网穿透工具[cpolar](<https://www.cpolar.com/>)。
 
+<!--more-->
 打开官网后直接选择对应版本下载安装即可。
 
 ![](内网穿透工具——cpolar/下载.png#pic_center)  

@@ -9,7 +9,8 @@ cover: http://api.mtyqx.cn/tapi/random.php?1203
 # coverHeight: 750
 comments: true
 ---
-
+Github主页的展示效果总结。
+<!--more-->
 ## 添加Github状态
 
 实现效果如下：
