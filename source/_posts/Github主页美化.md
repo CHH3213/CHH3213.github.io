@@ -74,7 +74,7 @@ Github主页的展示效果总结。
 
 
 
-### 接入waka-box
+### 主页接入waka-box
 
 [waka-box](https://github.com/matchai/waka-box)提供了你每周的代码状态，并且更新为类似于下面的内容：
 
@@ -84,18 +84,85 @@ Github主页的展示效果总结。
 
 下面是接入步骤：
 
-1. 在Github创建一个Gist：[Github Gist](https://gist.github.com/)，标题与内容可随意，成功运行后会被修改，保存 `Gist-url` 上一串 `key`，如：`https://gist.github.com/matchai/6d5f84419863089a167387da62dd7081` 中 `6d5f84419863089a167387da62dd7081`；
-2. 创建带有 `gist` 功能 `Github Token` 并保存下来 [Token](https://github.com/settings/tokens/new)
-3. 登入 `WakaTime` 页面，没有账号的，请[自行创建](https://wakatime.com/signup)
-4. 进入 `WakaTime` [配置页面](https://wakatime.com/settings/profile)，勾选 `Display coding activity publicly` 与 `Display languages, editors, operating systems publicly`
-5. 查看 `WakaTime` 账号 [api-key](https://wakatime.com/settings/api-key)，并保存好
+1. 获取 GitHub API 令牌， 打开 `Settings / Developer settings / Personal access tokens` 页面，创建 [`Github Token`](<https://github.com/settings/tokens/new>) ，权限部分勾选`repo`、`workflow`和`user`。生成后将`token`保存下来
+
+    ![](Github主页美化/20221026211944.png)  
+
+2. 进入 `WakaTime` [配置页面](https://wakatime.com/settings/profile)，勾选 `Display coding activity publicly` 与 `Display languages, editors, operating systems publicly`
+3. 查看 `WakaTime` 账号 [api-key](https://wakatime.com/settings/api-key)，并保存好
 
 项目设置
 
-1. `fork` [项目](https://github.com/matchai/waka-box) 到你自己的仓库
+1. 在你的Github 自定义首页的仓库，打开 `Settings / Secrets / Actions` 页面，点击 `New repository secret`
+    
+    ![](Github主页美化/20221026211519.png)  
 
-2. 打开 `.github/workflows/schedule.yml` 文件，修改 `GIST_ID`为自己的；
+2. 添加 `Secret API Key` 密钥，Name 为 `WAKATIME_API_KEY` ，value 为`Secret API Key` 密钥
+3. 添加 `Secret API Key` 密钥，Name 为 `GH_TOKEN` ，value 为`GitHub API` token
+4. 配置Github Action工作流
 
-3. 在 `fork` 项目下 `Settings > Secrets`，新增 `GH_TOKEN` 与 `WAKATIME_API_KEY`，Value 分别对应上面生成的 `Github Token` 与 `WakaTime api-key`
+    打开该仓库的 `Actions` 页面，点击 `set up a workflow yourself` 设置工作流
+    
+    ![](Github主页美化/actions.png)  
+    
+    文件名随意，清空初始内容，添入如下配置
+    ```yaml
+    name: Waka Readme
 
-   
+    on:
+    schedule:
+        # Runs at 12am IST
+        - cron: '30 18 ** *'
+    workflow_dispatch:
+    jobs:
+    update-readme:
+        name: Update Readme with Metrics
+        runs-on: ubuntu-latest
+        steps:
+        - uses: anmol098/waka-readme-stats@master
+            with:
+            WAKATIME_API_KEY: ${{ secrets.WAKATIME_API_KEY }}
+            GH_TOKEN: ${{ secrets.GH_TOKEN }}
+            SHOW_OS: "False"
+            SHOW_PROJECTS: "False"
+            SHOW_COMMIT: "False"
+            SHOW_DAYS_OF_WEEK: "False"
+            SHOW_TIMEZONE: "False"
+            SHOW_EDITORS: "False"
+            SHOW_SHORT_INFO: "False"
+            SHOW_LOC_CHART: "False"
+            SHOW_TOTAL_CODE_TIME: "False"
+            SHOW_PROFILE_VIEWS: "False"
+    ```
+    
+    一些自定义配置可以在 [waka-readme-stats](https://github.com/anmol098/waka-readme-stats) 仓库中找到示例。
+    
+    ![](Github主页美化/set.png)  
+    
+    然后提交至仓库。
+
+    ![](Github主页美化/20221026205208.png)  
+
+5. 更新`README.md`文件，在需要展示的地方，添加如下代码，下面代码相当于占位符，生成后的数据统计会放置在这个位置之中。
+
+    ```yaml
+    <!--START_SECTION:waka-->
+    <!--END_SECTION:waka-->
+    ```
+
+6. 点击`update gist with WakaTime stats`，再点击`Run workflow`运行。
+    
+    ![](Github主页美化/workflow.png)  
+    
+    > github actions 工作流是根据 .yml 配置文件定时运行任务，如果想马上看到结果，就需要手动执行一下
+7. 运行成功后可以点击当前的workflow进入查看执行日志。
+
+    ![](Github主页美化/20221026212952.png)  
+8. 以上配置完成后耐心等待数据同步到`readme`即可。
+
+
+另外还可参考以下资料：
+
+- [https://blog.csdn.net/weixin_43233914/article/details/126087735](https://blog.csdn.net/weixin_43233914/article/details/126087735)
+- [https://github.com/athul/waka-readme#extras](https://github.com/athul/waka-readme#extras)
+- [https://github.com/anmol098/waka-readme-stats](https://github.com/anmol098/waka-readme-stats)
