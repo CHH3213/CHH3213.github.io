@@ -141,7 +141,6 @@ Github主页的展示效果总结。
     
     然后提交至仓库。
 
-    ![](Github主页美化/20221026205208.png)  
 
 5. 更新`README.md`文件，在需要展示的地方，添加如下代码，下面代码相当于占位符，生成后的数据统计会放置在这个位置之中。
 
@@ -150,10 +149,10 @@ Github主页的展示效果总结。
     <!--END_SECTION:waka-->
     ```
 
-6. 点击`update gist with WakaTime stats`，再点击`Run workflow`运行。
+6. 点击该工作流，再点击`Run workflow`运行。
     
-    ![](Github主页美化/workflow.png)  
-    
+    ![](Github主页美化/20221026205208.png)  
+
     > github actions 工作流是根据 .yml 配置文件定时运行任务，如果想马上看到结果，就需要手动执行一下
 7. 运行成功后可以点击当前的workflow进入查看执行日志。
 
