@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+
+<head>
+    
+    <title>内网穿透工具——cpolar - 一半是火一半是光的博客</title>
+    <meta charset="UTF-8">
+    <meta name="keywords" content="强化学习,自动驾驶,规划控制,编程,C++,Java">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+    
+    <link rel="shortcut icon" href="https://s2.loli.net/2022/06/11/m1r7UeTHVh935ID.png" type="image/png" />
+    <meta name="description" content="在之前介绍了SakuraFrp内网穿透工具，后来又发现了一个也比较好的内网穿透工具cpolar。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="内网穿透工具——cpolar">
+<meta property="og:url" content="https://chh3213.github.io/2022/10/15/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7%E2%80%94%E2%80%94cpolar/index.html">
+<meta property="og:site_name" content="一半是火一半是光的博客">
+<meta property="og:description" content="在之前介绍了SakuraFrp内网穿透工具，后来又发现了一个也比较好的内网穿透工具cpolar。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://chh3213.github.io/2022/10/15/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7%E2%80%94%E2%80%94cpolar/下载.png#pic_center">
+<meta property="og:image" content="https://chh3213.github.io/2022/10/15/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7%E2%80%94%E2%80%94cpolar/隧道列表.png#pic_center">
+<meta property="og:image" content="https://chh3213.github.io/2022/10/15/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7%E2%80%94%E2%80%94cpolar/token.png#pic_center">
+<meta property="og:image" content="https://chh3213.github.io/2022/10/15/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7%E2%80%94%E2%80%94cpolar/ssh状态.png#pic_center">
+<meta property="article:published_time" content="2022-10-15T12:16:58.000Z">
+<meta property="article:modified_time" content="2022-10-25T07:16:57.826Z">
+<meta property="article:author" content="chh3213">
+<meta property="article:tag" content="内网穿透">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://chh3213.github.io/2022/10/15/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7%E2%80%94%E2%80%94cpolar/下载.png#pic_center">
+    
+<link rel="stylesheet" href="/lib/fancybox/fancybox.css">
+<link rel="stylesheet" href="/lib/justifiedGallery/justifiedGallery.min.css">
+<link rel="stylesheet" href="/lib/mdui_043tiny/mdui.css">
+
+
+    <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1666836534395">
+    
+        <link rel="stylesheet" href="//at.alicdn.com/t/c/font_3495394_enbrz0a58y.css">
+    
+    <link rel="stylesheet" href="/css/style.css?v=1666836534395">
+
+    
+        
+            <link rel="stylesheet" href="/custom.css?v=1666836534395">
+        
+    
+    <!-- <link href="https://cdn.bootcss.com/highlight.js/8.0/styles/monokai_sublime.min.css" rel="stylesheet"> -->
+    <link href="/js/highlight/styles/atom-one-dark.min.css" rel="stylesheet">
+    <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/themes/prism-coy.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/plugins/line-numbers/prism-line-numbers.min.css" rel="stylesheet"> -->
+    <link rel="stylesheet" href="/css/prism.css">
+
+<meta name="generator" content="Hexo 6.1.0"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style><link rel="alternate" href="/atom.xml" title="一半是火一半是光的博客" type="application/atom+xml">
+</head>
+
+<body class="mdui-drawer-body-left">
+    <div id="nexmoe-background">
+        <div class="nexmoe-bg" style="background-image: url(https://s2.loli.net/2022/06/11/wfuTIV7gaJpjBC2.png)"></div>
+        <div class="mdui-appbar mdui-shadow-0">
+            <div class="mdui-toolbar">
+                <a mdui-drawer="{target: '#drawer', swipe: true}" title="menu" class="mdui-btn mdui-btn-icon mdui-ripple"><i class="mdui-icon nexmoefont icon-menu"></i></a>
+                <div class="mdui-toolbar-spacer"></div>
+                <!--<a href="javascript:;" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">search</i></a>-->
+                <a href="/" title="chh3213" class="mdui-btn mdui-btn-icon"><img src="https://img-blog.csdnimg.cn/78ebd04c9eb54d858b4aa57f4f13c04b.png" alt="chh3213"></a>
+            </div>
+        </div>
+    </div>
+    <div id="nexmoe-header">
+        <div class="nexmoe-drawer mdui-drawer" id="drawer">
+    <div class="nexmoe-avatar mdui-ripple">
+        <a href="/" title="chh3213">
+            <img src="https://img-blog.csdnimg.cn/78ebd04c9eb54d858b4aa57f4f13c04b.png" alt="chh3213" alt="chh3213">
+        </a>
+    </div>
+    <div class="nexmoe-count">
+        <div><span>文章</span>7</div>
+        <div><span>标签</span>5</div>
+        <div><span>分类</span>3</div>
+    </div>
+    <div class="nexmoe-list mdui-list" mdui-collapse="{accordion: true}">
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/" title="回到首页">
+            <i class="mdui-list-item-icon nexmoefont icon-home"></i>
+            <div class="mdui-list-item-content">
+                回到首页
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/archive.html" title="分类归档">
+            <i class="mdui-list-item-icon nexmoefont icon-container"></i>
+            <div class="mdui-list-item-content">
+                分类归档
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/study/" title="学习之路">
+            <i class="mdui-list-item-icon nexmoefont icon-battlenet"></i>
+            <div class="mdui-list-item-content">
+                学习之路
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" target="_blank" rel="noopener" href="https://wbo.ophir.dev/boards/chh3213" title="来涂鸦吧">
+            <i class="mdui-list-item-icon nexmoefont icon-eye-fill"></i>
+            <div class="mdui-list-item-content">
+                来涂鸦吧
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/about.html" title="关于博主">
+            <i class="mdui-list-item-icon nexmoefont icon-info-circle"></i>
+            <div class="mdui-list-item-content">
+                关于博主
+            </div>
+        </a>
+        
+    </div>
+    <aside id="nexmoe-sidebar">
+    
+        
+        <!-- 一言 -->
+<div class="nexmoe-widget-wrap">
+  <h3 class="nexmoe-widget-title">
+    一则言语
+  </h3>
+  <div class="nexmoe-widget">
+    <ul class="hitokoto-box">
+      <li id="hitokoto_text_parent" class="hitokoto-text" hitokotoCategory="">
+        <a href="#" id="hitokoto_text">
+          
+        </a>
+        <a href="#" id="hitokoto_error_text" style="display: none;">
+          
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<script>
+  let hitokotoText = document.getElementById('hitokoto_text')
+  let hitokotoErroText = document.getElementById('hitokoto_error_text')
+  let hitokotoCategory = document.getElementById('hitokoto_text_parent').getAttribute('hitokotoCategory')
+  window.onload = function () {
+    let url = 'https://v1.hitokoto.cn'
+    if (hitokotoCategory) {
+      url += '?c=' + hitokotoCategory
+    }
+    fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        hitokotoText.innerText = "「 " + data.hitokoto + " 」 from " + data.from
+        hitokotoText.href = 'https://hitokoto.cn/?uuid=' + data.uuid
+      })
+      .catch((reason) => {
+        console.error(11, reason)
+        hitokotoText.style.display = 'none'
+        hitokotoErroText.style.display = 'block'
+      })
+  }
+</script>
+    
+        
+        <div class="nexmoe-widget-wrap">
+    <div class="nexmoe-widget nexmoe-search">
+        
+            <form id="search_form">
+                <label><input class="st-default-search-input" id="search_value" name="q" type="search" placeholder="站内搜索" style="
+                    font-size: 15px !important;
+                    height: 56px !important;
+                    background-image: none;
+                "></label>
+            </form>
+         
+    </div>
+</div>
+
+
+	<script async src="/js/search.js?v=1666836534395"></script>
+
+
+
+    
+        
+        <div class="nexmoe-widget-wrap">
+	<div class="nexmoe-widget nexmoe-social">
+		<a
+			class="mdui-ripple"
+			href="https://github.com/CHH3213"
+			target="_blank"
+			mdui-tooltip="{content: 'GitHub'}"
+			style="
+				color: rgb(25, 23, 23);
+				background-color: rgba(25, 23, 23, .1);
+			"
+		>
+			<i
+				class="nexmoefont icon-github"
+			></i> </a
+		><a
+			class="mdui-ripple"
+			href="https://blog.csdn.net/weixin_42301220"
+			target="_blank"
+			mdui-tooltip="{content: 'CSDN'}"
+			style="
+				color: rgb(247, 132, 34);
+				background-color: rgba(247, 132, 34, .1);
+			"
+		>
+			<i
+				class="nexmoefont icon-csdn1"
+			></i> </a
+		><a
+			class="mdui-ripple"
+			href="mailto:1213472983@qq.com"
+			target="_blank"
+			mdui-tooltip="{content: '邮箱'}"
+			style="
+				color: rgb(29, 161, 242);
+				background-color: rgba(29, 161, 242, .1);
+			"
+		>
+			<i
+				class="nexmoefont icon-mail-fill"
+			></i> </a
+		><a
+			class="mdui-ripple"
+			href="/atom.xml"
+			target="_blank"
+			mdui-tooltip="{content: 'RSS'}"
+			style="
+				color: rgb(235, 152, 0);
+				background-color: rgba(235, 152, 0, .15);
+			"
+		>
+			<i
+				class="nexmoefont icon-rss"
+			></i> </a
+		>
+	</div>
+</div>
+
+    
+        
+        
+  <div class="nexmoe-widget-wrap">
+    <h3 class="nexmoe-widget-title">文章分类</h3>
+    <div class="nexmoe-widget">
+
+      <ul class="category-list">
+
+        
+
+
+        
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/VPN教程/">VPN教程</a>
+          <span class="category-list-count">2</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/主页美化/">主页美化</a>
+          <span class="category-list-count">2</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/实用技巧/">实用技巧</a>
+          <span class="category-list-count">3</span>
+        </li>
+
+        
+      </ul>
+
+    </div>
+  </div>
+
+
+    
+        
+        
+  <div class="nexmoe-widget-wrap">
+    <div id="randomtagcloud" class="nexmoe-widget tagcloud nexmoe-rainbow">
+      <a href="/tags/Remote/" style="font-size: 10px;">Remote</a> <a href="/tags/VPN/" style="font-size: 20px;">VPN</a> <a href="/tags/%E4%B8%BB%E9%A1%B5/" style="font-size: 10px;">主页</a> <a href="/tags/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/" style="font-size: 20px;">内网穿透</a> <a href="/tags/%E7%BE%8E%E5%8C%96/" style="font-size: 10px;">美化</a>
+    </div>
+    
+      <script>
+        var maxTagcloud = parseInt(17);
+        var tags_length = parseInt(5);
+        var tags_arr = [];
+        for(var i = 0; i < tags_length; i++){
+          tags_arr.push(i);
+        }
+        tags_arr.sort(function (l, r) {
+          return Math.random() > 0.5 ? -1 : 1;
+        });
+        tags_arr = tags_arr.slice(0, maxTagcloud < tags_length ? tags_length - maxTagcloud : 0);
+        for(var tag_i = 0; tag_i < tags_arr.length; tag_i++){
+          document.getElementById("randomtagcloud").children[tags_arr[tag_i]].style.display = 'none';
+        }
+      </script>
+    
+  </div>
+
+    
+        
+        
+  <div class="nexmoe-widget-wrap">
+    <h3 class="nexmoe-widget-title">文章归档</h3>
+    <div class="nexmoe-widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/">2022</a><span class="archive-list-count">7</span></li></ul>
+    </div>
+  </div>
+
+
+
+    
+        
+        
+  <div class="nexmoe-widget-wrap">
+    <h3 class="nexmoe-widget-title">最新文章</h3>
+    <div class="nexmoe-widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/10/27/Github%E4%B8%BB%E9%A1%B5%E7%BE%8E%E5%8C%96/">Github主页美化</a>
+          </li>
+        
+          <li>
+            <a href="/2022/10/18/Windows%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2%E5%B7%A5%E5%85%B7%E8%BF%9E%E6%8E%A5Ubuntu%E7%B3%BB%E7%BB%9F/">Windows远程桌面工具连接Ubuntu系统</a>
+          </li>
+        
+          <li>
+            <a href="/2022/10/15/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7%E2%80%94%E2%80%94cpolar/">内网穿透工具——cpolar</a>
+          </li>
+        
+          <li>
+            <a href="/2022/10/15/SakuraFrp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7/">内网穿透工具——SakuraFrp</a>
+          </li>
+        
+          <li>
+            <a href="/2022/06/12/%E5%8D%9A%E5%AE%A2%E4%B8%BB%E9%A1%B5%E7%BE%8E%E5%8C%96/">博客主页美化</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+    
+        
+</aside>
+    <div class="nexmoe-copyright">
+        &copy; 2022 chh3213
+        Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+        & <a href="https://github.com/theme-nexmoe/hexo-theme-nexmoe" target="_blank">Nexmoe</a>
+        
+        <!-- 添加访问数 -->
+        <div style="font-size: 13px">
+            <link rel="stylesheet" href="https://widget.heweather.net/standard/static/css/he-standard.css?v=1.4.0">
+            <script src="https://widget.heweather.net/standard/static/js/he-standard.js?v=1.4.0"></script>
+            <script async="" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            本站总访问量 <a id="busuanzi_value_site_pv"></a> 次<br>
+            本站访客数<a id="busuanzi_value_site_uv"></a>人次
+        </div>
+    </div>
+
+<!--自定义看板娘-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<script src="/live2d-widget/autoload.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css" />
+
+</div><!-- .nexmoe-drawer -->
+    </div>
+    <div id="nexmoe-content">
+        <div class="nexmoe-primary">
+            <div class="nexmoe-post">
+
+  <article>
+      
+          <div class="nexmoe-post-cover" style="padding-bottom: 62.5%;"> 
+              <img src="http://api.mtyqx.cn/tapi/random.php?15156" alt="内网穿透工具——cpolar" loading="lazy">
+              <h1>内网穿透工具——cpolar</h1>
+          </div>
+      
+      
+      <div class="nexmoe-post-meta nexmoe-rainbow" style="margin:10px 0!important;">
+    <a><i class="nexmoefont icon-calendar-fill"></i>2022年10月15日</a>
+</div>
+      
+    <a><i class="nexmoefont icon-areachart"></i>约767字</a>
+    <a><i class="nexmoefont icon-time-circle-fill"></i>预计需要2分钟</a>
+
+
+      <p>在之前介绍了<a href="https://chh3213.github.io/2022/10/15/SakuraFrp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7/">SakuraFrp</a>内网穿透工具，后来又发现了一个也比较好的内网穿透工具<a target="_blank" rel="noopener" href="https://www.cpolar.com/">cpolar</a>。</p>
+<span id="more"></span>
+<p>打开官网后直接选择对应版本下载安装即可。</p>
+<p><img src="/2022/10/15/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7%E2%80%94%E2%80%94cpolar/下载.png#pic_center" alt>  </p>
+<p>下面介绍windows下和ubuntu的安装。</p>
+<h2 id="☺️windows-被控端安装"><a href="#☺️windows-被控端安装" class="headerlink" title="☺️windows 被控端安装"></a>☺️windows 被控端安装</h2><p>在官网注册好账号后，到官方界面下载对应的安装包，解压后默认安装即可。cpolar安装后会默认安装两条样例隧道:</p>
+<ul>
+<li>一个是Website隧道，指向http 8080端口</li>
+<li>一个是远程桌面隧道（win系统），指向tcp 3389端口</li>
+</ul>
+<p>因此，我们安装完成后，只需要启动远程桌面隧道服务，就可以获得公网地址。</p>
+<p>浏览器访问<code>127.0.0.1:9200</code>，登录cpolar web-ui管理界面。点击左侧仪表盘——隧道管理——隧道列表，找到远程桌面隧道，点击启动该隧道</p>
+<p><img src="/2022/10/15/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7%E2%80%94%E2%80%94cpolar/隧道列表.png#pic_center" alt>  </p>
+<p>隧道启动成功后，点击左侧仪表盘——状态——在线隧道列表，找到远程桌面隧道，可以看到已经有生成了相应的公网地址，复制下来。</p>
+<p>安装完成后，在另外一台windows电脑进行远程桌面连接，填入刚才生成的公网TCP端口地址（是<code>tcp://</code>后面的地址），就可以实现内网穿透远程桌面连接。</p>
+<h2 id="☺️linux被控端安装"><a href="#☺️linux被控端安装" class="headerlink" title="☺️linux被控端安装"></a>☺️linux被控端安装</h2><p>当服务器为linux系统时，我们可以通过SSH远程连接，同样正常在服务器安装cpolar客户端，然后映射内网端口即可。</p>
+<p>linux系统官网已经给了一键自动安装脚本</p>
+<ul>
+<li>国内使用  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">curl -L https://www.cpolar.com/static/downloads/install-release-cpolar.sh | sudo bash<br></code></pre></td></tr></table></figure></li>
+<li><p>国外使用</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">curl -sL https://git.io/cpolar | sudo bash<br></code></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>注意root权限问题。</p>
+<p>安装完成后，登录账号查看认证的token：</p>
+<p><img src="/2022/10/15/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7%E2%80%94%E2%80%94cpolar/token.png#pic_center" alt></p>
+<p>然后终端输入：<br><figure class="highlight gauss"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs gauss">cpolar authtoken 输入<span class="hljs-built_in">token</span>数字xxxxxxxxxxxxxxxxxx<br></code></pre></td></tr></table></figure></p>
+<ul>
+<li>如果需要配置cpolar开机自启动:  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo systemctl <span class="hljs-built_in">enable</span> cpolar<br></code></pre></td></tr></table></figure></li>
+<li>启动服务时输入命令：  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo systemctl start cpolar<br></code></pre></td></tr></table></figure></li>
+<li>通过查看服务状态来检查是否启动成功：  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo systemctl status cpolar<br></code></pre></td></tr></table></figure>
+  如显示<code>active</code>，则说明已经启动成功。</li>
+<li><p>关闭命令：</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo systemctl stop cpolar<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>cpolar 卸载方法</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">curl -L https://www.cpolar.com/static/downloads/install-release-cpolar.sh | sudo bash -s -- --remove<br></code></pre></td></tr></table></figure>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">cpolar默认安装路径 /usr/local/bin/cpolar,<br>安装脚本会自动配置systemd服务脚本，启动以后，可以开机自启动。<br>如果第一次安装，会默认配置一个简单的样例配置文件，创建了两个样例隧道，一个web，一个ssh<br>cpolar配置文件路径: /usr/local/etc/cpolar/cpolar.yml<br></code></pre></td></tr></table></figure>
+<p>启动成功后，登录cpolar官网后台查看<a target="_blank" rel="noopener" href="https://dashboard.cpolar.com/status">状态</a>，可以查看到所有在线隧道的公网地址，找到SSH隧道的公网地址，复制下来。</p>
+<p><img src="/2022/10/15/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7%E2%80%94%E2%80%94cpolar/ssh状态.png#pic_center" alt>  </p>
+<p>然后就可以使用ssh相关工具通过公网ip登录了。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ssh username@公网地址 -p 端口号<br></code></pre></td></tr></table></figure><br>如<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ssh pi@1.tcp.vip.cpolar.cn -p 20013<br></code></pre></td></tr></table></figure><br>由于我们的本地22端口到了公网被映射到了20013端口，所以，ssh命令需要加-p参数，后面加公网隧道端口号。</p>
+
+      
+  </article>
+
+  
+      
+    <div class="nexmoe-post-copyright">
+        <strong>本文作者：</strong>chh3213<br>
+        <strong>本文链接：</strong><a href="https://chh3213.github.io/2022/10/15/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7%E2%80%94%E2%80%94cpolar/" title="https:&#x2F;&#x2F;chh3213.github.io&#x2F;2022&#x2F;10&#x2F;15&#x2F;%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7%E2%80%94%E2%80%94cpolar&#x2F;" target="_blank" rel="noopener">https:&#x2F;&#x2F;chh3213.github.io&#x2F;2022&#x2F;10&#x2F;15&#x2F;%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7%E2%80%94%E2%80%94cpolar&#x2F;</a><br>
+        
+            <strong>版权声明：</strong>本文采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/cn/deed.zh" target="_blank">CC BY-NC-SA 3.0 CN</a> 协议进行许可
+        
+    </div>
+
+
+  
+  
+  <div class="nexmoe-post-meta nexmoe-rainbow">
+    
+        <a class="nexmoefont icon-appstore-fill -link" href="/categories/%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7/">实用技巧</a>
+    
+    
+        <a class="nexmoefont icon-tag-fill -none-link" href="/tags/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/" rel="tag">内网穿透</a>
+    
+</div>
+
+  
+      <div class="nexmoe-post-footer">
+           <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css"> <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script> <div id="gitalk-container"></div> <script type="text/javascript"> const gitalk = new Gitalk({ clientID: "55ea9dc4a0241f57729b", clientSecret: "20342a99dc08db6dbaa9d696c38404352353ad3a", repo: "CHH3213.github.io",       owner: "CHH3213", admin: "CHH3213", id: decodeURI(window.location.pathname)     }); gitalk.render("gitalk-container") </script> 
+      </div>
+  
+</div>
+            <div class="nexmoe-post-right">
+              <div class="nexmoe-fixed">
+                  <div class="nexmoe-tool"> 
+                    
+                      
+                        
+                          
+                          
+                              <button class="mdui-fab catalog" style="overflow:unset;">
+                                  <i class="nexmoefont icon-i-catalog"></i>
+                                  <div class="nexmoe-toc">
+                                      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E2%98%BA%EF%B8%8Fwindows-%E8%A2%AB%E6%8E%A7%E7%AB%AF%E5%AE%89%E8%A3%85"><span class="toc-number">1.</span> <span class="toc-text">☺️windows 被控端安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E2%98%BA%EF%B8%8Flinux%E8%A2%AB%E6%8E%A7%E7%AB%AF%E5%AE%89%E8%A3%85"><span class="toc-number">2.</span> <span class="toc-text">☺️linux被控端安装</span></a></li></ol>
+                                  </div>
+                              </button>
+                          
+                          
+                      
+                    
+                      <a href="#nexmoe-content" class="toc-link" aria-label="Back To Top" title="top"><button class="mdui-fab mdui-ripple"><i class="nexmoefont icon-caret-top"></i></button></a>
+                  </div>
+              </div>
+            </div>
+        </div>
+    </div>
+    <div id="nexmoe-search-space">
+	<div class="search-container">
+		<div class="search-header">
+			<div class="search-input-container">
+				<input
+					class="search-input"
+					type="text"
+					placeholder="站内搜索"
+					oninput="sinput();"
+				/>
+			</div>
+			<a class="search-close" onclick="sclose();">×</a>
+		</div>
+		<div class="search-body"></div>
+	</div>
+</div>
+
+    
+<script src="/lib/mdui_043tiny/mdui.js"></script>
+<script src="/lib/jquery.min.js"></script>
+<script src="/lib/justifiedGallery/jquery.justifiedGallery.min.js"></script>
+<script src="/lib/fancybox/fancybox.umd.js"></script>
+
+
+ 
+
+<script async src="/js/app.js?v=1666836534398"></script>
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2058306854838448" crossorigin="anonymous"></script>
+
+<script>
+	$(".justified-gallery").justifiedGallery({
+		rowHeight: 160,
+		margins: 10,
+	});
+</script>
+
+    <!-- 页面点击小红心-- 20221025-->
+    <script type="text/javascript" src="/js/heart.js"></script>
+    <!--搞笑title-->>
+    <script type="text/javascript" src="/js/funnyTitle.js"></script>
+    <!--人体时钟-->>
+    <!-- <script charset="text/javascript" src="/js/clock.js"></script> -->
+
+    <!--代码复制按钮-->>
+    <script type="text/javascript" src="/js/clipboard-min.js"></script>
+    <script type="text/javascript" src="/js/clipboard-use.js"></script>
+    
+    <!--代码高亮-->>
+    <!-- <script src="https://cdn.bootcss.com/highlight.js/8.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script> -->
+    
+    <script src="/js/highlight/highlight.min.js"></script>
+
+    <!--CDN方式引入-->>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/plugins/line-numbers/prism-line-numbers.min.js"></script> -->
+    <!--直接下载脚本引入-->>
+    <script src="/js/prism.js" async></script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+
+</html>

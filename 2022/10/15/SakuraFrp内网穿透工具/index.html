@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+
+<head>
+    
+    <title>内网穿透工具——SakuraFrp - 一半是火一半是光的博客</title>
+    <meta charset="UTF-8">
+    <meta name="keywords" content="强化学习,自动驾驶,规划控制,编程,C++,Java">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+    
+    <link rel="shortcut icon" href="https://s2.loli.net/2022/06/11/m1r7UeTHVh935ID.png" type="image/png" />
+    <meta name="description" content="SakuraFrp是一个内网穿透工具，使用它就可以轻松的实现在不是同一个局域网下的远程连接☺️。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="内网穿透工具——SakuraFrp">
+<meta property="og:url" content="https://chh3213.github.io/2022/10/15/SakuraFrp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7/index.html">
+<meta property="og:site_name" content="一半是火一半是光的博客">
+<meta property="og:description" content="SakuraFrp是一个内网穿透工具，使用它就可以轻松的实现在不是同一个局域网下的远程连接☺️。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://chh3213.github.io/2022/10/15/SakuraFrp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7/SakuraFrp内网穿透工具/实名认证.png">
+<meta property="og:image" content="https://chh3213.github.io/2022/10/15/SakuraFrp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7/实名认证.png#pic_center">
+<meta property="og:image" content="https://chh3213.github.io/2022/10/15/SakuraFrp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7/SakuraFrp内网穿透工具/访问密钥.png">
+<meta property="og:image" content="https://chh3213.github.io/2022/10/15/SakuraFrp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7/访问密钥.png#pic_center">
+<meta property="og:image" content="https://chh3213.github.io/2022/10/15/SakuraFrp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7/SakuraFrp内网穿透工具/doownloads.png">
+<meta property="og:image" content="https://chh3213.github.io/2022/10/15/SakuraFrp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7/doownloads.png#pic_center">
+<meta property="og:image" content="https://chh3213.github.io/2022/10/15/SakuraFrp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7/SakuraFrp内网穿透工具/启动器.png">
+<meta property="og:image" content="https://chh3213.github.io/2022/10/15/SakuraFrp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7/启动器.png#pic_center">
+<meta property="og:image" content="https://chh3213.github.io/2022/10/15/SakuraFrp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7/SakuraFrp内网穿透工具/软件.png">
+<meta property="og:image" content="https://chh3213.github.io/2022/10/15/SakuraFrp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7/软件.png#pic_center">
+<meta property="og:image" content="https://chh3213.github.io/2022/10/15/SakuraFrp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7/SakuraFrp内网穿透工具/隧道.png">
+<meta property="og:image" content="https://chh3213.github.io/2022/10/15/SakuraFrp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7/隧道.png#pic_center">
+<meta property="og:image" content="https://chh3213.github.io/2022/10/15/SakuraFrp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7/SakuraFrp内网穿透工具/隧道开启.png">
+<meta property="og:image" content="https://chh3213.github.io/2022/10/15/SakuraFrp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7/隧道开启.png#pic_center">
+<meta property="og:image" content="https://chh3213.github.io/2022/10/15/SakuraFrp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7/SakuraFrp内网穿透工具/20221015135818.png">
+<meta property="og:image" content="https://chh3213.github.io/2022/10/15/SakuraFrp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7/20221015135818.png#pic_center">
+<meta property="og:image" content="https://chh3213.github.io/2022/10/15/SakuraFrp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7/SakuraFrp内网穿透工具/属性.png">
+<meta property="og:image" content="https://chh3213.github.io/2022/10/15/SakuraFrp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7/属性.png#pic_center">
+<meta property="og:image" content="https://chh3213.github.io/2022/10/15/SakuraFrp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7/SakuraFrp内网穿透工具/远程设置.png">
+<meta property="og:image" content="https://chh3213.github.io/2022/10/15/SakuraFrp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7/远程设置.png#pic_center">
+<meta property="og:image" content="https://chh3213.github.io/2022/10/15/SakuraFrp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7/SakuraFrp内网穿透工具/20221015140700.png">
+<meta property="og:image" content="https://chh3213.github.io/2022/10/15/SakuraFrp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7/20221015140700.png#pic_center">
+<meta property="og:image" content="https://chh3213.github.io/2022/10/15/SakuraFrp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7/SakuraFrp内网穿透工具/远程桌面.png">
+<meta property="og:image" content="https://chh3213.github.io/2022/10/15/SakuraFrp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7/远程桌面.png#pic_center">
+<meta property="og:image" content="https://chh3213.github.io/2022/10/15/SakuraFrp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7/SakuraFrp内网穿透工具/20221015141250.png">
+<meta property="og:image" content="https://chh3213.github.io/2022/10/15/SakuraFrp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7/20221015141250.png#pic_center">
+<meta property="og:image" content="https://chh3213.github.io/2022/10/15/SakuraFrp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7/SakuraFrp内网穿透工具/20221015141845.png">
+<meta property="og:image" content="https://chh3213.github.io/2022/10/15/SakuraFrp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7/20221015141845.png#pic_center">
+<meta property="og:image" content="https://chh3213.github.io/2022/10/15/SakuraFrp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7/SakuraFrp内网穿透工具/终端演示.png">
+<meta property="og:image" content="https://chh3213.github.io/2022/10/15/SakuraFrp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7/终端演示.png#pic_center">
+<meta property="og:image" content="https://chh3213.github.io/2022/10/15/SakuraFrp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7/SakuraFrp内网穿透工具/校验.png">
+<meta property="og:image" content="https://chh3213.github.io/2022/10/15/SakuraFrp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7/校验.png#pic_center">
+<meta property="og:image" content="https://chh3213.github.io/2022/10/15/SakuraFrp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7/login.png#pic_center">
+<meta property="og:image" content="https://chh3213.github.io/2022/10/15/SakuraFrp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7/choice.png#pic_center">
+<meta property="og:image" content="https://chh3213.github.io/2022/10/15/SakuraFrp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7/frpc开启.png#pic_center">
+<meta property="og:image" content="https://chh3213.github.io/2022/10/15/SakuraFrp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7/vscode_ssh.png#pic_center">
+<meta property="og:image" content="https://chh3213.github.io/2022/10/15/SakuraFrp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7/20221015201032.png#pic_center">
+<meta property="article:published_time" content="2022-10-15T04:04:44.000Z">
+<meta property="article:modified_time" content="2022-10-25T13:45:27.238Z">
+<meta property="article:author" content="chh3213">
+<meta property="article:tag" content="内网穿透">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://chh3213.github.io/2022/10/15/SakuraFrp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7/SakuraFrp内网穿透工具/实名认证.png">
+    
+<link rel="stylesheet" href="/lib/fancybox/fancybox.css">
+<link rel="stylesheet" href="/lib/justifiedGallery/justifiedGallery.min.css">
+<link rel="stylesheet" href="/lib/mdui_043tiny/mdui.css">
+
+
+    <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1666836534404">
+    
+        <link rel="stylesheet" href="//at.alicdn.com/t/c/font_3495394_enbrz0a58y.css">
+    
+    <link rel="stylesheet" href="/css/style.css?v=1666836534404">
+
+    
+        
+            <link rel="stylesheet" href="/custom.css?v=1666836534404">
+        
+    
+    <!-- <link href="https://cdn.bootcss.com/highlight.js/8.0/styles/monokai_sublime.min.css" rel="stylesheet"> -->
+    <link href="/js/highlight/styles/atom-one-dark.min.css" rel="stylesheet">
+    <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/themes/prism-coy.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/plugins/line-numbers/prism-line-numbers.min.css" rel="stylesheet"> -->
+    <link rel="stylesheet" href="/css/prism.css">
+
+<meta name="generator" content="Hexo 6.1.0"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style><link rel="alternate" href="/atom.xml" title="一半是火一半是光的博客" type="application/atom+xml">
+</head>
+
+<body class="mdui-drawer-body-left">
+    <div id="nexmoe-background">
+        <div class="nexmoe-bg" style="background-image: url(https://s2.loli.net/2022/06/11/wfuTIV7gaJpjBC2.png)"></div>
+        <div class="mdui-appbar mdui-shadow-0">
+            <div class="mdui-toolbar">
+                <a mdui-drawer="{target: '#drawer', swipe: true}" title="menu" class="mdui-btn mdui-btn-icon mdui-ripple"><i class="mdui-icon nexmoefont icon-menu"></i></a>
+                <div class="mdui-toolbar-spacer"></div>
+                <!--<a href="javascript:;" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">search</i></a>-->
+                <a href="/" title="chh3213" class="mdui-btn mdui-btn-icon"><img src="https://img-blog.csdnimg.cn/78ebd04c9eb54d858b4aa57f4f13c04b.png" alt="chh3213"></a>
+            </div>
+        </div>
+    </div>
+    <div id="nexmoe-header">
+        <div class="nexmoe-drawer mdui-drawer" id="drawer">
+    <div class="nexmoe-avatar mdui-ripple">
+        <a href="/" title="chh3213">
+            <img src="https://img-blog.csdnimg.cn/78ebd04c9eb54d858b4aa57f4f13c04b.png" alt="chh3213" alt="chh3213">
+        </a>
+    </div>
+    <div class="nexmoe-count">
+        <div><span>文章</span>7</div>
+        <div><span>标签</span>5</div>
+        <div><span>分类</span>3</div>
+    </div>
+    <div class="nexmoe-list mdui-list" mdui-collapse="{accordion: true}">
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/" title="回到首页">
+            <i class="mdui-list-item-icon nexmoefont icon-home"></i>
+            <div class="mdui-list-item-content">
+                回到首页
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/archive.html" title="分类归档">
+            <i class="mdui-list-item-icon nexmoefont icon-container"></i>
+            <div class="mdui-list-item-content">
+                分类归档
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/study/" title="学习之路">
+            <i class="mdui-list-item-icon nexmoefont icon-battlenet"></i>
+            <div class="mdui-list-item-content">
+                学习之路
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" target="_blank" rel="noopener" href="https://wbo.ophir.dev/boards/chh3213" title="来涂鸦吧">
+            <i class="mdui-list-item-icon nexmoefont icon-eye-fill"></i>
+            <div class="mdui-list-item-content">
+                来涂鸦吧
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/about.html" title="关于博主">
+            <i class="mdui-list-item-icon nexmoefont icon-info-circle"></i>
+            <div class="mdui-list-item-content">
+                关于博主
+            </div>
+        </a>
+        
+    </div>
+    <aside id="nexmoe-sidebar">
+    
+        
+        <!-- 一言 -->
+<div class="nexmoe-widget-wrap">
+  <h3 class="nexmoe-widget-title">
+    一则言语
+  </h3>
+  <div class="nexmoe-widget">
+    <ul class="hitokoto-box">
+      <li id="hitokoto_text_parent" class="hitokoto-text" hitokotoCategory="">
+        <a href="#" id="hitokoto_text">
+          
+        </a>
+        <a href="#" id="hitokoto_error_text" style="display: none;">
+          
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<script>
+  let hitokotoText = document.getElementById('hitokoto_text')
+  let hitokotoErroText = document.getElementById('hitokoto_error_text')
+  let hitokotoCategory = document.getElementById('hitokoto_text_parent').getAttribute('hitokotoCategory')
+  window.onload = function () {
+    let url = 'https://v1.hitokoto.cn'
+    if (hitokotoCategory) {
+      url += '?c=' + hitokotoCategory
+    }
+    fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        hitokotoText.innerText = "「 " + data.hitokoto + " 」 from " + data.from
+        hitokotoText.href = 'https://hitokoto.cn/?uuid=' + data.uuid
+      })
+      .catch((reason) => {
+        console.error(11, reason)
+        hitokotoText.style.display = 'none'
+        hitokotoErroText.style.display = 'block'
+      })
+  }
+</script>
+    
+        
+        <div class="nexmoe-widget-wrap">
+    <div class="nexmoe-widget nexmoe-search">
+        
+            <form id="search_form">
+                <label><input class="st-default-search-input" id="search_value" name="q" type="search" placeholder="站内搜索" style="
+                    font-size: 15px !important;
+                    height: 56px !important;
+                    background-image: none;
+                "></label>
+            </form>
+         
+    </div>
+</div>
+
+
+	<script async src="/js/search.js?v=1666836534404"></script>
+
+
+
+    
+        
+        <div class="nexmoe-widget-wrap">
+	<div class="nexmoe-widget nexmoe-social">
+		<a
+			class="mdui-ripple"
+			href="https://github.com/CHH3213"
+			target="_blank"
+			mdui-tooltip="{content: 'GitHub'}"
+			style="
+				color: rgb(25, 23, 23);
+				background-color: rgba(25, 23, 23, .1);
+			"
+		>
+			<i
+				class="nexmoefont icon-github"
+			></i> </a
+		><a
+			class="mdui-ripple"
+			href="https://blog.csdn.net/weixin_42301220"
+			target="_blank"
+			mdui-tooltip="{content: 'CSDN'}"
+			style="
+				color: rgb(247, 132, 34);
+				background-color: rgba(247, 132, 34, .1);
+			"
+		>
+			<i
+				class="nexmoefont icon-csdn1"
+			></i> </a
+		><a
+			class="mdui-ripple"
+			href="mailto:1213472983@qq.com"
+			target="_blank"
+			mdui-tooltip="{content: '邮箱'}"
+			style="
+				color: rgb(29, 161, 242);
+				background-color: rgba(29, 161, 242, .1);
+			"
+		>
+			<i
+				class="nexmoefont icon-mail-fill"
+			></i> </a
+		><a
+			class="mdui-ripple"
+			href="/atom.xml"
+			target="_blank"
+			mdui-tooltip="{content: 'RSS'}"
+			style="
+				color: rgb(235, 152, 0);
+				background-color: rgba(235, 152, 0, .15);
+			"
+		>
+			<i
+				class="nexmoefont icon-rss"
+			></i> </a
+		>
+	</div>
+</div>
+
+    
+        
+        
+  <div class="nexmoe-widget-wrap">
+    <h3 class="nexmoe-widget-title">文章分类</h3>
+    <div class="nexmoe-widget">
+
+      <ul class="category-list">
+
+        
+
+
+        
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/VPN教程/">VPN教程</a>
+          <span class="category-list-count">2</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/主页美化/">主页美化</a>
+          <span class="category-list-count">2</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/实用技巧/">实用技巧</a>
+          <span class="category-list-count">3</span>
+        </li>
+
+        
+      </ul>
+
+    </div>
+  </div>
+
+
+    
+        
+        
+  <div class="nexmoe-widget-wrap">
+    <div id="randomtagcloud" class="nexmoe-widget tagcloud nexmoe-rainbow">
+      <a href="/tags/Remote/" style="font-size: 10px;">Remote</a> <a href="/tags/VPN/" style="font-size: 20px;">VPN</a> <a href="/tags/%E4%B8%BB%E9%A1%B5/" style="font-size: 10px;">主页</a> <a href="/tags/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/" style="font-size: 20px;">内网穿透</a> <a href="/tags/%E7%BE%8E%E5%8C%96/" style="font-size: 10px;">美化</a>
+    </div>
+    
+      <script>
+        var maxTagcloud = parseInt(17);
+        var tags_length = parseInt(5);
+        var tags_arr = [];
+        for(var i = 0; i < tags_length; i++){
+          tags_arr.push(i);
+        }
+        tags_arr.sort(function (l, r) {
+          return Math.random() > 0.5 ? -1 : 1;
+        });
+        tags_arr = tags_arr.slice(0, maxTagcloud < tags_length ? tags_length - maxTagcloud : 0);
+        for(var tag_i = 0; tag_i < tags_arr.length; tag_i++){
+          document.getElementById("randomtagcloud").children[tags_arr[tag_i]].style.display = 'none';
+        }
+      </script>
+    
+  </div>
+
+    
+        
+        
+  <div class="nexmoe-widget-wrap">
+    <h3 class="nexmoe-widget-title">文章归档</h3>
+    <div class="nexmoe-widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/">2022</a><span class="archive-list-count">7</span></li></ul>
+    </div>
+  </div>
+
+
+
+    
+        
+        
+  <div class="nexmoe-widget-wrap">
+    <h3 class="nexmoe-widget-title">最新文章</h3>
+    <div class="nexmoe-widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/10/27/Github%E4%B8%BB%E9%A1%B5%E7%BE%8E%E5%8C%96/">Github主页美化</a>
+          </li>
+        
+          <li>
+            <a href="/2022/10/18/Windows%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2%E5%B7%A5%E5%85%B7%E8%BF%9E%E6%8E%A5Ubuntu%E7%B3%BB%E7%BB%9F/">Windows远程桌面工具连接Ubuntu系统</a>
+          </li>
+        
+          <li>
+            <a href="/2022/10/15/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7%E2%80%94%E2%80%94cpolar/">内网穿透工具——cpolar</a>
+          </li>
+        
+          <li>
+            <a href="/2022/10/15/SakuraFrp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7/">内网穿透工具——SakuraFrp</a>
+          </li>
+        
+          <li>
+            <a href="/2022/06/12/%E5%8D%9A%E5%AE%A2%E4%B8%BB%E9%A1%B5%E7%BE%8E%E5%8C%96/">博客主页美化</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+    
+        
+</aside>
+    <div class="nexmoe-copyright">
+        &copy; 2022 chh3213
+        Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+        & <a href="https://github.com/theme-nexmoe/hexo-theme-nexmoe" target="_blank">Nexmoe</a>
+        
+        <!-- 添加访问数 -->
+        <div style="font-size: 13px">
+            <link rel="stylesheet" href="https://widget.heweather.net/standard/static/css/he-standard.css?v=1.4.0">
+            <script src="https://widget.heweather.net/standard/static/js/he-standard.js?v=1.4.0"></script>
+            <script async="" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            本站总访问量 <a id="busuanzi_value_site_pv"></a> 次<br>
+            本站访客数<a id="busuanzi_value_site_uv"></a>人次
+        </div>
+    </div>
+
+<!--自定义看板娘-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<script src="/live2d-widget/autoload.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css" />
+
+</div><!-- .nexmoe-drawer -->
+    </div>
+    <div id="nexmoe-content">
+        <div class="nexmoe-primary">
+            <div class="nexmoe-post">
+
+  <article>
+      
+          <div class="nexmoe-post-cover" style="padding-bottom: 62.5%;"> 
+              <img src="http://api.mtyqx.cn/tapi/random.php?" alt="内网穿透工具——SakuraFrp" loading="lazy">
+              <h1>内网穿透工具——SakuraFrp</h1>
+          </div>
+      
+      
+      <div class="nexmoe-post-meta nexmoe-rainbow" style="margin:10px 0!important;">
+    <a><i class="nexmoefont icon-calendar-fill"></i>2022年10月15日</a>
+</div>
+      
+    <a><i class="nexmoefont icon-areachart"></i>约1.3k字</a>
+    <a><i class="nexmoefont icon-time-circle-fill"></i>预计需要4分钟</a>
+
+
+      <p><a target="_blank" rel="noopener" href="https://www.natfrp.com/user/">SakuraFrp</a>是一个内网穿透工具，使用它就可以轻松的实现在不是同一个局域网下的远程连接☺️。<br><span id="more"></span></p>
+<h2 id="😋SakuraFrp简单介绍"><a href="#😋SakuraFrp简单介绍" class="headerlink" title="😋SakuraFrp简单介绍"></a>😋SakuraFrp简单介绍</h2><p>内网穿透的基本原理可以戳<a target="_blank" rel="noopener" href="https://doc.natfrp.com/#/basics">此处</a>。</p>
+<h2 id="😋被控端电脑接入步骤"><a href="#😋被控端电脑接入步骤" class="headerlink" title="😋被控端电脑接入步骤"></a>😋被控端电脑接入步骤</h2><h3 id="😉Sakura-frp账号注册"><a href="#😉Sakura-frp账号注册" class="headerlink" title="😉Sakura frp账号注册"></a>😉Sakura frp账号注册</h3><p>首先在<a target="_blank" rel="noopener" href="https://www.natfrp.com/user/">官网</a>注册Sakura frp账号。注册完成后需要进行实名认证:</p>
+<!-- <center><img src="./SakuraFrp内网穿透工具/实名认证.png" width=60%></center> -->
+<p><img src="/2022/10/15/SakuraFrp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7/实名认证.png#pic_center" alt></p>
+<p>点击首页的这个地方可以查看访问密钥，这个密钥待会用得上，不能把访问密钥告诉给他人。</p>
+<!-- <center><img src='SakuraFrp内网穿透工具/访问密钥.png' width=60%/></center> -->
+<p><img src="/2022/10/15/SakuraFrp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7/访问密钥.png#pic_center" alt></p>
+<h3 id="😉windows被控端设置"><a href="#😉windows被控端设置" class="headerlink" title="😉windows被控端设置"></a>😉windows被控端设置</h3><p>点击<code>穿透</code>下的<code>软件下载</code>按钮</p>
+<!-- <center><img src='SakuraFrp内网穿透工具/doownloads.png' width=60%/></center> -->
+<p><img src="/2022/10/15/SakuraFrp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7/doownloads.png#pic_center" alt></p>
+<p>进入页面后，官方推荐的是直接下载启动器，因此我们直接下载启动器即可。</p>
+<!-- <center><img src='SakuraFrp内网穿透工具/启动器.png' width=60%/></center> -->
+<p><img src="/2022/10/15/SakuraFrp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7/启动器.png#pic_center" alt></p>
+<p>下载完成后，点击安装即可。安装完后打开，软件大概长这样。</p>
+<!-- <center><img src='SakuraFrp内网穿透工具/软件.png' width=60%/></center> -->
+<p><img src="/2022/10/15/SakuraFrp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7/软件.png#pic_center" alt></p>
+<p>将刚才网页上的访问密钥填入，登录即可。</p>
+<p>登陆完成后，点左边菜单栏的隧道，点击<code>+</code>号，进行相应的填写。例如这样</p>
+<!-- <center><img src='SakuraFrp内网穿透工具/隧道.png' width=60%/></center> -->
+<p><img src="/2022/10/15/SakuraFrp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7/隧道.png#pic_center" alt></p>
+<p>需要注意的是<code>隧道类型</code>和<code>穿透节点</code>的选择。<code>隧道类型</code>选择<code>TCP</code>（想使用<code>ssh</code>方式，也是选择<code>TCP</code>），<code>穿透结点</code>选择一个可以用的就行，本地IP填写<code>127.0.0.1</code>即可。填写完成后点击创建，隧道就创建成功了。</p>
+<!-- <center><img src='SakuraFrp内网穿透工具/隧道开启.png' width=60%/></center> -->
+<p><img src="/2022/10/15/SakuraFrp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7/隧道开启.png#pic_center" alt></p>
+<blockquote>
+<p>隧道的创建也可以直接在网页上创建，然后在启动器中刷新即可。</p>
+</blockquote>
+<p>最后，点击开启刚才的隧道，会弹出日志信息，记住这个日志信息上面的IP或者服务器域名，待会通过这个IP连接被控电脑：</p>
+<!-- <center><img src='SakuraFrp内网穿透工具/20221015135818.png' width=60%/></center> -->
+<p><img src="/2022/10/15/SakuraFrp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7/20221015135818.png#pic_center" alt></p>
+<p>至此，内网穿透全部搞定，被控电脑全部设置完毕。</p>
+<h3 id="😉远程连接被控端"><a href="#😉远程连接被控端" class="headerlink" title="😉远程连接被控端"></a>😉远程连接被控端</h3><p>上面创建内网穿透的过程其实就是分配了一个公网IP，所以接下来我们可以通过这个公网IP来访问我们的电脑；</p>
+<p>win10提供了相当给力的远程连接工具：“远程桌面连接”。可以在windows系统之间进行远程控制。</p>
+<p>如果没有启动远程桌面连接，那么按照下述步骤设置。</p>
+<ol>
+<li><p>打开<code>我的电脑</code>，右键点击<code>属性</code></p>
+ <!-- <center><img src='SakuraFrp内网穿透工具/属性.png' width=60%/></center> -->
+<p> <img src="/2022/10/15/SakuraFrp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7/属性.png#pic_center" alt></p>
+</li>
+<li><p>选择<code>远程设置</code></p>
+ <!-- <center><img src='SakuraFrp内网穿透工具/远程设置.png' width=60%/></center> -->
+<p> <img src="/2022/10/15/SakuraFrp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7/远程设置.png#pic_center" alt></p>
+</li>
+<li><p>点击<code>允许远程协助连接此计算机</code>即可开启。</p>
+ <!-- <center><img src='SakuraFrp内网穿透工具/20221015140700.png' width=60%/></center> -->
+<p> <img src="/2022/10/15/SakuraFrp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7/20221015140700.png#pic_center" alt></p>
+</li>
+<li><p>开启之后，打开<code>远程桌面连接</code>程序，直接电脑的左下角菜单栏搜索即可出来。填入内网穿透的地址、远程计算机账户名、密码(无密码留空)即可远程。</p>
+ <!-- <center><img src='SakuraFrp内网穿透工具/远程桌面.png' width=60%/></center> -->
+<p> <img src="/2022/10/15/SakuraFrp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7/远程桌面.png#pic_center" alt></p>
+</li>
+</ol>
+<h3 id="😉ubuntu被控端设置"><a href="#😉ubuntu被控端设置" class="headerlink" title="😉ubuntu被控端设置"></a>😉ubuntu被控端设置</h3><p>ubuntu被控端需要下载<code>frpc</code>客户端，点击<code>穿透</code>下的<code>软件下载</code>按钮，进入后选择<code>linux系统</code></p>
+<!-- <center><img src='SakuraFrp内网穿透工具/20221015141250.png' width=60%/></center> -->
+<p><img src="/2022/10/15/SakuraFrp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7/20221015141250.png#pic_center" alt></p>
+<p>至于选择哪一个架构，可以在ubutnu系统中在终端使用命令查看：</p>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ada">dpkg <span class="hljs-comment">--print-architecture</span><br></code></pre></td></tr></table></figure>
+<p>或者使用<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">uname</span> -m<br></code></pre></td></tr></table></figure></p>
+<!-- <center><img src='SakuraFrp内网穿透工具/20221015141845.png' width=50%/></center> -->
+<p><img src="/2022/10/15/SakuraFrp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7/20221015141845.png#pic_center" alt></p>
+<p>详情可参考<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_41010198/article/details/109166131">博客</a>查看Linux系统架构的命令。我的是<code>amd64</code>，因此选择<code>amd64</code>点击右边的<code>复制链接</code>。</p>
+<p>在终端使用下面的命令进入 <code>/usr/local/bin</code> 目录并下载文件,确保现在已经处于有 <code>root</code> 权限的环境下。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cd</span> /usr/local/bin<br><br><span class="hljs-comment"># 一般来说只需要使用这条命令:</span><br>wget -O frpc &lt;下载地址&gt;<br><br><span class="hljs-comment"># 如果上面的命令报错，请尝试这条:</span><br>curl -Lo frpc &lt;下载地址&gt;<br><br><span class="hljs-comment"># Linux frpc 通常已经过 UPX 压缩，如需下载未压缩的版本请在下载地址尾部加上 _noupx</span><br><br></code></pre></td></tr></table></figure>
+<!-- <center><img src='SakuraFrp内网穿透工具/终端演示.png' width=50%/></center> -->
+<p><img src="/2022/10/15/SakuraFrp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7/终端演示.png#pic_center" alt></p>
+<p>然后设置权限并校验文件是否有损坏：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">chmod</span> 755 frpc<br><span class="hljs-built_in">ls</span> -<span class="hljs-built_in">ls</span> frpc<br><span class="hljs-built_in">md5sum</span> frpc<br></code></pre></td></tr></table></figure>
+<!-- <center><img src='SakuraFrp内网穿透工具/校验.png' width=50%/></center> -->
+<p><img src="/2022/10/15/SakuraFrp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7/校验.png#pic_center" alt></p>
+<p>此时 <code>frpc</code> 就安装完成并可以正常使用了。可以用此命令查看 <code>frpc</code> 版本号：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">frpc -v<br></code></pre></td></tr></table></figure></p>
+<h3 id="😉ubutnu-使用-frpc"><a href="#😉ubutnu-使用-frpc" class="headerlink" title="😉ubutnu 使用 frpc"></a>😉ubutnu 使用 frpc</h3><p>通过上节安装完成后，在终端使用命令开启frpc，注意加root权限：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo frpc<br></code></pre></td></tr></table></figure><br>在 Token 后面的文本框内输入访问密钥，然后使用 Tab 键切换到 Login 按钮并按 回车 键登录 (若终端支持也可使用鼠标进行操作)：</p>
+<p><img src="/2022/10/15/SakuraFrp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7/login.png#pic_center" alt></p>
+<p>登录成功后 TUI 会显示当前账户下的隧道列表，使用方向键选中想要启动的隧道，按空格标为绿色 (或使用鼠标直接点击隧道)：</p>
+<p><img src="/2022/10/15/SakuraFrp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7/choice.png#pic_center" alt></p>
+<blockquote>
+<p>可以一次性启用多个隧道，但是这些隧道必须位于同一节点下,也可以直接选中节点来启用该节点下的所有隧道</p>
+</blockquote>
+<p>选择完毕后，即可启动隧道，相关启动参数会被保存到配置文件 frpc.ini 中，下次不带参数直接运行 frpc 时不再显示 TUI 而是直接启动隧道。</p>
+<p><img src="/2022/10/15/SakuraFrp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7/frpc开启.png#pic_center" alt></p>
+<p>至此，ubuntu的被控端部分设置完毕，远程只需要填入得到的公网ip或者域名即可。</p>
+<p>例如，隧道启动成功后，使用vscode的远程remote插件连接ssh，那么只需要打开</p>
+<p><img src="/2022/10/15/SakuraFrp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7/vscode_ssh.png#pic_center" alt>  </p>
+<p>然后输入对应的ip和端口</p>
+<p><img src="/2022/10/15/SakuraFrp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7/20221015201032.png#pic_center" alt>  </p>
+<p>如：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ssh YHS@2.tcp.vip.cpolar.cn -p 14884<br></code></pre></td></tr></table></figure></p>
+<p><code>YHS</code>为被控电脑的用户名，<code>2.tcp.vip.cpolar.cn</code>为公网ip，<code>14884</code>为远程端口号。<br>这样就可以连接上ssh了。</p>
+
+      
+  </article>
+
+  
+      
+    <div class="nexmoe-post-copyright">
+        <strong>本文作者：</strong>chh3213<br>
+        <strong>本文链接：</strong><a href="https://chh3213.github.io/2022/10/15/SakuraFrp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7/" title="https:&#x2F;&#x2F;chh3213.github.io&#x2F;2022&#x2F;10&#x2F;15&#x2F;SakuraFrp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7&#x2F;" target="_blank" rel="noopener">https:&#x2F;&#x2F;chh3213.github.io&#x2F;2022&#x2F;10&#x2F;15&#x2F;SakuraFrp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7&#x2F;</a><br>
+        
+            <strong>版权声明：</strong>本文采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/cn/deed.zh" target="_blank">CC BY-NC-SA 3.0 CN</a> 协议进行许可
+        
+    </div>
+
+
+  
+  
+  <div class="nexmoe-post-meta nexmoe-rainbow">
+    
+        <a class="nexmoefont icon-appstore-fill -link" href="/categories/%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7/">实用技巧</a>
+    
+    
+        <a class="nexmoefont icon-tag-fill -none-link" href="/tags/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/" rel="tag">内网穿透</a>
+    
+</div>
+
+  
+      <div class="nexmoe-post-footer">
+           <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css"> <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script> <div id="gitalk-container"></div> <script type="text/javascript"> const gitalk = new Gitalk({ clientID: "55ea9dc4a0241f57729b", clientSecret: "20342a99dc08db6dbaa9d696c38404352353ad3a", repo: "CHH3213.github.io",       owner: "CHH3213", admin: "CHH3213", id: decodeURI(window.location.pathname)     }); gitalk.render("gitalk-container") </script> 
+      </div>
+  
+</div>
+            <div class="nexmoe-post-right">
+              <div class="nexmoe-fixed">
+                  <div class="nexmoe-tool"> 
+                    
+                      
+                        
+                          
+                          
+                              <button class="mdui-fab catalog" style="overflow:unset;">
+                                  <i class="nexmoefont icon-i-catalog"></i>
+                                  <div class="nexmoe-toc">
+                                      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%98%8BSakuraFrp%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.</span> <span class="toc-text">😋SakuraFrp简单介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%98%8B%E8%A2%AB%E6%8E%A7%E7%AB%AF%E7%94%B5%E8%84%91%E6%8E%A5%E5%85%A5%E6%AD%A5%E9%AA%A4"><span class="toc-number">2.</span> <span class="toc-text">😋被控端电脑接入步骤</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%98%89Sakura-frp%E8%B4%A6%E5%8F%B7%E6%B3%A8%E5%86%8C"><span class="toc-number">2.1.</span> <span class="toc-text">😉Sakura frp账号注册</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%98%89windows%E8%A2%AB%E6%8E%A7%E7%AB%AF%E8%AE%BE%E7%BD%AE"><span class="toc-number">2.2.</span> <span class="toc-text">😉windows被控端设置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%98%89%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5%E8%A2%AB%E6%8E%A7%E7%AB%AF"><span class="toc-number">2.3.</span> <span class="toc-text">😉远程连接被控端</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%98%89ubuntu%E8%A2%AB%E6%8E%A7%E7%AB%AF%E8%AE%BE%E7%BD%AE"><span class="toc-number">2.4.</span> <span class="toc-text">😉ubuntu被控端设置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%98%89ubutnu-%E4%BD%BF%E7%94%A8-frpc"><span class="toc-number">2.5.</span> <span class="toc-text">😉ubutnu 使用 frpc</span></a></li></ol></li></ol>
+                                  </div>
+                              </button>
+                          
+                          
+                      
+                    
+                      <a href="#nexmoe-content" class="toc-link" aria-label="Back To Top" title="top"><button class="mdui-fab mdui-ripple"><i class="nexmoefont icon-caret-top"></i></button></a>
+                  </div>
+              </div>
+            </div>
+        </div>
+    </div>
+    <div id="nexmoe-search-space">
+	<div class="search-container">
+		<div class="search-header">
+			<div class="search-input-container">
+				<input
+					class="search-input"
+					type="text"
+					placeholder="站内搜索"
+					oninput="sinput();"
+				/>
+			</div>
+			<a class="search-close" onclick="sclose();">×</a>
+		</div>
+		<div class="search-body"></div>
+	</div>
+</div>
+
+    
+<script src="/lib/mdui_043tiny/mdui.js"></script>
+<script src="/lib/jquery.min.js"></script>
+<script src="/lib/justifiedGallery/jquery.justifiedGallery.min.js"></script>
+<script src="/lib/fancybox/fancybox.umd.js"></script>
+
+
+ 
+
+<script async src="/js/app.js?v=1666836534407"></script>
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2058306854838448" crossorigin="anonymous"></script>
+
+<script>
+	$(".justified-gallery").justifiedGallery({
+		rowHeight: 160,
+		margins: 10,
+	});
+</script>
+
+    <!-- 页面点击小红心-- 20221025-->
+    <script type="text/javascript" src="/js/heart.js"></script>
+    <!--搞笑title-->>
+    <script type="text/javascript" src="/js/funnyTitle.js"></script>
+    <!--人体时钟-->>
+    <!-- <script charset="text/javascript" src="/js/clock.js"></script> -->
+
+    <!--代码复制按钮-->>
+    <script type="text/javascript" src="/js/clipboard-min.js"></script>
+    <script type="text/javascript" src="/js/clipboard-use.js"></script>
+    
+    <!--代码高亮-->>
+    <!-- <script src="https://cdn.bootcss.com/highlight.js/8.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script> -->
+    
+    <script src="/js/highlight/highlight.min.js"></script>
+
+    <!--CDN方式引入-->>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/plugins/line-numbers/prism-line-numbers.min.js"></script> -->
+    <!--直接下载脚本引入-->>
+    <script src="/js/prism.js" async></script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+
+</html>

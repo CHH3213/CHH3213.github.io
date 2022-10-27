@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+
+<head>
+    
+    <title>Windows远程桌面工具连接Ubuntu系统 - 一半是火一半是光的博客</title>
+    <meta charset="UTF-8">
+    <meta name="keywords" content="强化学习,自动驾驶,规划控制,编程,C++,Java">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+    
+    <link rel="shortcut icon" href="https://s2.loli.net/2022/06/11/m1r7UeTHVh935ID.png" type="image/png" />
+    <meta name="description" content="1. 前言1.1 常见远程桌面软件推荐随着过去一年多的研究生生涯，也陆陆续续用了几款远程桌面软件。目前来看都还不错。我主要用过的是4款：TeamViewer，RustDesk, 向日葵, ToDesk。这4款ubuntu和windows下均可使用。 4个软件的界面分别如下：    1.2 比较 其中，个人体验而言，TeamViewer，RustDesk,ToDesk是优于向日葵的。因为向日葵免费版">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Windows远程桌面工具连接Ubuntu系统">
+<meta property="og:url" content="https://chh3213.github.io/2022/10/18/Windows%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2%E5%B7%A5%E5%85%B7%E8%BF%9E%E6%8E%A5Ubuntu%E7%B3%BB%E7%BB%9F/index.html">
+<meta property="og:site_name" content="一半是火一半是光的博客">
+<meta property="og:description" content="1. 前言1.1 常见远程桌面软件推荐随着过去一年多的研究生生涯，也陆陆续续用了几款远程桌面软件。目前来看都还不错。我主要用过的是4款：TeamViewer，RustDesk, 向日葵, ToDesk。这4款ubuntu和windows下均可使用。 4个软件的界面分别如下：    1.2 比较 其中，个人体验而言，TeamViewer，RustDesk,ToDesk是优于向日葵的。因为向日葵免费版">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/340cf47adb58419b9bc6a790a8540f34.png#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/aa8f3c29acf14bcb87db5bc50803f45a.png#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/df6a1ea3673442a2a7ae941521856fca.png#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/334aee6b208c485bbf5eb6c03285445b.png#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/88093ffce5284e3294f86a5b867ec5be.png#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/88093ffce5284e3294f86a5b867ec5be.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/7a711d14430c46a7b2bfcd585a5ce391.png#pic_center">
+<meta property="article:published_time" content="2022-10-18T06:32:01.000Z">
+<meta property="article:modified_time" content="2022-10-22T04:07:22.471Z">
+<meta property="article:author" content="chh3213">
+<meta property="article:tag" content="Remote">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/340cf47adb58419b9bc6a790a8540f34.png#pic_center">
+    
+<link rel="stylesheet" href="/lib/fancybox/fancybox.css">
+<link rel="stylesheet" href="/lib/justifiedGallery/justifiedGallery.min.css">
+<link rel="stylesheet" href="/lib/mdui_043tiny/mdui.css">
+
+
+    <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1666836534388">
+    
+        <link rel="stylesheet" href="//at.alicdn.com/t/c/font_3495394_enbrz0a58y.css">
+    
+    <link rel="stylesheet" href="/css/style.css?v=1666836534388">
+
+    
+        
+            <link rel="stylesheet" href="/custom.css?v=1666836534388">
+        
+    
+    <!-- <link href="https://cdn.bootcss.com/highlight.js/8.0/styles/monokai_sublime.min.css" rel="stylesheet"> -->
+    <link href="/js/highlight/styles/atom-one-dark.min.css" rel="stylesheet">
+    <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/themes/prism-coy.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/plugins/line-numbers/prism-line-numbers.min.css" rel="stylesheet"> -->
+    <link rel="stylesheet" href="/css/prism.css">
+
+<meta name="generator" content="Hexo 6.1.0"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style><link rel="alternate" href="/atom.xml" title="一半是火一半是光的博客" type="application/atom+xml">
+</head>
+
+<body class="mdui-drawer-body-left">
+    <div id="nexmoe-background">
+        <div class="nexmoe-bg" style="background-image: url(https://s2.loli.net/2022/06/11/wfuTIV7gaJpjBC2.png)"></div>
+        <div class="mdui-appbar mdui-shadow-0">
+            <div class="mdui-toolbar">
+                <a mdui-drawer="{target: '#drawer', swipe: true}" title="menu" class="mdui-btn mdui-btn-icon mdui-ripple"><i class="mdui-icon nexmoefont icon-menu"></i></a>
+                <div class="mdui-toolbar-spacer"></div>
+                <!--<a href="javascript:;" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">search</i></a>-->
+                <a href="/" title="chh3213" class="mdui-btn mdui-btn-icon"><img src="https://img-blog.csdnimg.cn/78ebd04c9eb54d858b4aa57f4f13c04b.png" alt="chh3213"></a>
+            </div>
+        </div>
+    </div>
+    <div id="nexmoe-header">
+        <div class="nexmoe-drawer mdui-drawer" id="drawer">
+    <div class="nexmoe-avatar mdui-ripple">
+        <a href="/" title="chh3213">
+            <img src="https://img-blog.csdnimg.cn/78ebd04c9eb54d858b4aa57f4f13c04b.png" alt="chh3213" alt="chh3213">
+        </a>
+    </div>
+    <div class="nexmoe-count">
+        <div><span>文章</span>7</div>
+        <div><span>标签</span>5</div>
+        <div><span>分类</span>3</div>
+    </div>
+    <div class="nexmoe-list mdui-list" mdui-collapse="{accordion: true}">
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/" title="回到首页">
+            <i class="mdui-list-item-icon nexmoefont icon-home"></i>
+            <div class="mdui-list-item-content">
+                回到首页
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/archive.html" title="分类归档">
+            <i class="mdui-list-item-icon nexmoefont icon-container"></i>
+            <div class="mdui-list-item-content">
+                分类归档
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/study/" title="学习之路">
+            <i class="mdui-list-item-icon nexmoefont icon-battlenet"></i>
+            <div class="mdui-list-item-content">
+                学习之路
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" target="_blank" rel="noopener" href="https://wbo.ophir.dev/boards/chh3213" title="来涂鸦吧">
+            <i class="mdui-list-item-icon nexmoefont icon-eye-fill"></i>
+            <div class="mdui-list-item-content">
+                来涂鸦吧
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/about.html" title="关于博主">
+            <i class="mdui-list-item-icon nexmoefont icon-info-circle"></i>
+            <div class="mdui-list-item-content">
+                关于博主
+            </div>
+        </a>
+        
+    </div>
+    <aside id="nexmoe-sidebar">
+    
+        
+        <!-- 一言 -->
+<div class="nexmoe-widget-wrap">
+  <h3 class="nexmoe-widget-title">
+    一则言语
+  </h3>
+  <div class="nexmoe-widget">
+    <ul class="hitokoto-box">
+      <li id="hitokoto_text_parent" class="hitokoto-text" hitokotoCategory="">
+        <a href="#" id="hitokoto_text">
+          
+        </a>
+        <a href="#" id="hitokoto_error_text" style="display: none;">
+          
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<script>
+  let hitokotoText = document.getElementById('hitokoto_text')
+  let hitokotoErroText = document.getElementById('hitokoto_error_text')
+  let hitokotoCategory = document.getElementById('hitokoto_text_parent').getAttribute('hitokotoCategory')
+  window.onload = function () {
+    let url = 'https://v1.hitokoto.cn'
+    if (hitokotoCategory) {
+      url += '?c=' + hitokotoCategory
+    }
+    fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        hitokotoText.innerText = "「 " + data.hitokoto + " 」 from " + data.from
+        hitokotoText.href = 'https://hitokoto.cn/?uuid=' + data.uuid
+      })
+      .catch((reason) => {
+        console.error(11, reason)
+        hitokotoText.style.display = 'none'
+        hitokotoErroText.style.display = 'block'
+      })
+  }
+</script>
+    
+        
+        <div class="nexmoe-widget-wrap">
+    <div class="nexmoe-widget nexmoe-search">
+        
+            <form id="search_form">
+                <label><input class="st-default-search-input" id="search_value" name="q" type="search" placeholder="站内搜索" style="
+                    font-size: 15px !important;
+                    height: 56px !important;
+                    background-image: none;
+                "></label>
+            </form>
+         
+    </div>
+</div>
+
+
+	<script async src="/js/search.js?v=1666836534389"></script>
+
+
+
+    
+        
+        <div class="nexmoe-widget-wrap">
+	<div class="nexmoe-widget nexmoe-social">
+		<a
+			class="mdui-ripple"
+			href="https://github.com/CHH3213"
+			target="_blank"
+			mdui-tooltip="{content: 'GitHub'}"
+			style="
+				color: rgb(25, 23, 23);
+				background-color: rgba(25, 23, 23, .1);
+			"
+		>
+			<i
+				class="nexmoefont icon-github"
+			></i> </a
+		><a
+			class="mdui-ripple"
+			href="https://blog.csdn.net/weixin_42301220"
+			target="_blank"
+			mdui-tooltip="{content: 'CSDN'}"
+			style="
+				color: rgb(247, 132, 34);
+				background-color: rgba(247, 132, 34, .1);
+			"
+		>
+			<i
+				class="nexmoefont icon-csdn1"
+			></i> </a
+		><a
+			class="mdui-ripple"
+			href="mailto:1213472983@qq.com"
+			target="_blank"
+			mdui-tooltip="{content: '邮箱'}"
+			style="
+				color: rgb(29, 161, 242);
+				background-color: rgba(29, 161, 242, .1);
+			"
+		>
+			<i
+				class="nexmoefont icon-mail-fill"
+			></i> </a
+		><a
+			class="mdui-ripple"
+			href="/atom.xml"
+			target="_blank"
+			mdui-tooltip="{content: 'RSS'}"
+			style="
+				color: rgb(235, 152, 0);
+				background-color: rgba(235, 152, 0, .15);
+			"
+		>
+			<i
+				class="nexmoefont icon-rss"
+			></i> </a
+		>
+	</div>
+</div>
+
+    
+        
+        
+  <div class="nexmoe-widget-wrap">
+    <h3 class="nexmoe-widget-title">文章分类</h3>
+    <div class="nexmoe-widget">
+
+      <ul class="category-list">
+
+        
+
+
+        
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/VPN教程/">VPN教程</a>
+          <span class="category-list-count">2</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/主页美化/">主页美化</a>
+          <span class="category-list-count">2</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/实用技巧/">实用技巧</a>
+          <span class="category-list-count">3</span>
+        </li>
+
+        
+      </ul>
+
+    </div>
+  </div>
+
+
+    
+        
+        
+  <div class="nexmoe-widget-wrap">
+    <div id="randomtagcloud" class="nexmoe-widget tagcloud nexmoe-rainbow">
+      <a href="/tags/Remote/" style="font-size: 10px;">Remote</a> <a href="/tags/VPN/" style="font-size: 20px;">VPN</a> <a href="/tags/%E4%B8%BB%E9%A1%B5/" style="font-size: 10px;">主页</a> <a href="/tags/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/" style="font-size: 20px;">内网穿透</a> <a href="/tags/%E7%BE%8E%E5%8C%96/" style="font-size: 10px;">美化</a>
+    </div>
+    
+      <script>
+        var maxTagcloud = parseInt(17);
+        var tags_length = parseInt(5);
+        var tags_arr = [];
+        for(var i = 0; i < tags_length; i++){
+          tags_arr.push(i);
+        }
+        tags_arr.sort(function (l, r) {
+          return Math.random() > 0.5 ? -1 : 1;
+        });
+        tags_arr = tags_arr.slice(0, maxTagcloud < tags_length ? tags_length - maxTagcloud : 0);
+        for(var tag_i = 0; tag_i < tags_arr.length; tag_i++){
+          document.getElementById("randomtagcloud").children[tags_arr[tag_i]].style.display = 'none';
+        }
+      </script>
+    
+  </div>
+
+    
+        
+        
+  <div class="nexmoe-widget-wrap">
+    <h3 class="nexmoe-widget-title">文章归档</h3>
+    <div class="nexmoe-widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/">2022</a><span class="archive-list-count">7</span></li></ul>
+    </div>
+  </div>
+
+
+
+    
+        
+        
+  <div class="nexmoe-widget-wrap">
+    <h3 class="nexmoe-widget-title">最新文章</h3>
+    <div class="nexmoe-widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/10/27/Github%E4%B8%BB%E9%A1%B5%E7%BE%8E%E5%8C%96/">Github主页美化</a>
+          </li>
+        
+          <li>
+            <a href="/2022/10/18/Windows%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2%E5%B7%A5%E5%85%B7%E8%BF%9E%E6%8E%A5Ubuntu%E7%B3%BB%E7%BB%9F/">Windows远程桌面工具连接Ubuntu系统</a>
+          </li>
+        
+          <li>
+            <a href="/2022/10/15/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7%E2%80%94%E2%80%94cpolar/">内网穿透工具——cpolar</a>
+          </li>
+        
+          <li>
+            <a href="/2022/10/15/SakuraFrp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7/">内网穿透工具——SakuraFrp</a>
+          </li>
+        
+          <li>
+            <a href="/2022/06/12/%E5%8D%9A%E5%AE%A2%E4%B8%BB%E9%A1%B5%E7%BE%8E%E5%8C%96/">博客主页美化</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+    
+        
+</aside>
+    <div class="nexmoe-copyright">
+        &copy; 2022 chh3213
+        Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+        & <a href="https://github.com/theme-nexmoe/hexo-theme-nexmoe" target="_blank">Nexmoe</a>
+        
+        <!-- 添加访问数 -->
+        <div style="font-size: 13px">
+            <link rel="stylesheet" href="https://widget.heweather.net/standard/static/css/he-standard.css?v=1.4.0">
+            <script src="https://widget.heweather.net/standard/static/js/he-standard.js?v=1.4.0"></script>
+            <script async="" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            本站总访问量 <a id="busuanzi_value_site_pv"></a> 次<br>
+            本站访客数<a id="busuanzi_value_site_uv"></a>人次
+        </div>
+    </div>
+
+<!--自定义看板娘-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<script src="/live2d-widget/autoload.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css" />
+
+</div><!-- .nexmoe-drawer -->
+    </div>
+    <div id="nexmoe-content">
+        <div class="nexmoe-primary">
+            <div class="nexmoe-post">
+
+  <article>
+      
+          <div class="nexmoe-post-cover" style="padding-bottom: 62.5%;"> 
+              <img src="http://api.mtyqx.cn/tapi/random.php?461316" alt="Windows远程桌面工具连接Ubuntu系统" loading="lazy">
+              <h1>Windows远程桌面工具连接Ubuntu系统</h1>
+          </div>
+      
+      
+      <div class="nexmoe-post-meta nexmoe-rainbow" style="margin:10px 0!important;">
+    <a><i class="nexmoefont icon-calendar-fill"></i>2022年10月18日</a>
+</div>
+      
+    <a><i class="nexmoefont icon-areachart"></i>约722字</a>
+    <a><i class="nexmoefont icon-time-circle-fill"></i>预计需要2分钟</a>
+
+
+      <h1 id="1-前言"><a href="#1-前言" class="headerlink" title="1. 前言"></a>1. 前言</h1><h2 id="1-1-常见远程桌面软件推荐"><a href="#1-1-常见远程桌面软件推荐" class="headerlink" title="1.1 常见远程桌面软件推荐"></a>1.1 常见远程桌面软件推荐</h2><p>随着过去一年多的研究生生涯，也陆陆续续用了几款远程桌面软件。目前来看都还不错。我主要用过的是4款：<a target="_blank" rel="noopener" href="https://www.teamviewer.cn/cn/">TeamViewer</a>，<a target="_blank" rel="noopener" href="https://rustdesk.com/zh/">RustDesk</a>, <a target="_blank" rel="noopener" href="https://sunlogin.oray.com/download">向日葵</a>, <a target="_blank" rel="noopener" href="http://www.hellodesk.cn/download.html">ToDesk</a>。这4款ubuntu和windows下均可使用。</p>
+<p>4个软件的界面分别如下：</p>
+<p><img src="https://img-blog.csdnimg.cn/340cf47adb58419b9bc6a790a8540f34.png#pic_center" alt><br><img src="https://img-blog.csdnimg.cn/aa8f3c29acf14bcb87db5bc50803f45a.png#pic_center" alt><br><img src="https://img-blog.csdnimg.cn/df6a1ea3673442a2a7ae941521856fca.png#pic_center" alt><br><img src="https://img-blog.csdnimg.cn/334aee6b208c485bbf5eb6c03285445b.png#pic_center" alt>  </p>
+<h2 id="1-2-比较"><a href="#1-2-比较" class="headerlink" title="1.2 比较"></a>1.2 比较</h2><ul>
+<li>其中，个人体验而言，TeamViewer，RustDesk,ToDesk是优于向日葵的。因为向日葵免费版不能够<strong>进行传输文件</strong>，<strong>剪贴板</strong>也不能共享（不能相互之间复制粘贴文字）。</li>
+<li>速度而言，使用局域网时，体验上三者没有什么差别；不使用局域网连接时，向日葵速度&gt;TeamViewer&gt;RustDesk=ToDesk。所以，使用局域网时，还是推荐使用后三者的。不过可以自建服务器，不过我自己没有试过，还不懂咋搞。。。</li>
+<li>使用向日葵可能会碰到的一个问题，就是远程连接Ubuntu时，一连接就秒断的问题。具体可参考<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/0274a4b5e303">这个</a>。之前实验室的服务器就碰到了这个问题，折腾了很久都没解决，还差点把系统搞崩了，因此果断放弃在服务器上使用向日葵，转为使用后3种了。</li>
+</ul>
+<h1 id="2-使用windows远程桌面连接ubuntu"><a href="#2-使用windows远程桌面连接ubuntu" class="headerlink" title="2. 使用windows远程桌面连接ubuntu"></a>2. 使用windows远程桌面连接ubuntu</h1><p>用过windows远程桌面连接的小伙伴们都知道，使用起来非常顺畅丝滑，界面清晰。但它只能在windows之间使用，远程连接ubutnu还需要进行一些配置。</p>
+<h2 id="2-1-安装xrdp"><a href="#2-1-安装xrdp" class="headerlink" title="2.1 安装xrdp"></a>2.1 安装xrdp</h2><p>Xrdp 是一个微软远程桌面协议（RDP）的开源实现，它允许我们通过图形界面控制远程系统。这里使用RDP而不是VNC作为远程桌面，是因为Windows自带的远程桌面连接软件用的就是RDP协议，RDP在Windows下的体验非常好，包括速度很快（因为压缩方案做得比较好），可以直接在主机和远程桌面之间复制粘贴等等。</p>
+<blockquote>
+<p>有的Xwindow软件是不太兼容xrdp的（比如ubuntu 18.04的默认桌面），但是ubuntu 20.04使用的Gnome是完全ok的。</p>
+</blockquote>
+<p>安装过程如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo apt install xrdp<br></code></pre></td></tr></table></figure>
+<p>安装完成xrdp 服务将会自动启动，可以输入下面的命令验证它：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo systemctl status xrdp<br></code></pre></td></tr></table></figure>
+<p>可以将xrdp设为开机启动<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo systemctl <span class="hljs-built_in">enable</span> xrdp<br></code></pre></td></tr></table></figure></p>
+<p>默认情况下，xrdp 使用<code>/etc/ssl/private/ssl-cert-snakeoil.key</code>，它仅仅对ssl-cert用户组成语可读，所以需要运行下面的命令，将xrdp用户添加到这个用户组：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo adduser xrdp ssl-cert  <br>sudo systemctl restart xrdp<br></code></pre></td></tr></table></figure>
+<p>然后使用Windows自带的远程桌面软件连接服务器IP地址或者域名就行了。</p>
+<h2 id="2-2-问题1：远程连接后出现黑屏"><a href="#2-2-问题1：远程连接后出现黑屏" class="headerlink" title="2.2 问题1：远程连接后出现黑屏"></a>2.2 问题1：远程连接后出现黑屏</h2><p>==连接远程桌面输入账户和密码后，进入ubuntu20.04后，如果出现的是黑屏==，<font color="red>ubuntu系统下登出用户（log" out），远程连接正常。< font></font></p>
+<p>或者使用下面步骤解决根本问题。</p>
+<p>详情可阅读<a target="_blank" rel="noopener" href="https://askubuntu.com/questions/1245020/xrdp-on-ubuntu-20-04">参考资料2.</a></p>
+<ul>
+<li><p>打开<code>startwm.sh</code>文件</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo vim /etc/xrdp/startwm.sh<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>在以下位置添加如下内容：</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">unset</span> DBUS_SESSION_BUS_ADDRESS<br><span class="hljs-built_in">unset</span> XDG_RUNTIME_DIR<br></code></pre></td></tr></table></figure>
+<p>  <img src="https://img-blog.csdnimg.cn/88093ffce5284e3294f86a5b867ec5be.png#pic_center" alt>  </p>
+</li>
+</ul>
+<!-- <center><img src="https://img-blog.csdnimg.cn/88093ffce5284e3294f86a5b867ec5be.png" width=60%></center> -->
+<ul>
+<li><p>然后重启xrdp服务，重新尝试连接即可。</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo systemctl restart xrdp<br></code></pre></td></tr></table></figure>
+</li>
+</ul>
+<blockquote>
+<p>除此之外，若远程登录后不登出直接关闭远程窗口，ubuntu系统登录后无法看到桌面，需要远程后登出才可以使用。</p>
+</blockquote>
+<h2 id="2-3-问题2：远程连接只能登陆root用户，无法登录普通用户"><a href="#2-3-问题2：远程连接只能登陆root用户，无法登录普通用户" class="headerlink" title="2.3 问题2：远程连接只能登陆root用户，无法登录普通用户"></a>2.3 问题2：远程连接只能登陆root用户，无法登录普通用户</h2><ul>
+<li><p>进行 <code>~/.xsession</code>的配置，以下以ubuntu20.04 gnome桌面类型配置为例。</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">echo</span> gnome-session &gt; ~/.xsession<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>修改<code>startwm.sh</code></p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo vim /etc/xrdp/startwm.sh<br></code></pre></td></tr></table></figure>
+<p>  在<code>test -x /etc/X11/Xsession &amp;&amp; exec /etc/X11/Xsession</code>前添加如下代码：</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">gnome-session<br>. /etc/X11/Xsession<br></code></pre></td></tr></table></figure>
+<p>  <img src="https://img-blog.csdnimg.cn/7a711d14430c46a7b2bfcd585a5ce391.png#pic_center" alt>  </p>
+</li>
+</ul>
+<ul>
+<li><p>重启xrdp服务</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo systemctl restart xrdp<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>使用windows远程连接工具连接Ubuntu，输入相应的用户密码后即可进入</p>
+</li>
+</ul>
+<h1 id="3-进行内网穿透"><a href="#3-进行内网穿透" class="headerlink" title="3. 进行内网穿透"></a>3. 进行内网穿透</h1><blockquote>
+<p>进行内网穿透的手段还可以参考<a href="https://chh3213.github.io/2022/10/15/SakuraFrp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7/">博客</a>。这里不再赘述</p>
+</blockquote>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><ul>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/336429888">https://zhuanlan.zhihu.com/p/336429888</a></li>
+<li><a target="_blank" rel="noopener" href="https://askubuntu.com/questions/1245020/xrdp-on-ubuntu-20-04">https://askubuntu.com/questions/1245020/xrdp-on-ubuntu-20-04</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/Fatmear/article/details/122037566">https://blog.csdn.net/Fatmear/article/details/122037566</a></li>
+</ul>
+
+      
+  </article>
+
+  
+      
+    <div class="nexmoe-post-copyright">
+        <strong>本文作者：</strong>chh3213<br>
+        <strong>本文链接：</strong><a href="https://chh3213.github.io/2022/10/18/Windows%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2%E5%B7%A5%E5%85%B7%E8%BF%9E%E6%8E%A5Ubuntu%E7%B3%BB%E7%BB%9F/" title="https:&#x2F;&#x2F;chh3213.github.io&#x2F;2022&#x2F;10&#x2F;18&#x2F;Windows%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2%E5%B7%A5%E5%85%B7%E8%BF%9E%E6%8E%A5Ubuntu%E7%B3%BB%E7%BB%9F&#x2F;" target="_blank" rel="noopener">https:&#x2F;&#x2F;chh3213.github.io&#x2F;2022&#x2F;10&#x2F;18&#x2F;Windows%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2%E5%B7%A5%E5%85%B7%E8%BF%9E%E6%8E%A5Ubuntu%E7%B3%BB%E7%BB%9F&#x2F;</a><br>
+        
+            <strong>版权声明：</strong>本文采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/cn/deed.zh" target="_blank">CC BY-NC-SA 3.0 CN</a> 协议进行许可
+        
+    </div>
+
+
+  
+  
+  <div class="nexmoe-post-meta nexmoe-rainbow">
+    
+        <a class="nexmoefont icon-appstore-fill -link" href="/categories/%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7/">实用技巧</a>
+    
+    
+        <a class="nexmoefont icon-tag-fill -none-link" href="/tags/Remote/" rel="tag">Remote</a>
+    
+</div>
+
+  
+      <div class="nexmoe-post-footer">
+           <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css"> <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script> <div id="gitalk-container"></div> <script type="text/javascript"> const gitalk = new Gitalk({ clientID: "55ea9dc4a0241f57729b", clientSecret: "20342a99dc08db6dbaa9d696c38404352353ad3a", repo: "CHH3213.github.io",       owner: "CHH3213", admin: "CHH3213", id: decodeURI(window.location.pathname)     }); gitalk.render("gitalk-container") </script> 
+      </div>
+  
+</div>
+            <div class="nexmoe-post-right">
+              <div class="nexmoe-fixed">
+                  <div class="nexmoe-tool"> 
+                    
+                      
+                        
+                          
+                          
+                              <button class="mdui-fab catalog" style="overflow:unset;">
+                                  <i class="nexmoefont icon-i-catalog"></i>
+                                  <div class="nexmoe-toc">
+                                      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">1. 前言</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-%E5%B8%B8%E8%A7%81%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2%E8%BD%AF%E4%BB%B6%E6%8E%A8%E8%8D%90"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 常见远程桌面软件推荐</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2-%E6%AF%94%E8%BE%83"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 比较</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-%E4%BD%BF%E7%94%A8windows%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2%E8%BF%9E%E6%8E%A5ubuntu"><span class="toc-number">2.</span> <span class="toc-text">2. 使用windows远程桌面连接ubuntu</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1-%E5%AE%89%E8%A3%85xrdp"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 安装xrdp</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2-%E9%97%AE%E9%A2%981%EF%BC%9A%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5%E5%90%8E%E5%87%BA%E7%8E%B0%E9%BB%91%E5%B1%8F"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 问题1：远程连接后出现黑屏</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-3-%E9%97%AE%E9%A2%982%EF%BC%9A%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5%E5%8F%AA%E8%83%BD%E7%99%BB%E9%99%86root%E7%94%A8%E6%88%B7%EF%BC%8C%E6%97%A0%E6%B3%95%E7%99%BB%E5%BD%95%E6%99%AE%E9%80%9A%E7%94%A8%E6%88%B7"><span class="toc-number">2.3.</span> <span class="toc-text">2.3 问题2：远程连接只能登陆root用户，无法登录普通用户</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-%E8%BF%9B%E8%A1%8C%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F"><span class="toc-number">3.</span> <span class="toc-text">3. 进行内网穿透</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-number">4.</span> <span class="toc-text">参考资料</span></a></li></ol>
+                                  </div>
+                              </button>
+                          
+                          
+                      
+                    
+                      <a href="#nexmoe-content" class="toc-link" aria-label="Back To Top" title="top"><button class="mdui-fab mdui-ripple"><i class="nexmoefont icon-caret-top"></i></button></a>
+                  </div>
+              </div>
+            </div>
+        </div>
+    </div>
+    <div id="nexmoe-search-space">
+	<div class="search-container">
+		<div class="search-header">
+			<div class="search-input-container">
+				<input
+					class="search-input"
+					type="text"
+					placeholder="站内搜索"
+					oninput="sinput();"
+				/>
+			</div>
+			<a class="search-close" onclick="sclose();">×</a>
+		</div>
+		<div class="search-body"></div>
+	</div>
+</div>
+
+    
+<script src="/lib/mdui_043tiny/mdui.js"></script>
+<script src="/lib/jquery.min.js"></script>
+<script src="/lib/justifiedGallery/jquery.justifiedGallery.min.js"></script>
+<script src="/lib/fancybox/fancybox.umd.js"></script>
+
+
+ 
+
+<script async src="/js/app.js?v=1666836534394"></script>
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2058306854838448" crossorigin="anonymous"></script>
+
+<script>
+	$(".justified-gallery").justifiedGallery({
+		rowHeight: 160,
+		margins: 10,
+	});
+</script>
+
+    <!-- 页面点击小红心-- 20221025-->
+    <script type="text/javascript" src="/js/heart.js"></script>
+    <!--搞笑title-->>
+    <script type="text/javascript" src="/js/funnyTitle.js"></script>
+    <!--人体时钟-->>
+    <!-- <script charset="text/javascript" src="/js/clock.js"></script> -->
+
+    <!--代码复制按钮-->>
+    <script type="text/javascript" src="/js/clipboard-min.js"></script>
+    <script type="text/javascript" src="/js/clipboard-use.js"></script>
+    
+    <!--代码高亮-->>
+    <!-- <script src="https://cdn.bootcss.com/highlight.js/8.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script> -->
+    
+    <script src="/js/highlight/highlight.min.js"></script>
+
+    <!--CDN方式引入-->>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/plugins/line-numbers/prism-line-numbers.min.js"></script> -->
+    <!--直接下载脚本引入-->>
+    <script src="/js/prism.js" async></script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+
+</html>
