@@ -28,8 +28,9 @@
 <meta property="og:image" content="https://chh3213.github.io/2022/06/12/%E5%8D%9A%E5%AE%A2%E4%B8%BB%E9%A1%B5%E7%BE%8E%E5%8C%96/folder.png">
 <meta property="og:image" content="https://chh3213.github.io/2022/06/12/%E5%8D%9A%E5%AE%A2%E4%B8%BB%E9%A1%B5%E7%BE%8E%E5%8C%96/body_label.png">
 <meta property="og:image" content="https://chh3213.github.io/2022/06/12/%E5%8D%9A%E5%AE%A2%E4%B8%BB%E9%A1%B5%E7%BE%8E%E5%8C%96/head_table.png">
+<meta property="og:image" content="https://chh3213.github.io/2022/06/12/%E5%8D%9A%E5%AE%A2%E4%B8%BB%E9%A1%B5%E7%BE%8E%E5%8C%96/sakana.png">
 <meta property="article:published_time" content="2022-06-12T05:17:24.136Z">
-<meta property="article:modified_time" content="2022-10-27T06:03:05.134Z">
+<meta property="article:modified_time" content="2022-10-28T14:26:39.128Z">
 <meta property="article:author" content="chh3213">
 <meta property="article:tag" content="博客">
 <meta property="article:tag" content="美化">
@@ -41,15 +42,15 @@
 <link rel="stylesheet" href="/lib/mdui_043tiny/mdui.css">
 
 
-    <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1666959668934">
+    <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1666968195478">
     
         <link rel="stylesheet" href="//at.alicdn.com/t/c/font_3495394_enbrz0a58y.css">
     
-    <link rel="stylesheet" href="/css/style.css?v=1666959668934">
+    <link rel="stylesheet" href="/css/style.css?v=1666968195478">
 
     
         
-            <link rel="stylesheet" href="/custom.css?v=1666959668934">
+            <link rel="stylesheet" href="/custom.css?v=1666968195478">
         
     
     <!-- <link href="https://cdn.bootcss.com/highlight.js/8.0/styles/monokai_sublime.min.css" rel="stylesheet"> -->
@@ -184,7 +185,7 @@
 </div>
 
 
-	<script async src="/js/search.js?v=1666959668935"></script>
+	<script async src="/js/search.js?v=1666968195480"></script>
 
 
 
@@ -408,8 +409,8 @@
     <a><i class="nexmoefont icon-calendar-fill"></i>2022年06月12日</a>
 </div>
       
-    <a><i class="nexmoefont icon-areachart"></i>约3.2k字</a>
-    <a><i class="nexmoefont icon-time-circle-fill"></i>预计需要14分钟</a>
+    <a><i class="nexmoefont icon-areachart"></i>约3.5k字</a>
+    <a><i class="nexmoefont icon-time-circle-fill"></i>预计需要16分钟</a>
 
 
       <p>搭建的hexo博客的美化技巧。<br><span id="more"></span></p>
@@ -572,6 +573,20 @@
 <li><p>编译部署后即可生效。</p>
 </li>
 </ul>
+<h2 id="Sakana-」石蒜模拟器"><a href="#Sakana-」石蒜模拟器" class="headerlink" title="Sakana!」石蒜模拟器"></a>Sakana!」石蒜模拟器</h2><p>偶然在网上发现了这个非常可爱有趣的<a target="_blank" rel="noopener" href="https://github.com/itorr/sakana">小动态玩偶</a>，现在把它集成到网站上去</p>
+<p><img src="/2022/06/12/%E5%8D%9A%E5%AE%A2%E4%B8%BB%E9%A1%B5%E7%BE%8E%E5%8C%96/sakana.png" alt>  </p>
+<ul>
+<li><p>打开<code>themes/你的主题/layout/layout.ejs</code>文件，在<code>body</code>标签内引入：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-comment">&lt;!--sakana模拟器--&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;viewport&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;width=device-width&quot;</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">style</span>&gt;</span><span class="language-css"></span><br><span class="language-css">    <span class="hljs-selector-tag">html</span> &#123;</span><br><span class="language-css">        <span class="hljs-attribute">background</span>: <span class="hljs-number">#CCC</span>;</span><br><span class="language-css">    &#125;</span><br><span class="language-css"></span><br><span class="language-css">    <span class="hljs-selector-tag">html</span> <span class="hljs-selector-class">.sakana-box</span> &#123;</span><br><span class="language-css">        <span class="hljs-attribute">position</span>: fixed;</span><br><span class="language-css">        <span class="hljs-attribute">right</span>: <span class="hljs-number">0</span>;</span><br><span class="language-css">        <span class="hljs-attribute">bottom</span>: <span class="hljs-number">0</span>;</span><br><span class="language-css"></span><br><span class="language-css">        <span class="hljs-attribute">transform-origin</span>: <span class="hljs-number">100%</span> <span class="hljs-number">100%</span>;</span><br><span class="language-css">        <span class="hljs-comment">/* 从右下开始变换 */</span></span><br><span class="language-css">    &#125;</span><br><span class="language-css"></span><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;sakana-box&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;https://cdn.jsdelivr.net/npm/sakana@1.0.8&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>cccccccc<br><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;js/sakana.js&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br></code></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li><p>在<code>themes/你的主题/source/js</code>文件夹下新建<code>sakana.js</code>文件，填写内容如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><code class="hljs js"><br><br><span class="hljs-comment">//设置sakana状态</span><br><span class="hljs-comment">// 设定静音</span><br><span class="hljs-title class_">Sakana</span>.<span class="hljs-title function_">setMute</span>(<span class="hljs-literal">true</span>);<br><br><span class="hljs-comment">// 获取静音状态</span><br><span class="hljs-keyword">const</span> &#123; isMute &#125; = <span class="hljs-title class_">Sakana</span>.<span class="hljs-property">Voices</span>;<br><br><span class="hljs-comment">// 启动</span><br><span class="hljs-keyword">const</span> sakana = <span class="hljs-title class_">Sakana</span>.<span class="hljs-title function_">init</span>(&#123;<br>  <span class="hljs-comment">// 选项: 默认值</span><br>  <span class="hljs-attr">el</span>:         <span class="hljs-string">&#x27;.sakana-box&#x27;</span>,     <span class="hljs-comment">// 启动元素 node 或 选择器</span><br>  <span class="hljs-attr">character</span>:  <span class="hljs-string">&#x27;chisato&#x27;</span>,          <span class="hljs-comment">// 启动角色 &#x27;chisato&#x27;,&#x27;takina&#x27; </span><br>  <span class="hljs-attr">inertia</span>:    <span class="hljs-number">0.1</span>,              <span class="hljs-comment">// 惯性</span><br>  <span class="hljs-attr">decay</span>:      <span class="hljs-number">0.99</span>,              <span class="hljs-comment">// 衰减</span><br>  <span class="hljs-attr">r</span>:          <span class="hljs-number">60</span>,                <span class="hljs-comment">// 启动角度</span><br>  <span class="hljs-attr">y</span>:          <span class="hljs-number">10</span>,                <span class="hljs-comment">// 启动高度</span><br>  <span class="hljs-attr">scale</span>:      <span class="hljs-number">0.5</span>,                 <span class="hljs-comment">// 缩放倍数</span><br>  <span class="hljs-attr">translateY</span>: <span class="hljs-number">0</span>,                 <span class="hljs-comment">// 位移高度</span><br>  <span class="hljs-attr">canSwitchCharacter</span>: <span class="hljs-literal">false</span>,     <span class="hljs-comment">// 允许换角色</span><br>  <span class="hljs-title function_">onSwitchCharacter</span>(<span class="hljs-params">character</span>)&#123;  <span class="hljs-comment">// 切换角色回调</span><br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`<span class="hljs-subst">$&#123;character&#125;</span> dayo~`</span>);<br>  &#125;,<br>&#125;);<br><br><span class="hljs-comment">// 设定归零角度</span><br>sakana.<span class="hljs-title function_">setOriginRotate</span>(<span class="hljs-number">10</span>);<br><br><span class="hljs-comment">// 获取角色运行状态</span><br><span class="hljs-keyword">const</span> v = sakana.<span class="hljs-title function_">getValue</span>();<br><br><span class="hljs-comment">// 确保运行</span><br>sakana.<span class="hljs-title function_">confirmRunning</span>();<br><br><span class="hljs-comment">// 切换角色</span><br>sakana.<span class="hljs-title function_">switchCharacter</span>();<br><br><span class="hljs-comment">// 暂停动作</span><br>sakana.<span class="hljs-title function_">pause</span>();<br><br><span class="hljs-comment">// 恢复动作</span><br>sakana.<span class="hljs-title function_">play</span>();<br><br><span class="hljs-comment">// 切换特定角色</span><br>sakana.<span class="hljs-title function_">setCharacter</span>(<span class="hljs-string">&#x27;chisato&#x27;</span>);<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>博客重新部署生成即可。</p>
+</li>
+</ul>
 
       
   </article>
@@ -615,7 +630,7 @@
                               <button class="mdui-fab catalog" style="overflow:unset;">
                                   <i class="nexmoefont icon-i-catalog"></i>
                                   <div class="nexmoe-toc">
-                                      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%87%E7%AB%A0%E5%B0%81%E9%9D%A2%E7%94%9F%E6%88%90%E9%9A%8F%E6%9C%BA%E5%9B%BE%E7%89%87"><span class="toc-number">1.</span> <span class="toc-text">文章封面生成随机图片</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%99%84%E9%9A%8F%E6%9C%BA%E5%9B%BE%E7%89%87%E7%9A%84%E4%B8%80%E4%BA%9BAPI"><span class="toc-number">1.1.</span> <span class="toc-text">附随机图片的一些API</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E5%8A%A8%E6%BC%AB%E4%BA%BA%E7%89%A9-%E7%9C%8B%E6%9D%BF%E5%A8%98"><span class="toc-number">2.</span> <span class="toc-text">添加动漫人物(看板娘)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E8%AF%84%E8%AE%BA"><span class="toc-number">3.</span> <span class="toc-text">添加评论</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E9%A1%B5%E9%9D%A2%E7%82%B9%E5%87%BB%E5%87%BA%E7%8E%B0%E7%88%B1%E5%BF%83%E7%89%B9%E6%95%88"><span class="toc-number">4.</span> <span class="toc-text">添加页面点击出现爱心特效</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BD%91%E9%A1%B5%E6%A0%87%E9%A2%98%E7%89%B9%E6%95%88"><span class="toc-number">5.</span> <span class="toc-text">浏览器网页标题特效</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E4%BB%A3%E7%A0%81%E5%9D%97%E5%A4%8D%E5%88%B6%E5%8A%9F%E8%83%BD"><span class="toc-number">6.</span> <span class="toc-text">添加代码块复制功能</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E5%9D%97%E9%AB%98%E4%BA%AE"><span class="toc-number">7.</span> <span class="toc-text">代码块高亮</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8prismjs%E8%BF%9B%E8%A1%8C%E4%BB%A3%E7%A0%81%E9%AB%98%E4%BA%AE"><span class="toc-number">7.1.</span> <span class="toc-text">使用prismjs进行代码高亮</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8hightlight-js%E8%BF%9B%E8%A1%8C%E4%BB%A3%E7%A0%81%E9%AB%98%E4%BA%AE"><span class="toc-number">7.2.</span> <span class="toc-text">使用hightlight.js进行代码高亮</span></a></li></ol></li></ol>
+                                      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%87%E7%AB%A0%E5%B0%81%E9%9D%A2%E7%94%9F%E6%88%90%E9%9A%8F%E6%9C%BA%E5%9B%BE%E7%89%87"><span class="toc-number">1.</span> <span class="toc-text">文章封面生成随机图片</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%99%84%E9%9A%8F%E6%9C%BA%E5%9B%BE%E7%89%87%E7%9A%84%E4%B8%80%E4%BA%9BAPI"><span class="toc-number">1.1.</span> <span class="toc-text">附随机图片的一些API</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E5%8A%A8%E6%BC%AB%E4%BA%BA%E7%89%A9-%E7%9C%8B%E6%9D%BF%E5%A8%98"><span class="toc-number">2.</span> <span class="toc-text">添加动漫人物(看板娘)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E8%AF%84%E8%AE%BA"><span class="toc-number">3.</span> <span class="toc-text">添加评论</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E9%A1%B5%E9%9D%A2%E7%82%B9%E5%87%BB%E5%87%BA%E7%8E%B0%E7%88%B1%E5%BF%83%E7%89%B9%E6%95%88"><span class="toc-number">4.</span> <span class="toc-text">添加页面点击出现爱心特效</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BD%91%E9%A1%B5%E6%A0%87%E9%A2%98%E7%89%B9%E6%95%88"><span class="toc-number">5.</span> <span class="toc-text">浏览器网页标题特效</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E4%BB%A3%E7%A0%81%E5%9D%97%E5%A4%8D%E5%88%B6%E5%8A%9F%E8%83%BD"><span class="toc-number">6.</span> <span class="toc-text">添加代码块复制功能</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E5%9D%97%E9%AB%98%E4%BA%AE"><span class="toc-number">7.</span> <span class="toc-text">代码块高亮</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8prismjs%E8%BF%9B%E8%A1%8C%E4%BB%A3%E7%A0%81%E9%AB%98%E4%BA%AE"><span class="toc-number">7.1.</span> <span class="toc-text">使用prismjs进行代码高亮</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8hightlight-js%E8%BF%9B%E8%A1%8C%E4%BB%A3%E7%A0%81%E9%AB%98%E4%BA%AE"><span class="toc-number">7.2.</span> <span class="toc-text">使用hightlight.js进行代码高亮</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Sakana-%E3%80%8D%E7%9F%B3%E8%92%9C%E6%A8%A1%E6%8B%9F%E5%99%A8"><span class="toc-number">8.</span> <span class="toc-text">Sakana!」石蒜模拟器</span></a></li></ol>
                                   </div>
                               </button>
                           
@@ -654,7 +669,7 @@
 
  
 
-<script async src="/js/app.js?v=1666959668949"></script>
+<script async src="/js/app.js?v=1666968195498"></script>
 
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2058306854838448" crossorigin="anonymous"></script>
 
@@ -687,7 +702,27 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/plugins/line-numbers/prism-line-numbers.min.js"></script> -->
     <!--直接下载脚本引入-->>
     <script src="/js/prism.js" async></script>
+    
+    <!--sakana模拟器-->
+    <meta name="viewport" content="width=device-width">
+    <style>
+        html {
+            background: #CCC;
+        }
 
+        html .sakana-box {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+
+            transform-origin: 100% 100%;
+            /* 从右下开始变换 */
+        }
+    </style>
+    <div class="sakana-box"></div>
+    <script src="https://cdn.jsdelivr.net/npm/sakana@1.0.8"></script>
+    <script src="js/sakana.js"></script>
+    
 <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
         tex2jax: {
@@ -704,6 +739,6 @@
 </script>
 <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 <!-- <script src="http://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script> -->
-<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</body>
 
 </html>
