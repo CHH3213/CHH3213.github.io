@@ -11,6 +11,20 @@
         <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><p>一般情况下，ubuntu默认的鼠标光标主题都比较不好看，所以我们可以通过以下方法进行修改。<br><span id="more"></span></p><h2 id="获取鼠标光标主题"><a href="#获取鼠标光标主题" class="headerlink" title="获取鼠标光标主题"></a>获取鼠标光标主题</h2><p>在<a href="https://www.gnome-look.org/browse?cat=107&amp;ord=latest">网站</a>选择你想要的鼠标主题，例如我选择的是<a href="https://www.gnome-look.org/s/Gnome/p/1360254/">这一款</a>。</p><p><img data-fancybox="gallery" src="https://img-blog.csdnimg.cn/a25d23933da9417b9f806fa6e34efa94.png" alt="在这里插入图片描述" data-caption="在这里插入图片描述" loading="lazy"><br><img data-fancybox="gallery" src="https://img-blog.csdnimg.cn/0e6a926ecfdf4c56bfb9a6061fb75fde.png" alt="在这里插入图片描述" data-caption="在这里插入图片描述" loading="lazy"><br>点击下载后，将压缩包解压，并进入该文件夹内，将文件夹移至<code>/usr/share/icons</code>目录内</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo <span class="hljs-built_in">mv</span> oreo_spark_pink_cursors /usr/share/icons<br></code></pre></td></tr></table></figure><h2 id="配置主题"><a href="#配置主题" class="headerlink" title="配置主题"></a>配置主题</h2><p>打开ubuntu系统左下角的查找应用程序，输入<code>tweak</code>，打开出现的应用（中文系统下是<code>优化</code>，英文系统是<code>tweak</code>）。<br><img data-fancybox="gallery" src="https://img-blog.csdnimg.cn/db6d8fec0fde4743b8947582997b0fde.png" alt="在这里插入图片描述" data-caption="在这里插入图片描述" loading="lazy"><br>在<code>优化</code>中选择<code>外观</code>，找到<code>光标</code>，选择你想安装的鼠标主题即可。</p><p><img data-fancybox="gallery" src="https://img-blog.csdnimg.cn/35e08399c6944c248e978c8aa04fb7d0.png" alt="在这里插入图片描述" data-caption="在这里插入图片描述" loading="lazy"></p><h2 id="将下载的鼠标光标主题加入到-alternative-x-cursor-theme"><a href="#将下载的鼠标光标主题加入到-alternative-x-cursor-theme" class="headerlink" title="将下载的鼠标光标主题加入到 alternative x-cursor-theme"></a>将下载的鼠标光标主题加入到 alternative x-cursor-theme</h2><p>在进行步骤2后，虽然鼠标主题生效了，但是并没有全局生效，在一些应用内依旧是原来的主题。所以，还需要进行以下步骤的配置。</p><p>打开终端，在终端输入以下命令，将鼠标光标主题加入到 <code>alternative x-cursor-theme</code> 中</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo update-alternatives --install /usr/share/icons/default/index.theme x-cursor-theme /usr/share/icons/你的鼠标光标主题名称/cursor.theme 20<br></code></pre></td></tr></table></figure><p>例如，我的是</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo update-alternatives --install /usr/share/icons/default/index.theme x-cursor-theme /usr/share/icons/oreo_spark_pink_cursors/cursor.theme 20<br></code></pre></td></tr></table></figure><p>接着，在终端输入以下命令：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo update-alternatives --config x-cursor-theme<br></code></pre></td></tr></table></figure><p>选择你的候选项编号</p><p><img data-fancybox="gallery" src="https://img-blog.csdnimg.cn/2997c8b3c1ef4055a67023218c6ad4b5.png" alt="在这里插入图片描述" data-caption="在这里插入图片描述" loading="lazy"></p><p>选择完成后，重启系统生效。</p><h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul><li><a href="https://vincentbel.com/ubuntu-change-cursor-theme/">https://vincentbel.com/ubuntu-change-cursor-theme/</a></li><li><a href="https://www.youtube.com/watch?v=U_aQv74bHRQ">https://www.youtube.com/watch?v=U_aQv74bHRQ</a></li></ul>]]></content>
       
       
+      <categories>
+          
+          <category> 页面美化 </category>
+          
+          <category> Ubuntu </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 美化 </tag>
+            
+        </tags>
       
     </entry>
     
@@ -26,14 +40,14 @@
       
       <categories>
           
-          <category> 主页美化 </category>
+          <category> 页面美化 </category>
           
       </categories>
       
       
         <tags>
             
-            <tag> 主页 </tag>
+            <tag> 美化 </tag>
             
         </tags>
       
@@ -151,9 +165,9 @@
       
       <categories>
           
-          <category> 主页美化 </category>
-          
           <category> hexo博客 </category>
+          
+          <category> 页面美化 </category>
           
       </categories>
       
