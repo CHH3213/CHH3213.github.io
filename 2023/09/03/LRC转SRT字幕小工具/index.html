@@ -4,37 +4,41 @@
 
 <head>
     
-    <title>文章归档 - 一半是火一半是光的博客</title>
+    <title>LRC转SRT字幕小工具 - 一半是火一半是光的博客</title>
     <meta charset="UTF-8">
     <meta name="keywords" content="强化学习,自动驾驶,规划控制,编程,C++,Java">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
     
     <link rel="shortcut icon" href="https://s2.loli.net/2022/10/27/ifRX1BdH46hmTlr.png" type="image/png" />
-    <meta property="og:type" content="website">
-<meta property="og:title" content="文章归档">
-<meta property="og:url" content="https://chh3213.github.io/archive.html">
+    <meta name="description" content="一个LRC歌词文件转SRT字幕文件的小工具。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LRC转SRT字幕小工具">
+<meta property="og:url" content="https://chh3213.github.io/2023/09/03/LRC%E8%BD%ACSRT%E5%AD%97%E5%B9%95%E5%B0%8F%E5%B7%A5%E5%85%B7/index.html">
 <meta property="og:site_name" content="一半是火一半是光的博客">
+<meta property="og:description" content="一个LRC歌词文件转SRT字幕文件的小工具。">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-06-11T13:15:27.244Z">
-<meta property="article:modified_time" content="2022-06-11T13:15:27.244Z">
+<meta property="og:image" content="https://chh3213.github.io/2023/09/03/LRC%E8%BD%ACSRT%E5%AD%97%E5%B9%95%E5%B0%8F%E5%B7%A5%E5%85%B7/image.png">
+<meta property="article:published_time" content="2023-09-03T13:30:47.000Z">
+<meta property="article:modified_time" content="2023-09-03T13:36:29.061Z">
 <meta property="article:author" content="chh3213">
-<meta property="article:tag" content="强化学习,自动驾驶,规划控制,编程,C++,Java">
+<meta property="article:tag" content="工具">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://chh3213.github.io/2023/09/03/LRC%E8%BD%ACSRT%E5%AD%97%E5%B9%95%E5%B0%8F%E5%B7%A5%E5%85%B7/image.png">
     
 <link rel="stylesheet" href="/lib/fancybox/fancybox.css">
 <link rel="stylesheet" href="/lib/justifiedGallery/justifiedGallery.min.css">
 <link rel="stylesheet" href="/lib/mdui_043tiny/mdui.css">
 
 
-    <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1693748227821">
+    <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1693748227845">
     
         <link rel="stylesheet" href="//at.alicdn.com/t/c/font_3495394_enbrz0a58y.css">
     
-    <link rel="stylesheet" href="/css/style.css?v=1693748227821">
+    <link rel="stylesheet" href="/css/style.css?v=1693748227845">
 
     
         
-            <link rel="stylesheet" href="/custom.css?v=1693748227821">
+            <link rel="stylesheet" href="/custom.css?v=1693748227845">
         
     
     <!-- <link href="https://cdn.bootcss.com/highlight.js/8.0/styles/monokai_sublime.min.css" rel="stylesheet"> -->
@@ -43,7 +47,119 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/plugins/line-numbers/prism-line-numbers.min.css" rel="stylesheet"> -->
     <link rel="stylesheet" href="/css/prism.css">
 
-<meta name="generator" content="Hexo 6.1.0"><link rel="alternate" href="/atom.xml" title="一半是火一半是光的博客" type="application/atom+xml">
+<meta name="generator" content="Hexo 6.1.0"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style><link rel="alternate" href="/atom.xml" title="一半是火一半是光的博客" type="application/atom+xml">
 </head>
 
 <body class="mdui-drawer-body-left">
@@ -79,7 +195,7 @@
             </div>
         </a>
         
-        <a class="nexmoe-list-item mdui-list-item mdui-ripple true" href="/archive.html" title="分类归档">
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/archive.html" title="分类归档">
             <i class="mdui-list-item-icon nexmoefont icon-container"></i>
             <div class="mdui-list-item-content">
                 分类归档
@@ -169,7 +285,7 @@
 </div>
 
 
-	<script async src="/js/search.js?v=1693748227823"></script>
+	<script async src="/js/search.js?v=1693748227846"></script>
 
 
 
@@ -406,168 +522,77 @@
     </div>
     <div id="nexmoe-content">
         <div class="nexmoe-primary">
-            <section class="nexmoe-archives">
-    
-    <div class="tagcloud nexmoe-rainbow">
-        <a class="mdui-ripple -unordered list-link" href="/tags/AI/" rel="tag">AI<span class="mdui-ripple -unordered list-count">1</span></a><a class="mdui-ripple -unordered list-link" href="/tags/Remote/" rel="tag">Remote<span class="mdui-ripple -unordered list-count">1</span></a><a class="mdui-ripple -unordered list-link" href="/tags/VPN/" rel="tag">VPN<span class="mdui-ripple -unordered list-count">2</span></a><a class="mdui-ripple -unordered list-link" href="/tags/chatgpt/" rel="tag">chatgpt<span class="mdui-ripple -unordered list-count">1</span></a><a class="mdui-ripple -unordered list-link" href="/tags/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/" rel="tag">内网穿透<span class="mdui-ripple -unordered list-count">2</span></a><a class="mdui-ripple -unordered list-link" href="/tags/%E5%8D%9A%E5%AE%A2/" rel="tag">博客<span class="mdui-ripple -unordered list-count">2</span></a><a class="mdui-ripple -unordered list-link" href="/tags/%E5%B7%A5%E5%85%B7/" rel="tag">工具<span class="mdui-ripple -unordered list-count">1</span></a><a class="mdui-ripple -unordered list-link" href="/tags/%E7%BE%8E%E5%8C%96/" rel="tag">美化<span class="mdui-ripple -unordered list-count">3</span></a>
+            <div class="nexmoe-post">
+
+  <article>
+      
+          <div class="nexmoe-post-cover" style="padding-bottom: 62.5%;"> 
+              <img src="http://api.mtyqx.cn/tapi/random.php?8562" alt="LRC转SRT字幕小工具" loading="lazy">
+              <h1>LRC转SRT字幕小工具</h1>
+          </div>
+      
+      
+      <div class="nexmoe-post-meta nexmoe-rainbow" style="margin:10px 0!important;">
+    <a><i class="nexmoefont icon-calendar-fill"></i>2023年09月03日</a>
+</div>
+      
+    <a><i class="nexmoefont icon-areachart"></i>约155字</a>
+    <a><i class="nexmoefont icon-time-circle-fill"></i>预计需要1分钟</a>
+    <a><i class="nexmoefont icon-areachart"></i>
+        <span class="archive-article-date">阅读量
+            <span id="busuanzi_value_page_pv"></span></span></a>
+
+
+      <p>一个LRC歌词文件转SRT字幕文件的小工具。<br><span id="more"></span></p>
+<h2 id="LRC文件转SRT字幕文件"><a href="#LRC文件转SRT字幕文件" class="headerlink" title="LRC文件转SRT字幕文件"></a>LRC文件转SRT字幕文件</h2><p>最近比较空闲，没事在做MV视频，需要将LRC格式的歌词转为SRT字幕文件，以便于剪辑视频时导入。于是就写了这么一个小工具。</p>
+<h3 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h3><ol>
+<li><p>前往GitHub下载<a target="_blank" rel="noopener" href="https://github.com/CHH3213/LRC_convert_SRT/tree/master">源程序</a>，进入目录后，通过运行 <code>gui.py</code> 文件打开</p>
+ <figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs vim"><span class="hljs-keyword">python</span> <span class="hljs-keyword">gui</span>.<span class="hljs-keyword">py</span><br></code></pre></td></tr></table></figure>
+<p> 运行后会弹出一个窗口</p>
+<p> <img data-fancybox="gallery" src="/2023/09/03/LRC%E8%BD%ACSRT%E5%AD%97%E5%B9%95%E5%B0%8F%E5%B7%A5%E5%85%B7/image.png" alt="Alt text" data-caption="Alt text" loading="lazy"></p>
+<p> 选择要转换的lrc文件，点击 <code>convert</code> 转换即可。</p>
+</li>
+<li><p>我也把它打包成exe文件了，所以可以下载<a target="_blank" rel="noopener" href="https://github.com/CHH3213/LRC_convert_SRT/releases/tag/v1.0">.exe文件</a>后运行即可。</p>
+</li>
+</ol>
+
+      
+  </article>
+
+  
+      
+    <!-- 文章分享 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+    <div class="social-share" data-mode="prepend" data-disabled="tencent,diandian"></div>
+
+    <div class="nexmoe-post-copyright">
+        <strong>本文作者：</strong>chh3213<br>
+        <strong>本文链接：</strong><a href="https://chh3213.github.io/2023/09/03/LRC%E8%BD%ACSRT%E5%AD%97%E5%B9%95%E5%B0%8F%E5%B7%A5%E5%85%B7/" title="https:&#x2F;&#x2F;chh3213.github.io&#x2F;2023&#x2F;09&#x2F;03&#x2F;LRC%E8%BD%ACSRT%E5%AD%97%E5%B9%95%E5%B0%8F%E5%B7%A5%E5%85%B7&#x2F;" target="_blank" rel="noopener">https:&#x2F;&#x2F;chh3213.github.io&#x2F;2023&#x2F;09&#x2F;03&#x2F;LRC%E8%BD%ACSRT%E5%AD%97%E5%B9%95%E5%B0%8F%E5%B7%A5%E5%85%B7&#x2F;</a><br>
+        
+            <strong>版权声明：</strong>本文采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/cn/deed.zh" target="_blank">CC BY-NC-SA 3.0 CN</a> 协议进行许可
+        
     </div>
 
-    <div class="categories nexmoe-rainbow-fill">
-        
-            
-            
-                
-                 
-                     
-                
-            
-                
-                
-            
 
-            <a class="mdui-ripple" href="/categories/AI/">
-                <div class="bg" style="background-image:url(http://api.mtyqx.cn/tapi/random.php?84562)"></div>
-                <h1>AI</h1>
-            </a>
-        
-            
-            
-                
-                 
-                     
-                
-            
 
-            <a class="mdui-ripple" href="/categories/Ubuntu/">
-                <div class="bg" style="background-image:url(http://api.mtyqx.cn/tapi/random.php?1513231265465)"></div>
-                <h1>Ubuntu</h1>
-            </a>
-        
-            
-            
-                
-                 
-                     
-                
-            
-                
-                
-            
-
-            <a class="mdui-ripple" href="/categories/VPN%E6%95%99%E7%A8%8B/">
-                <div class="bg" style="background-image:url(http://api.mtyqx.cn/tapi/random.php?456)"></div>
-                <h1>VPN教程</h1>
-            </a>
-        
-            
-            
-                
-                 
-                     
-                
-            
-                
-                
-            
-
-            <a class="mdui-ripple" href="/categories/hexo%E5%8D%9A%E5%AE%A2/">
-                <div class="bg" style="background-image:url(http://api.mtyqx.cn/tapi/random.php?5461651651)"></div>
-                <h1>hexo博客</h1>
-            </a>
-        
-            
-            
-                
-                 
-                     
-                
-            
-                
-                
-            
-                
-                
-            
-                
-                
-            
-                
-                
-            
-                
-                
-            
-                
-                
-            
-
-            <a class="mdui-ripple" href="/categories/%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7/">
-                <div class="bg" style="background-image:url(http://api.mtyqx.cn/tapi/random.php?8562)"></div>
-                <h1>实用技巧</h1>
-            </a>
-        
-            
-            
-                
-                 
-                     
-                
-            
-                
-                
-            
-                
-                
-            
-
-            <a class="mdui-ripple" href="/categories/%E9%A1%B5%E9%9D%A2%E7%BE%8E%E5%8C%96/">
-                <div class="bg" style="background-image:url(http://api.mtyqx.cn/tapi/random.php?1513231265465)"></div>
-                <h1>页面美化</h1>
-            </a>
-        
-    </div>
+  
+  
+  <div class="nexmoe-post-meta nexmoe-rainbow">
     
-    <article>
-        
-        
+        <a class="nexmoefont icon-appstore-fill -link" href="/categories/%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7/">实用技巧</a>
+    
+    
+        <a class="nexmoefont icon-tag-fill -none-link" href="/tags/%E5%B7%A5%E5%85%B7/" rel="tag">工具</a>
+    
+</div>
 
-        
-            <h2>2023</h2>
-            <ul>
-            
-                <li><span>09-03</span><a href="/2023/09/03/LRC%E8%BD%ACSRT%E5%AD%97%E5%B9%95%E5%B0%8F%E5%B7%A5%E5%85%B7/" >LRC转SRT字幕小工具</a></li>
-            
-                <li><span>07-08</span><a href="/2023/07/08/stable-diffusion%E5%AE%89%E8%A3%85%E5%85%A8%E6%B5%81%E7%A8%8B-%E5%AE%89%E8%A3%85%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/" >stable-diffusion安装全流程+安装问题解决</a></li>
-            
-                <li><span>02-23</span><a href="/2023/02/23/ChatGPT-openAI%E6%B3%A8%E5%86%8C%E6%95%99%E7%A8%8B/" >ChatGPT openAI注册教程</a></li>
-            
-            </ul>
-        
-            <h2>2022</h2>
-            <ul>
-            
-                <li><span>12-03</span><a href="/2022/12/03/Ubuntu-%E4%BF%AE%E6%94%B9%E9%BC%A0%E6%A0%87%E5%85%89%E6%A0%87%E4%B8%BB%E9%A2%98%E5%B9%B6%E5%85%A8%E5%B1%80%E7%94%9F%E6%95%88%E7%9A%84%E6%96%B9%E6%B3%95/" >Ubuntu 修改鼠标光标主题并全局生效的方法</a></li>
-            
-                <li><span>10-27</span><a href="/2022/10/27/Github%E4%B8%BB%E9%A1%B5%E7%BE%8E%E5%8C%96/" >Github主页美化</a></li>
-            
-                <li><span>10-18</span><a href="/2022/10/18/Windows%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2%E5%B7%A5%E5%85%B7%E8%BF%9E%E6%8E%A5Ubuntu%E7%B3%BB%E7%BB%9F/" >Windows远程桌面工具连接Ubuntu系统</a></li>
-            
-                <li><span>10-15</span><a href="/2022/10/15/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7%E2%80%94%E2%80%94cpolar/" >内网穿透工具——cpolar</a></li>
-            
-                <li><span>10-15</span><a href="/2022/10/15/SakuraFrp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E5%B7%A5%E5%85%B7/" >内网穿透工具——SakuraFrp</a></li>
-            
-                <li><span>06-20</span><a href="/2022/06/20/hexo-gitee-github%E8%BF%9B%E8%A1%8C%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/" >hexo+gitee/github进行博客搭建</a></li>
-            
-                <li><span>06-12</span><a href="/2022/06/12/%E5%8D%9A%E5%AE%A2%E4%B8%BB%E9%A1%B5%E7%BE%8E%E5%8C%96/" >博客主页美化</a></li>
-            
-                <li><span>04-15</span><a href="/2022/04/15/ubuntu20-04%E9%85%8D%E7%BD%AEQv2ray/" >ubuntu20.04配置Qv2ray</a></li>
-            
-                <li><span>04-15</span><a href="/2022/04/15/windows%E4%B8%8B%E9%85%8D%E7%BD%AEQv2ray/" >windows下配置Qv2ray</a></li>
-            
-            </ul>
-        
-    </article>
-</section>
+  
+      <div class="nexmoe-post-footer">
+           <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css"> <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script> <div id="gitalk-container"></div> <script type="text/javascript"> const gitalk = new Gitalk({ clientID: "55ea9dc4a0241f57729b", clientSecret: "20342a99dc08db6dbaa9d696c38404352353ad3a", repo: "CHH3213.github.io",       owner: "CHH3213", admin: "CHH3213", id: decodeURI(window.location.pathname)     }); gitalk.render("gitalk-container") </script> 
+      </div>
+  
+</div>
             <div class="nexmoe-post-right">
               <div class="nexmoe-fixed">
                   <div class="nexmoe-tool"> 
@@ -575,6 +600,13 @@
                       
                         
                           
+                          
+                              <button class="mdui-fab catalog" style="overflow:unset;">
+                                  <i class="nexmoefont icon-i-catalog"></i>
+                                  <div class="nexmoe-toc">
+                                      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#LRC%E6%96%87%E4%BB%B6%E8%BD%ACSRT%E5%AD%97%E5%B9%95%E6%96%87%E4%BB%B6"><span class="toc-number">1.</span> <span class="toc-text">LRC文件转SRT字幕文件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95"><span class="toc-number">1.1.</span> <span class="toc-text">使用方法</span></a></li></ol></li></ol>
+                                  </div>
+                              </button>
                           
                           
                       
@@ -611,7 +643,7 @@
 
  
 
-<script async src="/js/app.js?v=1693748227830"></script>
+<script async src="/js/app.js?v=1693748227851"></script>
 
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2058306854838448" crossorigin="anonymous"></script>
 
