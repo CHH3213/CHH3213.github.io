@@ -24,7 +24,7 @@
 <meta property="og:image" content="https://chh3213.github.io/2023/11/12/linux%E7%B3%BB%E7%BB%9F%E9%85%8D%E7%BD%AEclash-gui%E7%95%8C%E9%9D%A2/1699773939367.png">
 <meta property="og:image" content="https://chh3213.github.io/2023/11/12/linux%E7%B3%BB%E7%BB%9F%E9%85%8D%E7%BD%AEclash-gui%E7%95%8C%E9%9D%A2/1699774391577.png">
 <meta property="article:published_time" content="2023-11-12T06:46:19.000Z">
-<meta property="article:modified_time" content="2023-11-12T08:39:34.632Z">
+<meta property="article:modified_time" content="2023-11-12T08:54:24.633Z">
 <meta property="article:author" content="chh3213">
 <meta property="article:tag" content="clash">
 <meta name="twitter:card" content="summary">
@@ -35,15 +35,15 @@
 <link rel="stylesheet" href="/lib/mdui_043tiny/mdui.css">
 
 
-    <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1699778592536">
+    <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1699779275607">
     
         <link rel="stylesheet" href="//at.alicdn.com/t/c/font_3495394_enbrz0a58y.css">
     
-    <link rel="stylesheet" href="/css/style.css?v=1699778592536">
+    <link rel="stylesheet" href="/css/style.css?v=1699779275607">
 
     
         
-            <link rel="stylesheet" href="/custom.css?v=1699778592536">
+            <link rel="stylesheet" href="/custom.css?v=1699779275607">
         
     
     <!-- <link href="https://cdn.bootcss.com/highlight.js/8.0/styles/monokai_sublime.min.css" rel="stylesheet"> -->
@@ -290,7 +290,7 @@ mjx-container[display="true"] + br {
 </div>
 
 
-	<script async src="/js/search.js?v=1699778592537"></script>
+	<script async src="/js/search.js?v=1699779275608"></script>
 
 
 
@@ -541,8 +541,8 @@ mjx-container[display="true"] + br {
     <a><i class="nexmoefont icon-calendar-fill"></i>2023年11月12日</a>
 </div>
       
-    <a><i class="nexmoefont icon-areachart"></i>约713字</a>
-    <a><i class="nexmoefont icon-time-circle-fill"></i>预计需要2分钟</a>
+    <a><i class="nexmoefont icon-areachart"></i>约739字</a>
+    <a><i class="nexmoefont icon-time-circle-fill"></i>预计需要3分钟</a>
     <a><i class="nexmoefont icon-areachart"></i>
         <span class="archive-article-date">阅读量
             <span id="busuanzi_value_page_pv"></span></span></a>
@@ -550,7 +550,7 @@ mjx-container[display="true"] + br {
 
       <p>Linux 系统下配置clash gui界面。</p>
 <span id="more"></span>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>最久不久原作者 的github仓库把clash for windows release删除了。目前我们还能使用的客户端有以下：</p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>不久前原作者 的github仓库把clash for windows release删除了。目前我们还能使用的客户端有以下：</p>
 <h3 id="基于-clash-meta-内核的"><a href="#基于-clash-meta-内核的" class="headerlink" title="基于 clash.meta 内核的"></a>基于 clash.meta 内核的</h3><ul>
 <li>Clash Verge（全平台 - 归档但不影响）：<a target="_blank" rel="noopener" href="https://github.com/zzzgydi/clash-verge">https://github.com/zzzgydi/clash-verge</a></li>
 <li>clashX.meta(macos):<a target="_blank" rel="noopener" href="https://github.com/MetaCubeX/ClashX.Meta">https://github.com/MetaCubeX/ClashX.Meta</a></li>
@@ -567,7 +567,7 @@ mjx-container[display="true"] + br {
 <p>另外，附上原库的archive镜像的：</p>
 <p><a target="_blank" rel="noopener" href="https://web.archive.org/web/20231025075452/https://github.com/Fndroid/clash_for_windows_pkg/releases">https://web.archive.org/web/20231025075452/https://github.com/Fndroid/clash_for_windows_pkg/releases</a></p>
 <h2 id="Linux配置clash-for-windows"><a href="#Linux配置clash-for-windows" class="headerlink" title="Linux配置clash for windows"></a>Linux配置clash for windows</h2><h3 id="安装步骤"><a href="#安装步骤" class="headerlink" title="安装步骤"></a>安装步骤</h3><ol>
-<li><p>首先，下载Clash.for.Windows-0.20.39-x64-linux.tar.gz，下载完成后终端进入下载目录运行以下命令进行解压：</p>
+<li><p>首先，下载<a target="_blank" rel="noopener" href="https://github.com/CHH3213/clash-for-windows-backup/releases/tag/v0.20.39">Clash.for.Windows-0.20.39-x64-linux.tar.gz</a>，下载完成后终端进入下载目录运行以下命令进行解压：&gt;</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c++">tar zxvf Clash.<span class="hljs-keyword">for</span>.Windows<span class="hljs-number">-0.20</span><span class="hljs-number">.39</span>-x64-linux.tar.gz<br></code></pre></td></tr></table></figure></li>
 <li><p>解压完成后，可以将文件夹改名并移到<code>/opt/</code>：目录中（一般我们把安装的软件放在这里）：</p>
  <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c++">mv Clash\ <span class="hljs-keyword">for</span>\ Windows<span class="hljs-number">-0.20</span><span class="hljs-number">.39</span>-x64-linux /opt/clash-GUI<br></code></pre></td></tr></table></figure></li>
@@ -582,13 +582,16 @@ mjx-container[display="true"] + br {
 <li>创建<code>clash_gui.desktop</code>：<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">vim clash_gui.desktop<br></code></pre></td></tr></table></figure>
 输入以下内容<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs vim">[Desktop Entry]<br> Name=clash <span class="hljs-keyword">for</span> linux<br> Icon=/<span class="hljs-keyword">opt</span>/clash-GUI/clash/clash.png<br> Exec=/<span class="hljs-keyword">opt</span>/clash-GUI/clash/cfw<br> Type=Application<br></code></pre></td></tr></table></figure>
 即如下：<br><img data-fancybox="gallery" src="/2023/11/12/linux%E7%B3%BB%E7%BB%9F%E9%85%8D%E7%BD%AEclash-gui%E7%95%8C%E9%9D%A2/1699773939367.png" alt="1699773939367" data-caption="1699773939367" loading="lazy"><br> 需要根据自己的情况修改的只有以下两个字段：<ul>
-<li><code>Icon</code> 是桌面图标所在地址，可以自己网上找一个clash图标下载即可。</li>
-<li><code>Exec</code> 表示<code>cfw</code>命令，这里我的<code>cfw</code>文件是在<code>/opt/clash-GUI/clash/</code>下，所以我的执行命令是如上所是。<br>然后保存退出。</li>
+<li><code>Icon</code> 是桌面图标所在地址，可以自己网上找一个clash图标下载即可，例如我的图标是：<a target="_blank" rel="noopener" href="https://github.com/CHH3213/clash-for-windows-backup/blob/main/clash.png。">https://github.com/CHH3213/clash-for-windows-backup/blob/main/clash.png。</a></li>
+</ul>
+<ul>
+<li><code>Exec</code> 表示<code>cfw</code>命令，这里我的<code>cfw</code>文件是在<code>/opt/clash-GUI/clash/</code>下，所以我的执行命令如上所是。<br>然后保存退出。</li>
 </ul>
 </li>
 <li>最后增加权限:<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-built_in">chmod</span> a+x clash_gui.desktop<br></code></pre></td></tr></table></figure>
- 然后便可在应用程序中看到clash的桌面图标了，下次我们直接点击桌面图标进入即可，另外右键图标可以选择加入图标。<br> <img data-fancybox="gallery" src="/2023/11/12/linux%E7%B3%BB%E7%BB%9F%E9%85%8D%E7%BD%AEclash-gui%E7%95%8C%E9%9D%A2/1699774391577.png" alt="1699774391577" data-caption="1699774391577" loading="lazy"></li>
+ 然后便可在应用程序中看到clash的桌面图标了，下次我们直接点击桌面图标进入即可，右键图标还可以选择加入图标。<br> <img data-fancybox="gallery" src="/2023/11/12/linux%E7%B3%BB%E7%BB%9F%E9%85%8D%E7%BD%AEclash-gui%E7%95%8C%E9%9D%A2/1699774391577.png" alt="1699774391577" data-caption="1699774391577" loading="lazy"></li>
 </ol>
+<p>以上就是配置过程啦~~~</p>
 
       
   </article>
@@ -677,7 +680,7 @@ mjx-container[display="true"] + br {
 
  
 
-<script async src="/js/app.js?v=1699778592544"></script>
+<script async src="/js/app.js?v=1699779275615"></script>
 
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2058306854838448" crossorigin="anonymous"></script>
 
