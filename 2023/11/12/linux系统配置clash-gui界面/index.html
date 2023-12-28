@@ -23,8 +23,10 @@
 <meta property="og:image" content="https://chh3213.github.io/2023/11/12/linux%E7%B3%BB%E7%BB%9F%E9%85%8D%E7%BD%AEclash-gui%E7%95%8C%E9%9D%A2/1699773468319.png">
 <meta property="og:image" content="https://chh3213.github.io/2023/11/12/linux%E7%B3%BB%E7%BB%9F%E9%85%8D%E7%BD%AEclash-gui%E7%95%8C%E9%9D%A2/1699773939367.png">
 <meta property="og:image" content="https://chh3213.github.io/2023/11/12/linux%E7%B3%BB%E7%BB%9F%E9%85%8D%E7%BD%AEclash-gui%E7%95%8C%E9%9D%A2/1699774391577.png">
+<meta property="og:image" content="https://chh3213.github.io/2023/11/12/linux%E7%B3%BB%E7%BB%9F%E9%85%8D%E7%BD%AEclash-gui%E7%95%8C%E9%9D%A2/1703731024213.png">
+<meta property="og:image" content="https://chh3213.github.io/2023/11/12/linux%E7%B3%BB%E7%BB%9F%E9%85%8D%E7%BD%AEclash-gui%E7%95%8C%E9%9D%A2/1703731116811.png">
 <meta property="article:published_time" content="2023-11-12T06:46:19.000Z">
-<meta property="article:modified_time" content="2023-11-12T08:54:24.633Z">
+<meta property="article:modified_time" content="2023-12-28T02:52:01.899Z">
 <meta property="article:author" content="chh3213">
 <meta property="article:tag" content="clash">
 <meta name="twitter:card" content="summary">
@@ -35,15 +37,15 @@
 <link rel="stylesheet" href="/lib/mdui_043tiny/mdui.css">
 
 
-    <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1699780261926">
+    <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1703731996269">
     
         <link rel="stylesheet" href="//at.alicdn.com/t/c/font_3495394_enbrz0a58y.css">
     
-    <link rel="stylesheet" href="/css/style.css?v=1699780261926">
+    <link rel="stylesheet" href="/css/style.css?v=1703731996269">
 
     
         
-            <link rel="stylesheet" href="/custom.css?v=1699780261926">
+            <link rel="stylesheet" href="/custom.css?v=1703731996269">
         
     
     <!-- <link href="https://cdn.bootcss.com/highlight.js/8.0/styles/monokai_sublime.min.css" rel="stylesheet"> -->
@@ -290,7 +292,7 @@ mjx-container[display="true"] + br {
 </div>
 
 
-	<script async src="/js/search.js?v=1699780261928"></script>
+	<script async src="/js/search.js?v=1703731996271"></script>
 
 
 
@@ -541,7 +543,7 @@ mjx-container[display="true"] + br {
     <a><i class="nexmoefont icon-calendar-fill"></i>2023年11月12日</a>
 </div>
       
-    <a><i class="nexmoefont icon-areachart"></i>约739字</a>
+    <a><i class="nexmoefont icon-areachart"></i>约903字</a>
     <a><i class="nexmoefont icon-time-circle-fill"></i>预计需要3分钟</a>
     <a><i class="nexmoefont icon-areachart"></i>
         <span class="archive-article-date">阅读量
@@ -592,6 +594,12 @@ mjx-container[display="true"] + br {
  然后便可在应用程序中看到clash的桌面图标了，下次我们直接点击桌面图标进入即可，右键图标还可以选择加入图标。<br> <img data-fancybox="gallery" src="/2023/11/12/linux%E7%B3%BB%E7%BB%9F%E9%85%8D%E7%BD%AEclash-gui%E7%95%8C%E9%9D%A2/1699774391577.png" alt="1699774391577" data-caption="1699774391577" loading="lazy"></li>
 </ol>
 <p>以上就是配置过程啦~~~</p>
+<h3 id="开启系统代理"><a href="#开启系统代理" class="headerlink" title="开启系统代理"></a>开启系统代理</h3><p>不同于windows版本的clash-gui，linux下的系统代理需要自己在系统的网络中进行手动设置，设置过程如下：</p>
+<p>打开ubuntu的系统设置，选择<code>网络</code>—&gt;<code>网络代理</code></p>
+<p><img data-fancybox="gallery" src="/2023/11/12/linux%E7%B3%BB%E7%BB%9F%E9%85%8D%E7%BD%AEclash-gui%E7%95%8C%E9%9D%A2/1703731024213.png" alt="1703731024213" data-caption="1703731024213" loading="lazy"></p>
+<p>将网络代理切换为<code>手动</code>，如图所示，将HTTP和HTTPS代理端口填写为上面获取到的HTTP端口，Socks主机端口号也填写成如下形式。</p>
+<p><img data-fancybox="gallery" src="/2023/11/12/linux%E7%B3%BB%E7%BB%9F%E9%85%8D%E7%BD%AEclash-gui%E7%95%8C%E9%9D%A2/1703731116811.png" alt="1703731116811" data-caption="1703731116811" loading="lazy"></p>
+<p>这样系统代理部分就完成了，之后只要在clash中选择节点通常就可以使用了。如果需要关闭代理，那么同样把<code>网络代理</code>从<code>手动</code>改为<code>关闭</code>即可。</p>
 
       
   </article>
@@ -641,7 +649,7 @@ mjx-container[display="true"] + br {
                               <button class="mdui-fab catalog" style="overflow:unset;">
                                   <i class="nexmoefont icon-i-catalog"></i>
                                   <div class="nexmoe-toc">
-                                      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E-clash-meta-%E5%86%85%E6%A0%B8%E7%9A%84"><span class="toc-number">1.1.</span> <span class="toc-text">基于 clash.meta 内核的</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B6%E4%BB%96"><span class="toc-number">1.2.</span> <span class="toc-text">其他</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#clash-for-windows-%E5%A4%87%E4%BB%BD"><span class="toc-number">1.3.</span> <span class="toc-text">clash for windows 备份</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Linux%E9%85%8D%E7%BD%AEclash-for-windows"><span class="toc-number">2.</span> <span class="toc-text">Linux配置clash for windows</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E6%AD%A5%E9%AA%A4"><span class="toc-number">2.1.</span> <span class="toc-text">安装步骤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E6%A1%8C%E9%9D%A2%E5%9B%BE%E6%A0%87"><span class="toc-number">2.2.</span> <span class="toc-text">配置桌面图标</span></a></li></ol></li></ol>
+                                      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E-clash-meta-%E5%86%85%E6%A0%B8%E7%9A%84"><span class="toc-number">1.1.</span> <span class="toc-text">基于 clash.meta 内核的</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B6%E4%BB%96"><span class="toc-number">1.2.</span> <span class="toc-text">其他</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#clash-for-windows-%E5%A4%87%E4%BB%BD"><span class="toc-number">1.3.</span> <span class="toc-text">clash for windows 备份</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Linux%E9%85%8D%E7%BD%AEclash-for-windows"><span class="toc-number">2.</span> <span class="toc-text">Linux配置clash for windows</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E6%AD%A5%E9%AA%A4"><span class="toc-number">2.1.</span> <span class="toc-text">安装步骤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E6%A1%8C%E9%9D%A2%E5%9B%BE%E6%A0%87"><span class="toc-number">2.2.</span> <span class="toc-text">配置桌面图标</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%80%E5%90%AF%E7%B3%BB%E7%BB%9F%E4%BB%A3%E7%90%86"><span class="toc-number">2.3.</span> <span class="toc-text">开启系统代理</span></a></li></ol></li></ol>
                                   </div>
                               </button>
                           
@@ -680,7 +688,7 @@ mjx-container[display="true"] + br {
 
  
 
-<script async src="/js/app.js?v=1699780261940"></script>
+<script async src="/js/app.js?v=1703731996279"></script>
 
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2058306854838448" crossorigin="anonymous"></script>
 
