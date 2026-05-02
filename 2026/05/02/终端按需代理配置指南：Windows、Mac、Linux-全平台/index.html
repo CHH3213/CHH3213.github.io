@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+
+<head>
+    
+    <title>终端按需代理配置指南：Windows、Mac、Linux 全平台 - 一半是火一半是光的博客</title>
+    <meta charset="UTF-8">
+    <meta name="keywords" content="强化学习,自动驾驶,规划控制,编程,C++,Java">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+    
+    <link rel="shortcut icon" href="https://s2.loli.net/2022/10/27/ifRX1BdH46hmTlr.png" type="image/png" />
+    <meta name="description" content="在开发过程中，我们经常需要临时通过代理访问外网（如下载依赖、拉取 Git 仓库），但又不希望代理常驻后台影响正常上网。本文介绍一种随开随关、终端级、不污染系统环境变量的代理配置方案，覆盖 Windows (PowerShell &#x2F; CMD)、Mac 和 Ubuntu。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="终端按需代理配置指南：Windows、Mac、Linux 全平台">
+<meta property="og:url" content="https://chh3213.github.io/2026/05/02/%E7%BB%88%E7%AB%AF%E6%8C%89%E9%9C%80%E4%BB%A3%E7%90%86%E9%85%8D%E7%BD%AE%E6%8C%87%E5%8D%97%EF%BC%9AWindows%E3%80%81Mac%E3%80%81Linux-%E5%85%A8%E5%B9%B3%E5%8F%B0/index.html">
+<meta property="og:site_name" content="一半是火一半是光的博客">
+<meta property="og:description" content="在开发过程中，我们经常需要临时通过代理访问外网（如下载依赖、拉取 Git 仓库），但又不希望代理常驻后台影响正常上网。本文介绍一种随开随关、终端级、不污染系统环境变量的代理配置方案，覆盖 Windows (PowerShell &#x2F; CMD)、Mac 和 Ubuntu。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-05-02T03:38:16.000Z">
+<meta property="article:modified_time" content="2026-05-02T03:39:52.348Z">
+<meta property="article:author" content="chh3213">
+<meta property="article:tag" content="强化学习,自动驾驶,规划控制,编程,C++,Java">
+<meta name="twitter:card" content="summary">
+    
+<link rel="stylesheet" href="/lib/fancybox/fancybox.css">
+<link rel="stylesheet" href="/lib/justifiedGallery/justifiedGallery.min.css">
+<link rel="stylesheet" href="/lib/mdui_043tiny/mdui.css">
+
+
+    <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1777693216341">
+    
+        <link rel="stylesheet" href="//at.alicdn.com/t/c/font_3495394_enbrz0a58y.css">
+    
+    <link rel="stylesheet" href="/css/style.css?v=1777693216341">
+
+    
+        
+            <link rel="stylesheet" href="/custom.css?v=1777693216341">
+        
+    
+    <!-- <link href="https://cdn.bootcss.com/highlight.js/8.0/styles/monokai_sublime.min.css" rel="stylesheet"> -->
+    <link href="/js/highlight/styles/atom-one-dark.min.css" rel="stylesheet">
+    <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/themes/prism-coy.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/plugins/line-numbers/prism-line-numbers.min.css" rel="stylesheet"> -->
+    <link rel="stylesheet" href="/css/prism.css">
+
+<meta name="generator" content="Hexo 6.1.0"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style><link rel="alternate" href="/atom.xml" title="一半是火一半是光的博客" type="application/atom+xml">
+</head>
+
+<body class="mdui-drawer-body-left">
+    <div id="nexmoe-background">
+        <div class="nexmoe-bg" style="background-image: url(https://s2.loli.net/2022/11/04/qKEnbHA6geBpthf.png)"></div>
+        <div class="mdui-appbar mdui-shadow-0">
+            <div class="mdui-toolbar">
+                <a mdui-drawer="{target: '#drawer', swipe: true}" title="menu" class="mdui-btn mdui-btn-icon mdui-ripple"><i class="mdui-icon nexmoefont icon-menu"></i></a>
+                <div class="mdui-toolbar-spacer"></div>
+                <!--<a href="javascript:;" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">search</i></a>-->
+                <a href="/" title="chh3213" class="mdui-btn mdui-btn-icon"><img src="https://img-blog.csdnimg.cn/78ebd04c9eb54d858b4aa57f4f13c04b.png" alt="chh3213"></a>
+            </div>
+        </div>
+    </div>
+    <div id="nexmoe-header">
+        <div class="nexmoe-drawer mdui-drawer" id="drawer">
+    <div class="nexmoe-avatar mdui-ripple">
+        <a href="/" title="chh3213">
+            <img src="https://img-blog.csdnimg.cn/78ebd04c9eb54d858b4aa57f4f13c04b.png" alt="chh3213" alt="chh3213">
+        </a>
+    </div>
+    <div class="nexmoe-count">
+        <div><span>文章</span>17</div>
+        <div><span>标签</span>9</div>
+        <div><span>分类</span>6</div>
+    </div>
+    <div class="nexmoe-list mdui-list" mdui-collapse="{accordion: true}">
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/" title="回到首页">
+            <i class="mdui-list-item-icon nexmoefont icon-home"></i>
+            <div class="mdui-list-item-content">
+                回到首页
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/archive.html" title="分类归档">
+            <i class="mdui-list-item-icon nexmoefont icon-container"></i>
+            <div class="mdui-list-item-content">
+                分类归档
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/study/" title="学习之旅">
+            <i class="mdui-list-item-icon nexmoefont icon-battlenet"></i>
+            <div class="mdui-list-item-content">
+                学习之旅
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" target="_blank" rel="noopener" href="https://wbo.ophir.dev/boards/chh3213" title="来涂鸦吧">
+            <i class="mdui-list-item-icon nexmoefont icon-eye-fill"></i>
+            <div class="mdui-list-item-content">
+                来涂鸦吧
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/about.html" title="关于博主">
+            <i class="mdui-list-item-icon nexmoefont icon-info-circle"></i>
+            <div class="mdui-list-item-content">
+                关于博主
+            </div>
+        </a>
+        
+    </div>
+    <aside id="nexmoe-sidebar">
+    
+        
+        <!-- 一言 -->
+<div class="nexmoe-widget-wrap">
+  <h3 class="nexmoe-widget-title">
+    一则言语
+  </h3>
+  <div class="nexmoe-widget">
+    <ul class="hitokoto-box">
+      <li id="hitokoto_text_parent" class="hitokoto-text" hitokotoCategory="">
+        <a href="#" id="hitokoto_text">
+          
+        </a>
+        <a href="#" id="hitokoto_error_text" style="display: none;">
+          
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<script>
+  let hitokotoText = document.getElementById('hitokoto_text')
+  let hitokotoErroText = document.getElementById('hitokoto_error_text')
+  let hitokotoCategory = document.getElementById('hitokoto_text_parent').getAttribute('hitokotoCategory')
+  window.onload = function () {
+    let url = 'https://v1.hitokoto.cn'
+    if (hitokotoCategory) {
+      url += '?c=' + hitokotoCategory
+    }
+    fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        hitokotoText.innerText = "「 " + data.hitokoto + " 」 from " + data.from
+        hitokotoText.href = 'https://hitokoto.cn/?uuid=' + data.uuid
+      })
+      .catch((reason) => {
+        console.error(11, reason)
+        hitokotoText.style.display = 'none'
+        hitokotoErroText.style.display = 'block'
+      })
+  }
+</script>
+    
+        
+        <div class="nexmoe-widget-wrap">
+    <div class="nexmoe-widget nexmoe-search">
+        
+            <form id="search_form">
+                <label><input class="st-default-search-input" id="search_value" name="q" type="search" placeholder="站内搜索" style="
+                    font-size: 15px !important;
+                    height: 56px !important;
+                    background-image: none;
+                "></label>
+            </form>
+         
+    </div>
+</div>
+
+
+	<script async src="/js/search.js?v=1777693216343"></script>
+
+
+
+    
+        
+        <div class="nexmoe-widget-wrap">
+	<div class="nexmoe-widget nexmoe-social">
+		<a
+			class="mdui-ripple"
+			href="https://github.com/CHH3213"
+			target="_blank"
+			mdui-tooltip="{content: 'GitHub'}"
+			style="
+				color: rgb(25, 23, 23);
+				background-color: rgba(25, 23, 23, .1);
+			"
+		>
+			<i
+				class="nexmoefont icon-github"
+			></i> </a
+		><a
+			class="mdui-ripple"
+			href="https://blog.csdn.net/weixin_42301220"
+			target="_blank"
+			mdui-tooltip="{content: 'CSDN'}"
+			style="
+				color: rgb(247, 132, 34);
+				background-color: rgba(247, 132, 34, .1);
+			"
+		>
+			<i
+				class="nexmoefont icon-csdn1"
+			></i> </a
+		><a
+			class="mdui-ripple"
+			href="mailto:1213472983@qq.com"
+			target="_blank"
+			mdui-tooltip="{content: '邮箱'}"
+			style="
+				color: rgb(29, 161, 242);
+				background-color: rgba(29, 161, 242, .1);
+			"
+		>
+			<i
+				class="nexmoefont icon-mail-fill"
+			></i> </a
+		><a
+			class="mdui-ripple"
+			href="/atom.xml"
+			target="_blank"
+			mdui-tooltip="{content: 'RSS'}"
+			style="
+				color: rgb(235, 152, 0);
+				background-color: rgba(235, 152, 0, .15);
+			"
+		>
+			<i
+				class="nexmoefont icon-rss"
+			></i> </a
+		><a
+			class="mdui-ripple"
+			href="https://space.bilibili.com/3493143542499415?spm_id_from=333.999.0.0"
+			target="_blank"
+			mdui-tooltip="{content: '哔哩哔哩'}"
+			style="
+				color: rgb(231, 106, 141);
+				background-color: rgba(231, 106, 141, .1);
+			"
+		>
+			<i
+				class="nexmoefont icon-bilibili"
+			></i> </a
+		>
+	</div>
+</div>
+
+    
+        
+        
+  <div class="nexmoe-widget-wrap">
+    <h3 class="nexmoe-widget-title">文章分类</h3>
+    <div class="nexmoe-widget">
+
+      <ul class="category-list">
+
+        
+
+
+        
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/AI/">AI</a>
+          <span class="category-list-count">4</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/Ubuntu/">Ubuntu</a>
+          <span class="category-list-count">1</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/VPN教程/">VPN教程</a>
+          <span class="category-list-count">3</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/hexo博客/">hexo博客</a>
+          <span class="category-list-count">2</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/实用技巧/">实用技巧</a>
+          <span class="category-list-count">9</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/页面美化/">页面美化</a>
+          <span class="category-list-count">3</span>
+        </li>
+
+        
+      </ul>
+
+    </div>
+  </div>
+
+
+    
+        
+        
+  <div class="nexmoe-widget-wrap">
+    <div id="randomtagcloud" class="nexmoe-widget tagcloud nexmoe-rainbow">
+      <a href="/tags/AI/" style="font-size: 20px;">AI</a> <a href="/tags/Remote/" style="font-size: 10px;">Remote</a> <a href="/tags/VPN/" style="font-size: 15px;">VPN</a> <a href="/tags/chatgpt/" style="font-size: 10px;">chatgpt</a> <a href="/tags/clash/" style="font-size: 10px;">clash</a> <a href="/tags/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/" style="font-size: 15px;">内网穿透</a> <a href="/tags/%E5%8D%9A%E5%AE%A2/" style="font-size: 15px;">博客</a> <a href="/tags/%E5%B7%A5%E5%85%B7/" style="font-size: 15px;">工具</a> <a href="/tags/%E7%BE%8E%E5%8C%96/" style="font-size: 20px;">美化</a>
+    </div>
+    
+      <script>
+        var maxTagcloud = parseInt(17);
+        var tags_length = parseInt(9);
+        var tags_arr = [];
+        for(var i = 0; i < tags_length; i++){
+          tags_arr.push(i);
+        }
+        tags_arr.sort(function (l, r) {
+          return Math.random() > 0.5 ? -1 : 1;
+        });
+        tags_arr = tags_arr.slice(0, maxTagcloud < tags_length ? tags_length - maxTagcloud : 0);
+        for(var tag_i = 0; tag_i < tags_arr.length; tag_i++){
+          document.getElementById("randomtagcloud").children[tags_arr[tag_i]].style.display = 'none';
+        }
+      </script>
+    
+  </div>
+
+    
+        
+        
+  <div class="nexmoe-widget-wrap">
+    <h3 class="nexmoe-widget-title">文章归档</h3>
+    <div class="nexmoe-widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/">2026</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/">2025</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/">2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/">2023</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/">2022</a><span class="archive-list-count">9</span></li></ul>
+    </div>
+  </div>
+
+
+
+    
+        
+        
+  <div class="nexmoe-widget-wrap">
+    <h3 class="nexmoe-widget-title">最新文章</h3>
+    <div class="nexmoe-widget">
+      <ul>
+        
+          <li>
+            <a href="/2026/05/02/%E7%BB%88%E7%AB%AF%E6%8C%89%E9%9C%80%E4%BB%A3%E7%90%86%E9%85%8D%E7%BD%AE%E6%8C%87%E5%8D%97%EF%BC%9AWindows%E3%80%81Mac%E3%80%81Linux-%E5%85%A8%E5%B9%B3%E5%8F%B0/">终端按需代理配置指南：Windows、Mac、Linux 全平台</a>
+          </li>
+        
+          <li>
+            <a href="/2026/01/02/ComfyUI-%E5%8E%9F%E7%94%9F%E5%B7%A5%E4%BD%9C%E6%B5%81%E4%BD%BF%E7%94%A8/">ComfyUI 原生工作流使用</a>
+          </li>
+        
+          <li>
+            <a href="/2025/11/16/%E5%88%9B%E5%BB%BA%E6%97%A0%E9%99%90%E7%9A%84%E5%85%8D%E8%B4%B9%E5%9B%BE%E5%BA%8A/">使用cloudflare 创建无限的免费图床</a>
+          </li>
+        
+          <li>
+            <a href="/2024/02/03/GPT-SoVITS-1%E5%88%86%E9%92%9F%E5%BE%AE%E8%B0%83%E4%B8%AD%E6%96%87%E5%A3%B0%E9%9F%B3%E5%85%8B%E9%9A%86%E6%95%99%E7%A8%8B/">GPT-SoVITS | 1分钟微调中文声音克隆教程</a>
+          </li>
+        
+          <li>
+            <a href="/2023/11/12/linux%E7%B3%BB%E7%BB%9F%E9%85%8D%E7%BD%AEclash-gui%E7%95%8C%E9%9D%A2/">linux系统配置clash-gui界面</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+    
+        
+</aside>
+    <div class="nexmoe-copyright">
+        &copy; 2026 chh3213
+        Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+        & <a href="https://github.com/theme-nexmoe/hexo-theme-nexmoe" target="_blank">Nexmoe</a>
+        
+        <!-- 添加访问数 -->
+        <div style="font-size: 13px">
+            <link rel="stylesheet" href="https://widget.heweather.net/standard/static/css/he-standard.css?v=1.4.0">
+            <script src="https://widget.heweather.net/standard/static/js/he-standard.js?v=1.4.0"></script>
+            <script async="" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            本站总访问量 <a id="busuanzi_value_site_pv"></a> 次<br>
+            本站访客数<a id="busuanzi_value_site_uv"></a>人次
+        </div>
+    </div>
+
+<!--自定义看板娘-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<script src="/live2d-widget/autoload.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css" />
+
+</div><!-- .nexmoe-drawer -->
+    </div>
+    <div id="nexmoe-content">
+        <div class="nexmoe-primary">
+            <div class="nexmoe-post">
+
+  <article>
+      
+          <div class="nexmoe-post-cover" style="padding-bottom: 62.5%;"> 
+              <img src="http://api.mtyqx.cn/tapi/random.php?885522336" alt="终端按需代理配置指南：Windows、Mac、Linux 全平台" loading="lazy">
+              <h1>终端按需代理配置指南：Windows、Mac、Linux 全平台</h1>
+          </div>
+      
+      
+      <div class="nexmoe-post-meta nexmoe-rainbow" style="margin:10px 0!important;">
+    <a><i class="nexmoefont icon-calendar-fill"></i>2026年05月02日</a>
+</div>
+      
+    <a><i class="nexmoefont icon-areachart"></i>约1k字</a>
+    <a><i class="nexmoefont icon-time-circle-fill"></i>预计需要4分钟</a>
+    <a><i class="nexmoefont icon-areachart"></i>
+        <span class="archive-article-date">阅读量
+            <span id="busuanzi_value_page_pv"></span></span></a>
+
+
+      <p>在开发过程中，我们经常需要临时通过代理访问外网（如下载依赖、拉取 Git 仓库），但又不希望代理常驻后台影响正常上网。本文介绍一种<strong>随开随关、终端级、不污染系统环境变量</strong>的代理配置方案，覆盖 Windows (PowerShell / CMD)、Mac 和 Ubuntu。</p>
+<span id="more"></span>
+<hr>
+<h2 id="核心思路"><a href="#核心思路" class="headerlink" title="核心思路"></a>核心思路</h2><p>无论哪个平台，原理都一致：<strong>在当前 Shell 会话中注入环境变量</strong>，关闭终端后自动失效。</p>
+<ul>
+<li><strong>开启代理</strong>：设置 <code>HTTP_PROXY</code>、<code>HTTPS_PROXY</code>、<code>ALL_PROXY</code></li>
+<li><strong>关闭代理</strong>：清除上述变量</li>
+<li><strong>作用范围</strong>：仅当前终端窗口，不影响浏览器和其他应用</li>
+</ul>
+<hr>
+<h2 id="一、Windows-PowerShell（推荐）"><a href="#一、Windows-PowerShell（推荐）" class="headerlink" title="一、Windows PowerShell（推荐）"></a>一、Windows PowerShell（推荐）</h2><p>PowerShell 支持通过 <code>$PROFILE</code> 配置文件持久化自定义函数，配置一次，永久使用。</p>
+<h3 id="1-打开配置文件"><a href="#1-打开配置文件" class="headerlink" title="1. 打开配置文件"></a>1. 打开配置文件</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs powershell"><br><span class="hljs-keyword">if</span> (!(<span class="hljs-built_in">Test-Path</span><span class="hljs-variable">$PROFILE</span>)) { <span class="hljs-built_in">New-Item</span><span class="hljs-literal">-Path</span> <span class="hljs-variable">$PROFILE</span><span class="hljs-literal">-ItemType</span> File <span class="hljs-literal">-Force</span> }; notepad <span class="hljs-variable">$PROFILE</span><br><br></code></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>注意</strong>：如果你同时使用 Windows PowerShell 5.1 和 PowerShell 7，两者的 <code>$PROFILE</code> 路径不同，需分别在各自终端中配置。</p>
+</blockquote>
+<h3 id="2-添加函数"><a href="#2-添加函数" class="headerlink" title="2. 添加函数"></a>2. 添加函数</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs powershell"><br>functionsetproxy {<br><br>    <span class="hljs-variable">$env:HTTP_PROXY</span>   =<span class="hljs-string">"http://127.0.0.1:7890"</span><br><br>    <span class="hljs-variable">$env:HTTPS_PROXY</span>  =<span class="hljs-string">"http://127.0.0.1:7890"</span><br><br>    <span class="hljs-variable">$env:ALL_PROXY</span>    =<span class="hljs-string">"http://127.0.0.1:7890"</span><br><br>    <span class="hljs-built_in">Write-Host</span><span class="hljs-string">"Proxy enabled: <span class="hljs-variable">$</span>(<span class="hljs-variable">$env:HTTP_PROXY</span>)"</span><span class="hljs-literal">-ForegroundColor</span> Green<br><br>}<br><br><br>functionunsetproxy {<br><br>    <span class="hljs-built_in">Remove-Item</span> Env:\HTTP_PROXY   <span class="hljs-literal">-ErrorAction</span> SilentlyContinue<br><br>    <span class="hljs-built_in">Remove-Item</span> Env:\HTTPS_PROXY  <span class="hljs-literal">-ErrorAction</span> SilentlyContinue<br><br>    <span class="hljs-built_in">Remove-Item</span> Env:\ALL_PROXY    <span class="hljs-literal">-ErrorAction</span> SilentlyContinue<br><br>    <span class="hljs-built_in">Write-Host</span><span class="hljs-string">"Proxy disabled"</span><span class="hljs-literal">-ForegroundColor</span> Yellow<br><br>}<br><br></code></pre></td></tr></table></figure>
+<h3 id="3-加载配置"><a href="#3-加载配置" class="headerlink" title="3. 加载配置"></a>3. 加载配置</h3><p>保存后，执行以下命令立即生效（或重启终端）：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs powershell"><br>. <span class="hljs-variable">$PROFILE</span><br><br></code></pre></td></tr></table></figure>
+<h3 id="4-用法"><a href="#4-用法" class="headerlink" title="4. 用法"></a>4. 用法</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs powershell"><br>setproxy    <span class="hljs-comment"># 开启代理</span><br><br>unsetproxy  <span class="hljs-comment"># 关闭代理</span><br><br></code></pre></td></tr></table></figure>
+<hr>
+<h2 id="二、Windows-CMD"><a href="#二、Windows-CMD" class="headerlink" title="二、Windows CMD"></a>二、Windows CMD</h2><p>CMD 没有 <code>$PROFILE</code> 机制，原生不支持持久化函数。推荐编写两个批处理文件，放到系统 <code>PATH</code> 中的某个目录（如 <code>C:\Tools</code>）。</p>
+<h3 id="1-创建批处理文件"><a href="#1-创建批处理文件" class="headerlink" title="1. 创建批处理文件"></a>1. 创建批处理文件</h3><p><strong><code>proxy.bat</code></strong></p>
+<figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bat"><br>@echooff<br><br><span class="hljs-built_in">set</span> HTTP_PROXY=http://<span class="hljs-number">127</span>.<span class="hljs-number">0</span>.<span class="hljs-number">0</span>.<span class="hljs-number">1</span>:<span class="hljs-number">7890</span><br><br><span class="hljs-built_in">set</span> HTTPS_PROXY=http://<span class="hljs-number">127</span>.<span class="hljs-number">0</span>.<span class="hljs-number">0</span>.<span class="hljs-number">1</span>:<span class="hljs-number">7890</span><br><br><span class="hljs-built_in">echo</span> [OK] Proxy enabled: <span class="hljs-variable">%HTTP_PROXY%</span><br><br></code></pre></td></tr></table></figure>
+<p><strong><code>unproxy.bat</code></strong></p>
+<figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bat"><br>@echooff<br><br><span class="hljs-built_in">set</span> HTTP_PROXY=<br><br><span class="hljs-built_in">set</span> HTTPS_PROXY=<br><br><span class="hljs-built_in">echo</span> [OK] Proxy disabled<br><br></code></pre></td></tr></table></figure>
+<h3 id="2-用法"><a href="#2-用法" class="headerlink" title="2. 用法"></a>2. 用法</h3><p>在 CMD 中直接输入：</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs cmd"><br>proxy       # 开启代理<br><br>unproxy     # 关闭代理<br><br></code></pre></td></tr></table></figure>
+<h3 id="3-临时设置（不改文件）"><a href="#3-临时设置（不改文件）" class="headerlink" title="3. 临时设置（不改文件）"></a>3. 临时设置（不改文件）</h3><p>如果只想临时用一次：</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs cmd"><br><span class="hljs-built_in">set</span> HTTP_PROXY=http://<span class="hljs-number">127</span>.<span class="hljs-number">0</span>.<span class="hljs-number">0</span>.<span class="hljs-number">1</span>:<span class="hljs-number">7890</span><br><br><span class="hljs-built_in">set</span> HTTPS_PROXY=http://<span class="hljs-number">127</span>.<span class="hljs-number">0</span>.<span class="hljs-number">0</span>.<span class="hljs-number">1</span>:<span class="hljs-number">7890</span><br><br></code></pre></td></tr></table></figure>
+<p>关闭 CMD 窗口后自动失效。</p>
+<hr>
+<h2 id="三、Mac-Ubuntu-zsh-bash"><a href="#三、Mac-Ubuntu-zsh-bash" class="headerlink" title="三、Mac / Ubuntu (zsh / bash)"></a>三、Mac / Ubuntu (zsh / bash)</h2><p>Mac 默认使用 <strong>zsh</strong>，Ubuntu 默认使用 <strong>bash</strong>。如果你使用 zsh，编辑 <code>~/.zshrc</code>；如果使用 bash，编辑 <code>~/.bashrc</code>。</p>
+<h3 id="1-打开配置文件-1"><a href="#1-打开配置文件-1" class="headerlink" title="1. 打开配置文件"></a>1. 打开配置文件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs bash"><br><span class="hljs-comment"># Mac / Ubuntu (zsh)</span><br><br>vim~/.zshrc<br><br><br><span class="hljs-comment"># Ubuntu (bash)</span><br><br>vim~/.bashrc<br><br></code></pre></td></tr></table></figure>
+<h3 id="2-添加函数-1"><a href="#2-添加函数-1" class="headerlink" title="2. 添加函数"></a>2. 添加函数</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs bash"><br><span class="hljs-function"><span class="hljs-title">proxy</span></span>() {<br><br>    <span class="hljs-built_in">export</span> http_proxy=<span class="hljs-string">"http://127.0.0.1:7890"</span><br><br>    <span class="hljs-built_in">export</span> https_proxy=<span class="hljs-string">"http://127.0.0.1:7890"</span><br><br>    <span class="hljs-built_in">export</span> all_proxy=<span class="hljs-string">"http://127.0.0.1:7890"</span><br><br>    <span class="hljs-built_in">export</span> HTTP_PROXY=<span class="hljs-string">"http://127.0.0.1:7890"</span><br><br>    <span class="hljs-built_in">export</span> HTTPS_PROXY=<span class="hljs-string">"http://127.0.0.1:7890"</span><br><br>    <span class="hljs-built_in">export</span> ALL_PROXY=<span class="hljs-string">"http://127.0.0.1:7890"</span><br><br>    <span class="hljs-built_in">echo</span><span class="hljs-string">"[OK] Proxy enabled: <span class="hljs-variable">$http_proxy</span>"</span><br><br>}<br><br><br><span class="hljs-function"><span class="hljs-title">unproxy</span></span>() {<br><br>    unsethttp_proxy<br><br>    unsethttps_proxy<br><br>    unsetall_proxy<br><br>    unsetHTTP_PROXY<br><br>    unsetHTTPS_PROXY<br><br>    unsetALL_PROXY<br><br>    <span class="hljs-built_in">echo</span><span class="hljs-string">"[OK] Proxy disabled"</span><br><br>}<br><br></code></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>为什么大小写都写？</strong> Linux/macOS 下很多工具（如 <code>curl</code>、<code>wget</code>、<code>apt</code>、<code>git</code>）优先识别<strong>小写</strong>变量，同时设置大小写可确保最大兼容性。</p>
+</blockquote>
+<h3 id="3-加载配置-1"><a href="#3-加载配置-1" class="headerlink" title="3. 加载配置"></a>3. 加载配置</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash"><br><span class="hljs-built_in">source</span>~/.zshrc    <span class="hljs-comment"># 或 source ~/.bashrc</span><br><br></code></pre></td></tr></table></figure>
+<h3 id="4-用法-1"><a href="#4-用法-1" class="headerlink" title="4. 用法"></a>4. 用法</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash"><br>proxy       <span class="hljs-comment"># 开启代理</span><br><br>unproxy     <span class="hljs-comment"># 关闭代理</span><br><br></code></pre></td></tr></table></figure>
+<hr>
+<h2 id="四、各平台命令速查"><a href="#四、各平台命令速查" class="headerlink" title="四、各平台命令速查"></a>四、各平台命令速查</h2><p>| 平台 | 开启代理 | 关闭代理 | 配置持久化方式 |</p>
+<p>|:—-|:—-|:—-|:—-|</p>
+<p>| <strong>PowerShell</strong> | <code>setproxy</code> | <code>unsetproxy</code> | <code>$PROFILE</code> |</p>
+<p>| <strong>CMD</strong> | <code>proxy</code> | <code>unproxy</code> | <code>.bat</code> 文件 |</p>
+<p>| <strong>Mac / Ubuntu</strong> | <code>proxy</code> | <code>unproxy</code> | <code>~/.zshrc</code> 或 <code>~/.bashrc</code> |</p>
+<hr>
+<h2 id="五、常见问题与补充"><a href="#五、常见问题与补充" class="headerlink" title="五、常见问题与补充"></a>五、常见问题与补充</h2><h3 id="1-代理端口怎么填？"><a href="#1-代理端口怎么填？" class="headerlink" title="1. 代理端口怎么填？"></a>1. 代理端口怎么填？</h3><p>| 代理工具 | 默认 HTTP 端口 |</p>
+<p>|:—-|:—-|</p>
+<p>| Clash Verge / Clash for Windows | <code>7890</code> |</p>
+<p>| v2rayN | <code>10809</code> |</p>
+<p>| Shadowsocks (常规) | <code>1080</code> |</p>
+<p>请根据实际使用的代理软件调整端口。</p>
+<h3 id="2-如何验证代理已生效？"><a href="#2-如何验证代理已生效？" class="headerlink" title="2. 如何验证代理已生效？"></a>2. 如何验证代理已生效？</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash"><br><span class="hljs-comment"># PowerShell / CMD / Mac / Ubuntu</span><br><br>curl-Ihttps://www.google.com<br><br><br></code></pre></td></tr></table></figure>
+<p>如果能返回 HTTP 200 头信息，说明代理正常工作。</p>
+<h3 id="3-内网地址不走代理"><a href="#3-内网地址不走代理" class="headerlink" title="3. 内网地址不走代理"></a>3. 内网地址不走代理</h3><p>如果公司内网或局域网访问变慢，可以设置排除列表,假设公司域名为 <code>.company.com</code>：</p>
+<p><strong>PowerShell：</strong></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs powershell"><br><span class="hljs-variable">$env:NO_PROXY</span> =<span class="hljs-string">"localhost,127.0.0.1,.local,.company.com"</span><br><br></code></pre></td></tr></table></figure>
+<p><strong>Mac / Ubuntu：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash"><br><span class="hljs-built_in">export</span> no_proxy=<span class="hljs-string">"localhost,127.0.0.1,.local,.company.com"</span><br><br><span class="hljs-built_in">export</span> NO_PROXY=<span class="hljs-string">"localhost,127.0.0.1,.local,.company.com"</span><br><br></code></pre></td></tr></table></figure>
+<h3 id="4-Git-npm-等工具仍需单独配置"><a href="#4-Git-npm-等工具仍需单独配置" class="headerlink" title="4. Git / npm 等工具仍需单独配置"></a>4. Git / npm 等工具仍需单独配置</h3><p>环境变量只能影响支持它的程序。部分工具需要额外配置：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs bash"><br><span class="hljs-comment"># Git</span><br><br>gitconfig--globalhttp.proxyhttp://127.0.0.1:7890<br><br>gitconfig--globalhttps.proxyhttp://127.0.0.1:7890<br><br><br><span class="hljs-comment"># npm</span><br><br>npmconfigsetproxyhttp://127.0.0.1:7890<br><br>npmconfigsethttps-proxyhttp://127.0.0.1:7890<br><br></code></pre></td></tr></table></figure>
+<h3 id="5-关闭终端后代理还在吗？"><a href="#5-关闭终端后代理还在吗？" class="headerlink" title="5. 关闭终端后代理还在吗？"></a>5. 关闭终端后代理还在吗？</h3><p><strong>不在</strong>。以上所有方案修改的都是<strong>当前 Shell 进程的环境变量</strong>，关闭终端窗口后立即失效，完全不会污染系统级配置。</p>
+<h3 id="6-PowerShell-执行策略报错"><a href="#6-PowerShell-执行策略报错" class="headerlink" title="6. PowerShell 执行策略报错"></a>6. PowerShell 执行策略报错</h3><p>如果 <code>. $PROFILE</code> 提示无法加载脚本，先执行：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs powershell"><br><span class="hljs-built_in">Set-ExecutionPolicy</span><span class="hljs-literal">-ExecutionPolicy</span> RemoteSigned <span class="hljs-literal">-Scope</span> CurrentUser<br><br></code></pre></td></tr></table></figure>
+
+      
+  </article>
+
+  
+      
+    <!-- 文章分享 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+    <div class="social-share" data-mode="prepend" data-disabled="tencent,diandian"></div>
+
+    <div class="nexmoe-post-copyright">
+        <strong>本文作者：</strong>chh3213<br>
+        <strong>本文链接：</strong><a href="https://chh3213.github.io/2026/05/02/%E7%BB%88%E7%AB%AF%E6%8C%89%E9%9C%80%E4%BB%A3%E7%90%86%E9%85%8D%E7%BD%AE%E6%8C%87%E5%8D%97%EF%BC%9AWindows%E3%80%81Mac%E3%80%81Linux-%E5%85%A8%E5%B9%B3%E5%8F%B0/" title="https:&#x2F;&#x2F;chh3213.github.io&#x2F;2026&#x2F;05&#x2F;02&#x2F;%E7%BB%88%E7%AB%AF%E6%8C%89%E9%9C%80%E4%BB%A3%E7%90%86%E9%85%8D%E7%BD%AE%E6%8C%87%E5%8D%97%EF%BC%9AWindows%E3%80%81Mac%E3%80%81Linux-%E5%85%A8%E5%B9%B3%E5%8F%B0&#x2F;" target="_blank" rel="noopener">https:&#x2F;&#x2F;chh3213.github.io&#x2F;2026&#x2F;05&#x2F;02&#x2F;%E7%BB%88%E7%AB%AF%E6%8C%89%E9%9C%80%E4%BB%A3%E7%90%86%E9%85%8D%E7%BD%AE%E6%8C%87%E5%8D%97%EF%BC%9AWindows%E3%80%81Mac%E3%80%81Linux-%E5%85%A8%E5%B9%B3%E5%8F%B0&#x2F;</a><br>
+        
+            <strong>版权声明：</strong>本文采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/cn/deed.zh" target="_blank">CC BY-NC-SA 3.0 CN</a> 协议进行许可
+        
+    </div>
+
+
+
+  
+  
+  <div class="nexmoe-post-meta nexmoe-rainbow">
+    
+    
+</div>
+
+  
+      <div class="nexmoe-post-footer">
+           <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css"> <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script> <div id="gitalk-container"></div> <script type="text/javascript"> const gitalk = new Gitalk({ clientID: "55ea9dc4a0241f57729b", clientSecret: "20342a99dc08db6dbaa9d696c38404352353ad3a", repo: "CHH3213.github.io",       owner: "CHH3213", admin: "CHH3213", id: decodeURI(window.location.pathname)     }); gitalk.render("gitalk-container") </script> 
+      </div>
+  
+</div>
+            <div class="nexmoe-post-right">
+              <div class="nexmoe-fixed">
+                  <div class="nexmoe-tool"> 
+                    
+                      
+                        
+                          
+                          
+                              <button class="mdui-fab catalog" style="overflow:unset;">
+                                  <i class="nexmoefont icon-i-catalog"></i>
+                                  <div class="nexmoe-toc">
+                                      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E6%80%9D%E8%B7%AF"><span class="toc-number">1.</span> <span class="toc-text">核心思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81Windows-PowerShell%EF%BC%88%E6%8E%A8%E8%8D%90%EF%BC%89"><span class="toc-number">2.</span> <span class="toc-text">一、Windows PowerShell（推荐）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%89%93%E5%BC%80%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-number">2.1.</span> <span class="toc-text">1. 打开配置文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%B7%BB%E5%8A%A0%E5%87%BD%E6%95%B0"><span class="toc-number">2.2.</span> <span class="toc-text">2. 添加函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%8A%A0%E8%BD%BD%E9%85%8D%E7%BD%AE"><span class="toc-number">2.3.</span> <span class="toc-text">3. 加载配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E7%94%A8%E6%B3%95"><span class="toc-number">2.4.</span> <span class="toc-text">4. 用法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81Windows-CMD"><span class="toc-number">3.</span> <span class="toc-text">二、Windows CMD</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%88%9B%E5%BB%BA%E6%89%B9%E5%A4%84%E7%90%86%E6%96%87%E4%BB%B6"><span class="toc-number">3.1.</span> <span class="toc-text">1. 创建批处理文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E7%94%A8%E6%B3%95"><span class="toc-number">3.2.</span> <span class="toc-text">2. 用法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E4%B8%B4%E6%97%B6%E8%AE%BE%E7%BD%AE%EF%BC%88%E4%B8%8D%E6%94%B9%E6%96%87%E4%BB%B6%EF%BC%89"><span class="toc-number">3.3.</span> <span class="toc-text">3. 临时设置（不改文件）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81Mac-Ubuntu-zsh-bash"><span class="toc-number">4.</span> <span class="toc-text">三、Mac &#x2F; Ubuntu (zsh &#x2F; bash)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%89%93%E5%BC%80%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6-1"><span class="toc-number">4.1.</span> <span class="toc-text">1. 打开配置文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%B7%BB%E5%8A%A0%E5%87%BD%E6%95%B0-1"><span class="toc-number">4.2.</span> <span class="toc-text">2. 添加函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%8A%A0%E8%BD%BD%E9%85%8D%E7%BD%AE-1"><span class="toc-number">4.3.</span> <span class="toc-text">3. 加载配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E7%94%A8%E6%B3%95-1"><span class="toc-number">4.4.</span> <span class="toc-text">4. 用法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E5%90%84%E5%B9%B3%E5%8F%B0%E5%91%BD%E4%BB%A4%E9%80%9F%E6%9F%A5"><span class="toc-number">5.</span> <span class="toc-text">四、各平台命令速查</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E4%B8%8E%E8%A1%A5%E5%85%85"><span class="toc-number">6.</span> <span class="toc-text">五、常见问题与补充</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E4%BB%A3%E7%90%86%E7%AB%AF%E5%8F%A3%E6%80%8E%E4%B9%88%E5%A1%AB%EF%BC%9F"><span class="toc-number">6.1.</span> <span class="toc-text">1. 代理端口怎么填？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%A6%82%E4%BD%95%E9%AA%8C%E8%AF%81%E4%BB%A3%E7%90%86%E5%B7%B2%E7%94%9F%E6%95%88%EF%BC%9F"><span class="toc-number">6.2.</span> <span class="toc-text">2. 如何验证代理已生效？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%86%85%E7%BD%91%E5%9C%B0%E5%9D%80%E4%B8%8D%E8%B5%B0%E4%BB%A3%E7%90%86"><span class="toc-number">6.3.</span> <span class="toc-text">3. 内网地址不走代理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-Git-npm-%E7%AD%89%E5%B7%A5%E5%85%B7%E4%BB%8D%E9%9C%80%E5%8D%95%E7%8B%AC%E9%85%8D%E7%BD%AE"><span class="toc-number">6.4.</span> <span class="toc-text">4. Git &#x2F; npm 等工具仍需单独配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E5%85%B3%E9%97%AD%E7%BB%88%E7%AB%AF%E5%90%8E%E4%BB%A3%E7%90%86%E8%BF%98%E5%9C%A8%E5%90%97%EF%BC%9F"><span class="toc-number">6.5.</span> <span class="toc-text">5. 关闭终端后代理还在吗？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-PowerShell-%E6%89%A7%E8%A1%8C%E7%AD%96%E7%95%A5%E6%8A%A5%E9%94%99"><span class="toc-number">6.6.</span> <span class="toc-text">6. PowerShell 执行策略报错</span></a></li></ol></li></ol>
+                                  </div>
+                              </button>
+                          
+                          
+                      
+                    
+                      <a href="#nexmoe-content" class="toc-link" aria-label="Back To Top" title="top"><button class="mdui-fab mdui-ripple"><i class="nexmoefont icon-caret-top"></i></button></a>
+                  </div>
+              </div>
+            </div>
+        </div>
+    </div>
+    <div id="nexmoe-search-space">
+	<div class="search-container">
+		<div class="search-header">
+			<div class="search-input-container">
+				<input
+					class="search-input"
+					type="text"
+					placeholder="站内搜索"
+					oninput="sinput();"
+				/>
+			</div>
+			<a class="search-close" onclick="sclose();">×</a>
+		</div>
+		<div class="search-body"></div>
+	</div>
+</div>
+
+    
+<script src="/lib/mdui_043tiny/mdui.js"></script>
+<script src="/lib/jquery.min.js"></script>
+<script src="/lib/justifiedGallery/jquery.justifiedGallery.min.js"></script>
+<script src="/lib/fancybox/fancybox.umd.js"></script>
+
+
+ 
+
+<script async src="/js/app.js?v=1777693216359"></script>
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2058306854838448" crossorigin="anonymous"></script>
+
+<script>
+	$(".justified-gallery").justifiedGallery({
+		rowHeight: 160,
+		margins: 10,
+	});
+</script>
+
+    <!-- 页面点击小红心-- 20221025-->
+    <script type="text/javascript" src="/js/heart.js"></script>
+    <!--搞笑title-->>
+    <script type="text/javascript" src="/js/funnyTitle.js"></script>
+    <!--人体时钟-->>
+    <!-- <script charset="text/javascript" src="/js/clock.js"></script> -->
+
+    <!--代码复制按钮-->>
+    <script type="text/javascript" src="/js/clipboard-min.js"></script>
+    <script type="text/javascript" src="/js/clipboard-use.js"></script>
+    
+    <!--代码高亮-->>
+    <!-- <script src="https://cdn.bootcss.com/highlight.js/8.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script> -->
+    
+    <script src="/js/highlight/highlight.min.js"></script>
+
+    <!--CDN方式引入-->>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/plugins/line-numbers/prism-line-numbers.min.js"></script> -->
+    <!--直接下载脚本引入-->>
+    <script src="/js/prism.js" async></script>
+    
+    <!--sakana模拟器-->
+    <meta name="viewport" content="width=device-width">
+    <style>
+        html {
+            background: #CCC;
+        }
+
+        html .sakana-box {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+
+            transform-origin: 100% 100%;
+            /* 从右下开始变换 */
+        }
+    </style>
+    <div class="sakana-box"></div>
+    <script src="https://cdn.jsdelivr.net/npm/sakana@1.0.8"></script>
+    <script src="js/sakana.js"></script>
+
+    <!-- <div id="sakana-widget" style="position:fixed ;bottom: 10px; right: 10px;"></div>
+    <script>
+        function initSakanaWidget() {
+            new SakanaWidget().mount('#sakana-widget');
+        }
+    </script>
+    <script async onload="initSakanaWidget()"
+        src="https://cdn.jsdelivr.net/npm/sakana-widget@2.2.2/lib/sakana.min.js"></script> -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<!-- <script src="http://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script> -->
+</body>
+
+</html>
