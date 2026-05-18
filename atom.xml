@@ -6,7 +6,7 @@
   <link href="https://chh3213.github.io/atom.xml" rel="self"/>
   
   <link href="https://chh3213.github.io/"/>
-  <updated>2026-05-02T03:41:30.060Z</updated>
+  <updated>2026-05-18T15:19:32.454Z</updated>
   <id>https://chh3213.github.io/</id>
   
   <author>
@@ -15,6 +15,41 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Obsidian Custom File Explorer Sorting 插件配置指南</title>
+    <link href="https://chh3213.github.io/2026/05/12/Obsidian-Custom-File-Explorer-Sorting-%E9%85%8D%E7%BD%AE%E6%8C%87%E5%8D%97/"/>
+    <id>https://chh3213.github.io/2026/05/12/Obsidian-Custom-File-Explorer-Sorting-%E9%85%8D%E7%BD%AE%E6%8C%87%E5%8D%97/</id>
+    <published>2026-05-11T16:00:00.000Z</published>
+    <updated>2026-05-18T15:19:32.454Z</updated>
+    
+    <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>Obsidian 原生文件浏览器只支持按文件名排序，但实际使用中我们往往需要更灵活的排序方式——比如按<strong>最近更新时间</strong>、按<strong>创建时间</strong>、按自定义优先级等。</p><p>解决方案有两个：</p><ol><li><strong>第三方插件路线</strong>：Custom File Explorer Sorting（基于 <code>sortspec.md</code> 配置文件）</li><li><strong>原生插件路线</strong>：Obsidian Bases（数据库视图，不改变文件浏览器本身）</li></ol><p>本文聚焦方案一。</p><span id="more"></span><h2 id="安装插件"><a href="#安装插件" class="headerlink" title="安装插件"></a>安装插件</h2><ol><li>打开 Obsidian → 设置 → 社区插件</li><li>搜索 <strong>Custom File Explorer Sorting</strong>（作者：SebastianMC）</li><li>点击安装并启用</li></ol><p><img data-fancybox="gallery" src="/2026/05/12/Obsidian-Custom-File-Explorer-Sorting-%E9%85%8D%E7%BD%AE%E6%8C%87%E5%8D%97/1779117217818.png" alt="1779117217818" data-caption="1779117217818" loading="lazy"><br><img data-fancybox="gallery" src="/2026/05/12/Obsidian-Custom-File-Explorer-Sorting-%E9%85%8D%E7%BD%AE%E6%8C%87%E5%8D%97/1779117264033.png" alt="1779117264033" data-caption="1779117264033" loading="lazy"></p><h2 id="核心原理"><a href="#核心原理" class="headerlink" title="核心原理"></a>核心原理</h2><p>插件通过在文件夹内放置一个名为 <strong><code>sortspec.md</code></strong> 的笔记，在其 YAML frontmatter 中编写排序规则来实现自定义排序。</p><p>所有排序配置都存放在 Obsidian 笔记的 frontmatter 中，天然版本控制友好。</p><h2 id="基础语法"><a href="#基础语法" class="headerlink" title="基础语法"></a>基础语法</h2><p><code>sortspec.md</code> 的 YAML 结构如下：</p><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-meta">---</span><br><span class="hljs-attr">sorting-spec:</span> <span class="hljs-string">|</span><br><span class="hljs-string">    &lt;排序指令&gt;</span><br><span class="hljs-string"></span><span class="hljs-meta">---</span><br></code></pre></td></tr></table></figure><h3 id="排序方向"><a href="#排序方向" class="headerlink" title="排序方向"></a>排序方向</h3><div class="table-container"><table><thead><tr><th>符号</th><th>含义</th></tr></thead><tbody><tr><td><code>&lt;</code> 或 <code>order-asc:</code></td><td>升序（A→Z, 旧→新）</td></tr><tr><td><code>&gt;</code> 或 <code>order-desc:</code></td><td>降序（Z→A, 新→旧）</td></tr></tbody></table></div><h3 id="排序依据"><a href="#排序依据" class="headerlink" title="排序依据"></a>排序依据</h3><div class="table-container"><table><thead><tr><th>指令</th><th>效果</th></tr></thead><tbody><tr><td><code>a-z</code></td><td>按文件名排序</td></tr><tr><td><code>modified</code></td><td>按文件修改时间排序</td></tr><tr><td><code>ctime</code></td><td>按文件创建时间排序</td></tr><tr><td><code>by-metadata: &lt;字段名&gt;</code></td><td>按 frontmatter 属性排序</td></tr></tbody></table></div><h2 id="实操"><a href="#实操" class="headerlink" title="实操"></a>实操</h2><h3 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h3><p>我的 LLM-Wiki 知识库中，<code>wiki/sources/</code> 目录存放了大量论文摘要笔记。每篇笔记的 frontmatter 都有 <code>last_updated</code> 字段（格式如 <code>2026-05-07</code>）。</p><p>需求：打开 sources 文件夹时，最新更新的笔记排在最前面。</p><h3 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h3><ol><li>在 <code>wiki/sources/</code> 目录下创建 <code>sortspec.md</code> 文件</li><li>写入以下内容：</li></ol><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-meta">---</span><br><span class="hljs-attr">sorting-spec:</span> <span class="hljs-string">|</span><br><span class="hljs-string">    &gt; a-z by-metadata: last_updated</span><br><span class="hljs-string"></span><span class="hljs-meta">---</span><br></code></pre></td></tr></table></figure><ol><li>保存文件</li><li>点击 Obsidian 左侧 ribbon 上的插件图标（🎛️）应用排序</li></ol><p><img data-fancybox="gallery" src="/2026/05/12/Obsidian-Custom-File-Explorer-Sorting-%E9%85%8D%E7%BD%AE%E6%8C%87%E5%8D%97/1779117345443.png" alt="1779117345443" data-caption="1779117345443" loading="lazy"></p><h3 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h3><p>现在 <code>wiki/sources/</code> 中的笔记按 <code>last_updated</code> 字段降序排列，最近更新的笔记自动置顶。</p><h2 id="更多配置示例"><a href="#更多配置示例" class="headerlink" title="更多配置示例"></a>更多配置示例</h2><h3 id="混合排序：文件按修改时间，文件夹按名称"><a href="#混合排序：文件按修改时间，文件夹按名称" class="headerlink" title="混合排序：文件按修改时间，文件夹按名称"></a>混合排序：文件按修改时间，文件夹按名称</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-meta">---</span><br><span class="hljs-attr">sorting-spec:</span> <span class="hljs-string">|</span><br><span class="hljs-string">    target-folder: /</span><br><span class="hljs-string">    /:files</span><br><span class="hljs-string">     &lt; modified</span><br><span class="hljs-string">    /folders</span><br><span class="hljs-string">     &gt; a-z</span><br><span class="hljs-string"></span><span class="hljs-meta">---</span><br></code></pre></td></tr></table></figure><h3 id="手动置顶特定笔记"><a href="#手动置顶特定笔记" class="headerlink" title="手动置顶特定笔记"></a>手动置顶特定笔记</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-meta">---</span><br><span class="hljs-attr">sorting-spec:</span> <span class="hljs-string">|</span><br><span class="hljs-string">    Inbox</span><br><span class="hljs-string">    Todo</span><br><span class="hljs-string">    %</span><br><span class="hljs-string">    sortspec</span><br><span class="hljs-string">    &lt; a-z</span><br><span class="hljs-string"></span><span class="hljs-meta">---</span><br></code></pre></td></tr></table></figure><p><code>%</code> 表示分区线，之前的条目被提到最前面，之后的按后续规则排序。</p><h3 id="全局递归排序（作用于所有子文件夹）"><a href="#全局递归排序（作用于所有子文件夹）" class="headerlink" title="全局递归排序（作用于所有子文件夹）"></a>全局递归排序（作用于所有子文件夹）</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-meta">---</span><br><span class="hljs-attr">sorting-spec:</span> <span class="hljs-string">|</span><br><span class="hljs-string">    target-folder: /*</span><br><span class="hljs-string">    &lt; a-z</span><br><span class="hljs-string"></span><span class="hljs-meta">---</span><br></code></pre></td></tr></table></figure><h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><ul><li><strong>格式敏感</strong>：YAML 缩进非常重要，多一个空格或少一个空格都会导致规则不生效</li><li><strong>手动刷新</strong>：每次修改 <code>sortspec.md</code> 后需要点击 ribbon 图标重新应用</li><li><strong>前端属性格式</strong>：<code>by-metadata</code> 要求 frontmatter 中的日期为 ISO 格式（如 <code>2026-05-12</code>），非标准格式可能无法正确排序</li><li><strong>文件名固定</strong>：配置文件的名称必须是 <code>sortspec.md</code>，插件会扫描全库中所有叫这个名字的笔记</li></ul>]]></content>
+    
+    
+    <summary type="html">&lt;h2 id=&quot;背景&quot;&gt;&lt;a href=&quot;#背景&quot; class=&quot;headerlink&quot; title=&quot;背景&quot;&gt;&lt;/a&gt;背景&lt;/h2&gt;&lt;p&gt;Obsidian 原生文件浏览器只支持按文件名排序，但实际使用中我们往往需要更灵活的排序方式——比如按&lt;strong&gt;最近更新时间&lt;/strong&gt;、按&lt;strong&gt;创建时间&lt;/strong&gt;、按自定义优先级等。&lt;/p&gt;
+&lt;p&gt;解决方案有两个：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;第三方插件路线&lt;/strong&gt;：Custom File Explorer Sorting（基于 &lt;code&gt;sortspec.md&lt;/code&gt; 配置文件）&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;原生插件路线&lt;/strong&gt;：Obsidian Bases（数据库视图，不改变文件浏览器本身）&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;本文聚焦方案一。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="实用技巧" scheme="https://chh3213.github.io/categories/%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7/"/>
+    
+    <category term="Obsidian" scheme="https://chh3213.github.io/categories/Obsidian/"/>
+    
+    
+    <category term="Obsidian" scheme="https://chh3213.github.io/tags/Obsidian/"/>
+    
+    <category term="插件" scheme="https://chh3213.github.io/tags/%E6%8F%92%E4%BB%B6/"/>
+    
+    <category term="效率" scheme="https://chh3213.github.io/tags/%E6%95%88%E7%8E%87/"/>
+    
+    <category term="笔记管理" scheme="https://chh3213.github.io/tags/%E7%AC%94%E8%AE%B0%E7%AE%A1%E7%90%86/"/>
+    
+  </entry>
   
   <entry>
     <title>博客主页美化</title>
