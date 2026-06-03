@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+
+<head>
+    
+    <title>ComfyUI 原生工作流使用 - 一半是火一半是光的博客</title>
+    <meta charset="UTF-8">
+    <meta name="keywords" content="强化学习,自动驾驶,规划控制,编程,C++,Java">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+    
+    <link rel="shortcut icon" href="https://s2.loli.net/2022/10/27/ifRX1BdH46hmTlr.png" type="image/png" />
+    <meta name="description" content="ComfyUI 是一个开源的图像生成工具，可以利用各种模型生成各种图像。这篇文章简单整理一下ComfyUI的原生工作流使用方法。以及使用Qwen-Image-2512 模型进行图像生成。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ComfyUI 原生工作流使用">
+<meta property="og:url" content="https://chh3213.github.io/2026/01/02/comfyui-yuan-sheng-gong-zuo-liu-shi-yong/index.html">
+<meta property="og:site_name" content="一半是火一半是光的博客">
+<meta property="og:description" content="ComfyUI 是一个开源的图像生成工具，可以利用各种模型生成各种图像。这篇文章简单整理一下ComfyUI的原生工作流使用方法。以及使用Qwen-Image-2512 模型进行图像生成。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://chh3213.github.io/image/ComfyUI-原生工作流使用/1767343519620.png">
+<meta property="og:image" content="https://chh3213.github.io/image/ComfyUI-原生工作流使用/1767343595422.png">
+<meta property="og:image" content="https://chh3213.github.io/image/ComfyUI-原生工作流使用/1767343656818.png">
+<meta property="og:image" content="https://chh3213.github.io/image/ComfyUI-原生工作流使用/1767345739928.png">
+<meta property="og:image" content="https://chh3213.github.io/image/ComfyUI-原生工作流使用/1767343722559.png">
+<meta property="og:image" content="https://chh3213.github.io/image/ComfyUI-原生工作流使用/1767343783511.png">
+<meta property="og:image" content="https://chh3213.github.io/image/ComfyUI-原生工作流使用/1767343834186.png">
+<meta property="og:image" content="https://chh3213.github.io/image/ComfyUI-原生工作流使用/1767344824979.png">
+<meta property="og:image" content="https://chh3213.github.io/image/ComfyUI-原生工作流使用/1767344852301.png">
+<meta property="og:image" content="https://chh3213.github.io/image/ComfyUI-原生工作流使用/1767346077748.png">
+<meta property="article:published_time" content="2026-01-02T08:43:42.000Z">
+<meta property="article:modified_time" content="2026-06-03T16:50:51.344Z">
+<meta property="article:author" content="chh3213">
+<meta property="article:tag" content="AI">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://chh3213.github.io/image/ComfyUI-原生工作流使用/1767343519620.png">
+    
+<link rel="stylesheet" href="/lib/fancybox/fancybox.css">
+<link rel="stylesheet" href="/lib/justifiedGallery/justifiedGallery.min.css">
+<link rel="stylesheet" href="/lib/mdui_043tiny/mdui.css">
+
+
+    <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1780505731983">
+    
+        <link rel="stylesheet" href="//at.alicdn.com/t/c/font_3495394_enbrz0a58y.css">
+    
+    <link rel="stylesheet" href="/css/style.css?v=1780505731983">
+
+    
+        
+            <link rel="stylesheet" href="/custom.css?v=1780505731983">
+        
+    
+    <!-- <link href="https://cdn.bootcss.com/highlight.js/8.0/styles/monokai_sublime.min.css" rel="stylesheet"> -->
+    <link href="/js/highlight/styles/atom-one-dark.min.css" rel="stylesheet">
+    <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/themes/prism-coy.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/plugins/line-numbers/prism-line-numbers.min.css" rel="stylesheet"> -->
+    <link rel="stylesheet" href="/css/prism.css">
+
+<meta name="generator" content="Hexo 6.1.0"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style><link rel="alternate" href="/atom.xml" title="一半是火一半是光的博客" type="application/atom+xml">
+</head>
+
+<body class="mdui-drawer-body-left">
+    <div id="nexmoe-background">
+        <div class="nexmoe-bg" style="background-image: url(https://s2.loli.net/2022/11/04/qKEnbHA6geBpthf.png)"></div>
+        <div class="mdui-appbar mdui-shadow-0">
+            <div class="mdui-toolbar">
+                <a mdui-drawer="{target: '#drawer', swipe: true}" title="menu" class="mdui-btn mdui-btn-icon mdui-ripple"><i class="mdui-icon nexmoefont icon-menu"></i></a>
+                <div class="mdui-toolbar-spacer"></div>
+                <!--<a href="javascript:;" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">search</i></a>-->
+                <a href="/" title="chh3213" class="mdui-btn mdui-btn-icon"><img src="https://img.523213.xyz/api/cfile/AgACAgUAAyEGAATLpGrYAAMRafV71Yn_Nk2_i0UZxUq5miCgzRMAAswUaxuaBLBXSblkY-jzoPIBAAMCAAN3AAM7BA" alt="chh3213"></a>
+            </div>
+        </div>
+    </div>
+    <div id="nexmoe-header">
+        <div class="nexmoe-drawer mdui-drawer" id="drawer">
+    <div class="nexmoe-avatar mdui-ripple">
+        <a href="/" title="chh3213">
+            <img src="https://img.523213.xyz/api/cfile/AgACAgUAAyEGAATLpGrYAAMRafV71Yn_Nk2_i0UZxUq5miCgzRMAAswUaxuaBLBXSblkY-jzoPIBAAMCAAN3AAM7BA" alt="chh3213" alt="chh3213">
+        </a>
+    </div>
+    <div class="nexmoe-count">
+        <div><span>文章</span>19</div>
+        <div><span>标签</span>14</div>
+        <div><span>分类</span>7</div>
+    </div>
+    <div class="nexmoe-list mdui-list" mdui-collapse="{accordion: true}">
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/" title="回到首页">
+            <i class="mdui-list-item-icon nexmoefont icon-home"></i>
+            <div class="mdui-list-item-content">
+                回到首页
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/archive.html" title="分类归档">
+            <i class="mdui-list-item-icon nexmoefont icon-container"></i>
+            <div class="mdui-list-item-content">
+                分类归档
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/study/" title="学习之旅">
+            <i class="mdui-list-item-icon nexmoefont icon-battlenet"></i>
+            <div class="mdui-list-item-content">
+                学习之旅
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" target="_blank" rel="noopener" href="https://wbo.ophir.dev/boards/chh3213" title="来涂鸦吧">
+            <i class="mdui-list-item-icon nexmoefont icon-eye-fill"></i>
+            <div class="mdui-list-item-content">
+                来涂鸦吧
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/about.html" title="关于博主">
+            <i class="mdui-list-item-icon nexmoefont icon-info-circle"></i>
+            <div class="mdui-list-item-content">
+                关于博主
+            </div>
+        </a>
+        
+    </div>
+    <aside id="nexmoe-sidebar">
+    
+        
+        <!-- 一言 -->
+<div class="nexmoe-widget-wrap">
+  <h3 class="nexmoe-widget-title">
+    一则言语
+  </h3>
+  <div class="nexmoe-widget">
+    <ul class="hitokoto-box">
+      <li id="hitokoto_text_parent" class="hitokoto-text" hitokotoCategory="">
+        <a href="#" id="hitokoto_text">
+          
+        </a>
+        <a href="#" id="hitokoto_error_text" style="display: none;">
+          
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<script>
+  let hitokotoText = document.getElementById('hitokoto_text')
+  let hitokotoErroText = document.getElementById('hitokoto_error_text')
+  let hitokotoCategory = document.getElementById('hitokoto_text_parent').getAttribute('hitokotoCategory')
+  window.onload = function () {
+    let url = 'https://v1.hitokoto.cn'
+    if (hitokotoCategory) {
+      url += '?c=' + hitokotoCategory
+    }
+    fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        hitokotoText.innerText = "「 " + data.hitokoto + " 」 from " + data.from
+        hitokotoText.href = 'https://hitokoto.cn/?uuid=' + data.uuid
+      })
+      .catch((reason) => {
+        console.error(11, reason)
+        hitokotoText.style.display = 'none'
+        hitokotoErroText.style.display = 'block'
+      })
+  }
+</script>
+    
+        
+        <div class="nexmoe-widget-wrap">
+    <div class="nexmoe-widget nexmoe-search">
+        
+            <form id="search_form">
+                <label><input class="st-default-search-input" id="search_value" name="q" type="search" placeholder="站内搜索" style="
+                    font-size: 15px !important;
+                    height: 56px !important;
+                    background-image: none;
+                "></label>
+            </form>
+         
+    </div>
+</div>
+
+
+	<script async src="/js/search.js?v=1780505731984"></script>
+
+
+
+    
+        
+        <div class="nexmoe-widget-wrap">
+	<div class="nexmoe-widget nexmoe-social">
+		<a
+			class="mdui-ripple"
+			href="https://github.com/CHH3213"
+			target="_blank"
+			mdui-tooltip="{content: 'GitHub'}"
+			style="
+				color: rgb(25, 23, 23);
+				background-color: rgba(25, 23, 23, .1);
+			"
+		>
+			<i
+				class="nexmoefont icon-github"
+			></i> </a
+		><a
+			class="mdui-ripple"
+			href="https://blog.csdn.net/weixin_42301220"
+			target="_blank"
+			mdui-tooltip="{content: 'CSDN'}"
+			style="
+				color: rgb(247, 132, 34);
+				background-color: rgba(247, 132, 34, .1);
+			"
+		>
+			<i
+				class="nexmoefont icon-csdn1"
+			></i> </a
+		><a
+			class="mdui-ripple"
+			href="mailto:1213472983@qq.com"
+			target="_blank"
+			mdui-tooltip="{content: '邮箱'}"
+			style="
+				color: rgb(29, 161, 242);
+				background-color: rgba(29, 161, 242, .1);
+			"
+		>
+			<i
+				class="nexmoefont icon-mail-fill"
+			></i> </a
+		><a
+			class="mdui-ripple"
+			href="/atom.xml"
+			target="_blank"
+			mdui-tooltip="{content: 'RSS'}"
+			style="
+				color: rgb(235, 152, 0);
+				background-color: rgba(235, 152, 0, .15);
+			"
+		>
+			<i
+				class="nexmoefont icon-rss"
+			></i> </a
+		><a
+			class="mdui-ripple"
+			href="https://space.bilibili.com/3493143542499415?spm_id_from=333.999.0.0"
+			target="_blank"
+			mdui-tooltip="{content: '哔哩哔哩'}"
+			style="
+				color: rgb(231, 106, 141);
+				background-color: rgba(231, 106, 141, .1);
+			"
+		>
+			<i
+				class="nexmoefont icon-bilibili"
+			></i> </a
+		>
+	</div>
+</div>
+
+    
+        
+        
+  <div class="nexmoe-widget-wrap">
+    <h3 class="nexmoe-widget-title">文章分类</h3>
+    <div class="nexmoe-widget">
+
+      <ul class="category-list">
+
+        
+
+
+        
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/AI/">AI</a>
+          <span class="category-list-count">4</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/Obsidian/">Obsidian</a>
+          <span class="category-list-count">1</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/Ubuntu/">Ubuntu</a>
+          <span class="category-list-count">1</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/VPN教程/">VPN教程</a>
+          <span class="category-list-count">4</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/hexo博客/">hexo博客</a>
+          <span class="category-list-count">3</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/实用技巧/">实用技巧</a>
+          <span class="category-list-count">12</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/页面美化/">页面美化</a>
+          <span class="category-list-count">3</span>
+        </li>
+
+        
+      </ul>
+
+    </div>
+  </div>
+
+
+    
+        
+        
+  <div class="nexmoe-widget-wrap">
+    <div id="randomtagcloud" class="nexmoe-widget tagcloud nexmoe-rainbow">
+      <a href="/tags/AI/" style="font-size: 20px;">AI</a> <a href="/tags/Obsidian/" style="font-size: 10px;">Obsidian</a> <a href="/tags/Remote/" style="font-size: 10px;">Remote</a> <a href="/tags/VPN/" style="font-size: 15px;">VPN</a> <a href="/tags/chatgpt/" style="font-size: 10px;">chatgpt</a> <a href="/tags/clash/" style="font-size: 10px;">clash</a> <a href="/tags/hexo%E5%8D%9A%E5%AE%A2/" style="font-size: 10px;">hexo博客</a> <a href="/tags/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/" style="font-size: 15px;">内网穿透</a> <a href="/tags/%E5%8D%9A%E5%AE%A2/" style="font-size: 20px;">博客</a> <a href="/tags/%E5%B7%A5%E5%85%B7/" style="font-size: 20px;">工具</a> <a href="/tags/%E6%8F%92%E4%BB%B6/" style="font-size: 10px;">插件</a> <a href="/tags/%E6%95%88%E7%8E%87/" style="font-size: 10px;">效率</a> <a href="/tags/%E7%AC%94%E8%AE%B0%E7%AE%A1%E7%90%86/" style="font-size: 10px;">笔记管理</a> <a href="/tags/%E7%BE%8E%E5%8C%96/" style="font-size: 20px;">美化</a>
+    </div>
+    
+      <script>
+        var maxTagcloud = parseInt(17);
+        var tags_length = parseInt(14);
+        var tags_arr = [];
+        for(var i = 0; i < tags_length; i++){
+          tags_arr.push(i);
+        }
+        tags_arr.sort(function (l, r) {
+          return Math.random() > 0.5 ? -1 : 1;
+        });
+        tags_arr = tags_arr.slice(0, maxTagcloud < tags_length ? tags_length - maxTagcloud : 0);
+        for(var tag_i = 0; tag_i < tags_arr.length; tag_i++){
+          document.getElementById("randomtagcloud").children[tags_arr[tag_i]].style.display = 'none';
+        }
+      </script>
+    
+  </div>
+
+    
+        
+        
+  <div class="nexmoe-widget-wrap">
+    <h3 class="nexmoe-widget-title">文章归档</h3>
+    <div class="nexmoe-widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/">2026</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/">2025</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/">2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/">2023</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/">2022</a><span class="archive-list-count">7</span></li></ul>
+    </div>
+  </div>
+
+
+
+    
+        
+        
+  <div class="nexmoe-widget-wrap">
+    <h3 class="nexmoe-widget-title">最新文章</h3>
+    <div class="nexmoe-widget">
+      <ul>
+        
+          <li>
+            <a href="/2026/06/04/github-zhu-ye-mei-hua/">Github主页美化</a>
+          </li>
+        
+          <li>
+            <a href="/2026/06/02/hexo-bo-ke-cong-gitalk-qian-yi-dao-giscus-ping-lun-xi-tong/">Hexo 博客从 Gitalk 迁移到 Giscus 评论系统</a>
+          </li>
+        
+          <li>
+            <a href="/2026/05/12/obsidian-custom-file-explorer-sorting-pei-zhi-zhi-nan/">Obsidian Custom File Explorer Sorting 插件配置指南</a>
+          </li>
+        
+          <li>
+            <a href="/2026/05/02/zhong-duan-an-xu-dai-li-pei-zhi-zhi-nan-windows-mac-linux-quan-ping-tai/">终端按需代理配置指南：Windows、Mac、Linux 全平台</a>
+          </li>
+        
+          <li>
+            <a href="/2026/01/02/comfyui-yuan-sheng-gong-zuo-liu-shi-yong/">ComfyUI 原生工作流使用</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+    
+        
+</aside>
+    <div class="nexmoe-copyright">
+        &copy; 2026 chh3213
+        Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+        & <a href="https://github.com/theme-nexmoe/hexo-theme-nexmoe" target="_blank">Nexmoe</a>
+        
+        <!-- 添加访问数 -->
+        <div style="font-size: 13px">
+            <link rel="stylesheet" href="https://widget.heweather.net/standard/static/css/he-standard.css?v=1.4.0">
+            <script src="https://widget.heweather.net/standard/static/js/he-standard.js?v=1.4.0"></script>
+            <script async="" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            本站总访问量 <a id="busuanzi_value_site_pv"></a> 次<br>
+            本站访客数<a id="busuanzi_value_site_uv"></a>人次
+        </div>
+    </div>
+
+<!--自定义看板娘-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<script src="/live2d-widget/autoload.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css" />
+
+</div><!-- .nexmoe-drawer -->
+    </div>
+    <div id="nexmoe-content">
+        <div class="nexmoe-primary">
+            <div class="nexmoe-post">
+
+  <article>
+      
+          <div class="nexmoe-post-cover" style="padding-bottom: 62.5%;"> 
+              <img src="http://api.mtyqx.cn/tapi/random.php?" alt="ComfyUI 原生工作流使用" loading="lazy">
+              <h1>ComfyUI 原生工作流使用</h1>
+          </div>
+      
+      
+      <div class="nexmoe-post-meta nexmoe-rainbow" style="margin:10px 0!important;">
+    <a><i class="nexmoefont icon-calendar-fill"></i>2026年01月02日</a>
+</div>
+      
+    <a><i class="nexmoefont icon-areachart"></i>约890字</a>
+    <a><i class="nexmoefont icon-time-circle-fill"></i>预计需要3分钟</a>
+    <a><i class="nexmoefont icon-areachart"></i>
+        <span class="archive-article-date">阅读量
+            <span id="busuanzi_value_page_pv"></span></span></a>
+
+
+      <p>ComfyUI 是一个开源的图像生成工具，可以利用各种模型生成各种图像。这篇文章简单整理一下ComfyUI的原生工作流使用方法。以及使用Qwen-Image-2512 模型进行图像生成。<br><span id="more"></span></p>
+<h2 id="前言-——-Qwen-Image-2512"><a href="#前言-——-Qwen-Image-2512" class="headerlink" title="前言 —— Qwen-Image-2512"></a>前言 —— Qwen-Image-2512</h2><p><a target="_blank" rel="noopener" href="https://huggingface.co/Qwen/Qwen-Image-2512">Qwen-Image-2512</a>是Qwen-Image文生图基础模型的12月更新版本，相较于8月的基础模型，它在图像质量和真实感方面有了显著提升。该模型特别在三大核心能力上实现了飞跃式进步：更真实的人物质感、更细腻的自然纹理以及更复杂的文字渲染。这些改进使得生成的图像在细节表现上更为出色，尤其是在处理文本元素时，能够实现更精确的布局和更高质量的呈现。</p>
+<p><strong>Qwen-Image-2512 的主要增强</strong>：</p>
+<ul>
+<li><strong>增强的人物真实感</strong>：显著减少”AI生成”的感觉，大幅提升整体图像真实性，尤其是人物主体</li>
+<li><strong>更精细的自然细节</strong>：风景、动物毛发和其他自然元素的渲染更加细腻</li>
+<li><strong>改进的文字渲染</strong>：提高文字元素的准确性和质量，实现更好的排版和更忠实的多模态（文字+图像）组合</li>
+</ul>
+<p><strong>官方链接</strong>：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/QwenLM/Qwen-Image">GitHub 仓库</a></li>
+<li><a target="_blank" rel="noopener" href="https://huggingface.co/Qwen/Qwen-Image-2512">Hugging Face</a></li>
+<li><a target="_blank" rel="noopener" href="https://modelscope.cn/models/Qwen/Qwen-Image-2512">ModelScope</a></li>
+<li><a target="_blank" rel="noopener" href="https://qianwen-res.oss-cn-beijing.aliyuncs.com/Qwen-Image/Qwen_Image.pdf">技术报告</a></li>
+<li><a target="_blank" rel="noopener" href="https://qwen.ai/blog?id=qwen-image-2512">博客</a></li>
+</ul>
+<p><strong>支持的宽高比</strong></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>宽高比</th>
+<th>分辨率</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1:1</td>
+<td>1328x1328</td>
+</tr>
+<tr>
+<td>16:9</td>
+<td>1664x928</td>
+</tr>
+<tr>
+<td>9:16</td>
+<td>928x1664</td>
+</tr>
+<tr>
+<td>4:3</td>
+<td>1472x1104</td>
+</tr>
+<tr>
+<td>3:4</td>
+<td>1104x1472</td>
+</tr>
+<tr>
+<td>3:2</td>
+<td>1584x1056</td>
+</tr>
+<tr>
+<td>2:3</td>
+<td>1056x1584</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="CmomfyUI-安装"><a href="#CmomfyUI-安装" class="headerlink" title="CmomfyUI 安装"></a>CmomfyUI 安装</h2><p>ComfyUI 安装可直接按照官方给的文档进行：<a target="_blank" rel="noopener" href="https://docs.comfy.org/zh-CN/installation/system_requirements">https://docs.comfy.org/zh-CN/installation/system_requirements</a></p>
+<p>安装成功后, 打开显示如下界面：</p>
+<p><img data-fancybox="gallery" src="/image/ComfyUI-原生工作流使用/1767343519620.png" alt="1767343519620" data-caption="1767343519620" loading="lazy"></p>
+<h2 id="下载-JSON-工作流"><a href="#下载-JSON-工作流" class="headerlink" title="下载 JSON 工作流"></a>下载 JSON 工作流</h2><p>下载 Qwen-Image-2512 工作流：<a target="_blank" rel="noopener" href="https://raw.githubusercontent.com/Comfy-Org/workflow_templates/refs/heads/main/templates/image_qwen_Image_2512.json">link</a></p>
+<p>将工作流拖入ComfyUI 界面中，即可看到如下界面：</p>
+<p><img data-fancybox="gallery" src="/image/ComfyUI-原生工作流使用/1767343595422.png" alt="1767343595422" data-caption="1767343595422" loading="lazy"></p>
+<p>将提示的文件模型都点击下载，等待完成后关闭弹窗：</p>
+<p><img data-fancybox="gallery" src="/image/ComfyUI-原生工作流使用/1767343656818.png" alt="1767343656818" data-caption="1767343656818" loading="lazy"></p>
+<h3 id="1-工作流文件说明"><a href="#1-工作流文件说明" class="headerlink" title="1. 工作流文件说明"></a>1. 工作流文件说明</h3><p>工作流包含两个子图：</p>
+<ul>
+<li><strong>Text to Image (Qwen-Image 2512)</strong>：标准 50 步生成</li>
+<li><strong>Text to Image (Qwen-Image 2512 4steps)</strong>：使用 Lightning LoRA 的 4 步加速生成</li>
+</ul>
+<p><img data-fancybox="gallery" src="/image/ComfyUI-原生工作流使用/1767345739928.png" alt="1767345739928" data-caption="1767345739928" loading="lazy"></p>
+<h3 id="2-模型说明"><a href="#2-模型说明" class="headerlink" title="2. 模型说明"></a>2. 模型说明</h3><p><strong>文本编码器</strong></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://huggingface.co/Comfy-Org/Qwen-Image_ComfyUI/resolve/main/split_files/text_encoders/qwen_2.5_vl_7b_fp8_scaled.safetensors">qwen_2.5_vl_7b_fp8_scaled.safetensors</a></li>
+</ul>
+<p><strong>LoRA（可选 - 用于 4 步 Lightning 加速）</strong></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://huggingface.co/lightx2v/Qwen-Image-Lightning/resolve/main/Qwen-Image-Lightning-4steps-V1.0.safetensors">Qwen-Image-Lightning-4steps-V1.0.safetensors</a></li>
+</ul>
+<p><strong>扩散模型</strong></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://huggingface.co/Comfy-Org/Qwen-Image_ComfyUI/resolve/main/split_files/diffusion_models/qwen_image_2512_fp8_e4m3fn.safetensors">qwen_image_2512_fp8_e4m3fn.safetensors</a>（推荐大多数用户使用）</li>
+<li><a target="_blank" rel="noopener" href="https://huggingface.co/Comfy-Org/Qwen-Image_ComfyUI/resolve/main/split_files/diffusion_models/qwen_image_2512_bf16.safetensors">qwen_image_2512_bf16.safetensors</a>（如果您有足够的显存并想要更好的质量）</li>
+</ul>
+<p><strong>VAE</strong></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://huggingface.co/Comfy-Org/Qwen-Image_ComfyUI/resolve/main/split_files/vae/qwen_image_vae.safetensors">qwen_image_vae.safetensors</a></li>
+</ul>
+<p><strong>模型存储位置</strong></p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs stylus">📂 ComfyUI/<br>├── 📂 models/<br>│   ├── 📂 text_encoders/<br>│   │      └── qwen_2.<span class="hljs-number">5</span>_vl_7b_fp8_scaled<span class="hljs-selector-class">.safetensors</span><br>│   ├── 📂 loras/<br>│   │      └── Qwen-Image-Lightning-<span class="hljs-number">4s</span>teps-V1.<span class="hljs-number">0</span><span class="hljs-selector-class">.safetensors</span><br>│   ├── 📂 diffusion_models/<br>│   │      ├── qwen_image_2512_bf16<span class="hljs-selector-class">.safetensors</span><br>│   │      └── qwen_image_2512_fp8_e4m3fn<span class="hljs-selector-class">.safetensors</span><br>│   └── 📂 vae/<br>│          └── qwen_image_vae.safetensors<br></code></pre></td></tr></table></figure>
+<p>它默认给我们提供了一些提示词，是英文的。</p>
+<p><img data-fancybox="gallery" src="/image/ComfyUI-原生工作流使用/1767343722559.png" alt="1767343722559" data-caption="1767343722559" loading="lazy"></p>
+<p>我们可以修改所生成图片的长宽：</p>
+<p><img data-fancybox="gallery" src="/image/ComfyUI-原生工作流使用/1767343783511.png" alt="1767343783511" data-caption="1767343783511" loading="lazy"></p>
+<p>我们直接点击<code>运行</code> 按钮看看默认的提示词会生成怎样的图片</p>
+<p><img data-fancybox="gallery" src="/image/ComfyUI-原生工作流使用/1767343834186.png" alt="1767343834186" data-caption="1767343834186" loading="lazy"></p>
+<p>可以看到生成的图片如下：</p>
+<p><img data-fancybox="gallery" src="/image/ComfyUI-原生工作流使用/1767344824979.png" alt="1767344824979" data-caption="1767344824979" loading="lazy"></p>
+<p>质感还是不错的。</p>
+<p><img data-fancybox="gallery" src="/image/ComfyUI-原生工作流使用/1767344852301.png" alt="1767344852301" data-caption="1767344852301" loading="lazy"></p>
+<p>尝试修改提示词，看看效果如何：</p>
+<blockquote>
+<p>一位身着淡雅水粉色交领襦裙的年轻女子背对镜头而坐，俯身专注地手持毛笔在素白宣纸上书写“走天高云淡”四个遒劲汉字。古色古香的室内陈设典雅考究，案头错落摆放着青瓷茶盏与鎏金香炉，一缕熏香轻盈升腾；柔和光线洒落肩头，勾勒出她衣裙的柔美质感与专注神情，仿佛凝固了一段宁静温润的旧时光。</p>
+</blockquote>
+<p><img data-fancybox="gallery" src="/image/ComfyUI-原生工作流使用/1767346077748.png" alt="1767346077748" data-caption="1767346077748" loading="lazy"></p>
+<h2 id="Qwen-Image-2512-的免费在线平台"><a href="#Qwen-Image-2512-的免费在线平台" class="headerlink" title="Qwen-Image-2512 的免费在线平台"></a>Qwen-Image-2512 的免费在线平台</h2><p>如果电脑硬件不支持的话，可以以通过 Qwen-Image-2512 的免费在线平台来进行使用:<br><a target="_blank" rel="noopener" href="https://huggingface.co/spaces/Qwen/Qwen-Image-2512">https://huggingface.co/spaces/Qwen/Qwen-Image-2512</a></p>
+<h2 id="其他教程"><a href="#其他教程" class="headerlink" title="其他教程"></a>其他教程</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://unsloth.ai/docs/zh/mo-xing/qwen-image-2512">https://unsloth.ai/docs/zh/mo-xing/qwen-image-2512</a></li>
+</ul>
+
+      
+  </article>
+
+  
+      
+    <!-- 文章分享 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+    <div class="social-share" data-mode="prepend" data-disabled="tencent,diandian"></div>
+
+    <div class="nexmoe-post-copyright">
+        <strong>本文作者：</strong>chh3213<br>
+        <strong>本文链接：</strong><a href="https://chh3213.github.io/2026/01/02/comfyui-yuan-sheng-gong-zuo-liu-shi-yong/" title="https:&#x2F;&#x2F;chh3213.github.io&#x2F;2026&#x2F;01&#x2F;02&#x2F;comfyui-yuan-sheng-gong-zuo-liu-shi-yong&#x2F;" target="_blank" rel="noopener">https:&#x2F;&#x2F;chh3213.github.io&#x2F;2026&#x2F;01&#x2F;02&#x2F;comfyui-yuan-sheng-gong-zuo-liu-shi-yong&#x2F;</a><br>
+        
+            <strong>版权声明：</strong>本文采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/cn/deed.zh" target="_blank">CC BY-NC-SA 3.0 CN</a> 协议进行许可
+        
+    </div>
+
+
+
+  
+  
+  <div class="nexmoe-post-meta nexmoe-rainbow">
+    
+        <a class="nexmoefont icon-appstore-fill -link" href="/categories/AI/">AI</a>
+    
+    
+        <a class="nexmoefont icon-tag-fill -none-link" href="/tags/AI/" rel="tag">AI</a>
+    
+</div>
+
+  
+      <div class="nexmoe-post-footer">
+           <script src="https://giscus.app/client.js" data-repo="CHH3213/CHH3213.github.io" data-repo-id="R_kgDOHLqh1g" data-category="Announcements" data-category-id="DIC_kwDOHLqh1s4C-bvg" data-mapping="pathname" data-strict="0" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="bottom" data-theme="preferred_color_scheme" data-lang="zh-CN" crossorigin="anonymous" async> </script> 
+      </div>
+  
+</div>
+            <div class="nexmoe-post-right">
+              <div class="nexmoe-fixed">
+                  <div class="nexmoe-tool"> 
+                    
+                      
+                        
+                          
+                          
+                              <button class="mdui-fab catalog" style="overflow:unset;">
+                                  <i class="nexmoefont icon-i-catalog"></i>
+                                  <div class="nexmoe-toc">
+                                      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80-%E2%80%94%E2%80%94-Qwen-Image-2512"><span class="toc-number">1.</span> <span class="toc-text">前言 —— Qwen-Image-2512</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CmomfyUI-%E5%AE%89%E8%A3%85"><span class="toc-number">2.</span> <span class="toc-text">CmomfyUI 安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8B%E8%BD%BD-JSON-%E5%B7%A5%E4%BD%9C%E6%B5%81"><span class="toc-number">3.</span> <span class="toc-text">下载 JSON 工作流</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%B7%A5%E4%BD%9C%E6%B5%81%E6%96%87%E4%BB%B6%E8%AF%B4%E6%98%8E"><span class="toc-number">3.1.</span> <span class="toc-text">1. 工作流文件说明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%A8%A1%E5%9E%8B%E8%AF%B4%E6%98%8E"><span class="toc-number">3.2.</span> <span class="toc-text">2. 模型说明</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Qwen-Image-2512-%E7%9A%84%E5%85%8D%E8%B4%B9%E5%9C%A8%E7%BA%BF%E5%B9%B3%E5%8F%B0"><span class="toc-number">4.</span> <span class="toc-text">Qwen-Image-2512 的免费在线平台</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E6%95%99%E7%A8%8B"><span class="toc-number">5.</span> <span class="toc-text">其他教程</span></a></li></ol>
+                                  </div>
+                              </button>
+                          
+                          
+                      
+                    
+                      <a href="#nexmoe-content" class="toc-link" aria-label="Back To Top" title="top"><button class="mdui-fab mdui-ripple"><i class="nexmoefont icon-caret-top"></i></button></a>
+                  </div>
+              </div>
+            </div>
+        </div>
+    </div>
+    <div id="nexmoe-search-space">
+	<div class="search-container">
+		<div class="search-header">
+			<div class="search-input-container">
+				<input
+					class="search-input"
+					type="text"
+					placeholder="站内搜索"
+					oninput="sinput();"
+				/>
+			</div>
+			<a class="search-close" onclick="sclose();">×</a>
+		</div>
+		<div class="search-body"></div>
+	</div>
+</div>
+
+    
+<script src="/lib/mdui_043tiny/mdui.js"></script>
+<script src="/lib/jquery.min.js"></script>
+<script src="/lib/justifiedGallery/jquery.justifiedGallery.min.js"></script>
+<script src="/lib/fancybox/fancybox.umd.js"></script>
+
+
+ 
+
+<script async src="/js/app.js?v=1780505731988"></script>
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2058306854838448" crossorigin="anonymous"></script>
+
+<script>
+	$(".justified-gallery").justifiedGallery({
+		rowHeight: 160,
+		margins: 10,
+	});
+</script>
+
+    <!-- 页面点击小红心-- 20221025-->
+    <script type="text/javascript" src="/js/heart.js"></script>
+    <!--搞笑title-->>
+    <script type="text/javascript" src="/js/funnyTitle.js"></script>
+    <!--人体时钟-->>
+    <!-- <script charset="text/javascript" src="/js/clock.js"></script> -->
+
+    <!--代码复制按钮-->>
+    <script type="text/javascript" src="/js/clipboard-min.js"></script>
+    <script type="text/javascript" src="/js/clipboard-use.js"></script>
+    
+    <!--代码高亮-->>
+    <!-- <script src="https://cdn.bootcss.com/highlight.js/8.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script> -->
+    
+    <script src="/js/highlight/highlight.min.js"></script>
+
+    <!--CDN方式引入-->>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/plugins/line-numbers/prism-line-numbers.min.js"></script> -->
+    <!--直接下载脚本引入-->>
+    <script src="/js/prism.js" async></script>
+    
+    <!--sakana模拟器-->
+    <meta name="viewport" content="width=device-width">
+    <style>
+        html {
+            background: #CCC;
+        }
+
+        html .sakana-box {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+
+            transform-origin: 100% 100%;
+            /* 从右下开始变换 */
+        }
+    </style>
+    <div class="sakana-box"></div>
+    <script src="https://cdn.jsdelivr.net/npm/sakana@1.0.8"></script>
+    <script src="js/sakana.js"></script>
+
+    <!-- <div id="sakana-widget" style="position:fixed ;bottom: 10px; right: 10px;"></div>
+    <script>
+        function initSakanaWidget() {
+            new SakanaWidget().mount('#sakana-widget');
+        }
+    </script>
+    <script async onload="initSakanaWidget()"
+        src="https://cdn.jsdelivr.net/npm/sakana-widget@2.2.2/lib/sakana.min.js"></script> -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<!-- <script src="http://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script> -->
+</body>
+
+</html>

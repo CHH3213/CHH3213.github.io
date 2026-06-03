@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+
+<head>
+    
+    <title>Hexo 博客从 Gitalk 迁移到 Giscus 评论系统 - 一半是火一半是光的博客</title>
+    <meta charset="UTF-8">
+    <meta name="keywords" content="强化学习,自动驾驶,规划控制,编程,C++,Java">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+    
+    <link rel="shortcut icon" href="https://s2.loli.net/2022/10/27/ifRX1BdH46hmTlr.png" type="image/png" />
+    <meta name="description" content="Gitalk 作为老牌的 Hexo 评论方案，长期依赖 GitHub Issues 存储评论数据。但随着 GitHub Discussions 的成熟，基于 Discussions 的 Giscus 成为了更轻量、更现代的替代方案。本文记录将 Nexmoe 主题的评论系统从 Gitalk 完整迁移到 Giscus 的全过程。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo 博客从 Gitalk 迁移到 Giscus 评论系统">
+<meta property="og:url" content="https://chh3213.github.io/2026/06/02/hexo-bo-ke-cong-gitalk-qian-yi-dao-giscus-ping-lun-xi-tong/index.html">
+<meta property="og:site_name" content="一半是火一半是光的博客">
+<meta property="og:description" content="Gitalk 作为老牌的 Hexo 评论方案，长期依赖 GitHub Issues 存储评论数据。但随着 GitHub Discussions 的成熟，基于 Discussions 的 Giscus 成为了更轻量、更现代的替代方案。本文记录将 Nexmoe 主题的评论系统从 Gitalk 完整迁移到 Giscus 的全过程。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://chh3213.github.io/image/Hexo博客从Gitalk迁移到Giscus评论系统/1780503360842.png">
+<meta property="og:image" content="https://chh3213.github.io/image/Hexo博客从Gitalk迁移到Giscus评论系统/1780503390532.png">
+<meta property="og:image" content="https://chh3213.github.io/image/Hexo博客从Gitalk迁移到Giscus评论系统/1780503518222.png">
+<meta property="og:image" content="https://chh3213.github.io/image/Hexo博客从Gitalk迁移到Giscus评论系统/1780503556826.png">
+<meta property="og:image" content="https://chh3213.github.io/image/Hexo博客从Gitalk迁移到Giscus评论系统/1780503613963.png">
+<meta property="og:image" content="https://chh3213.github.io/image/Hexo博客从Gitalk迁移到Giscus评论系统/1780503736742.png">
+<meta property="og:image" content="https://chh3213.github.io/image/Hexo博客从Gitalk迁移到Giscus评论系统/1780505000764.png">
+<meta property="article:published_time" content="2026-06-01T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-06-03T16:50:51.346Z">
+<meta property="article:author" content="chh3213">
+<meta property="article:tag" content="博客">
+<meta property="article:tag" content="hexo博客">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://chh3213.github.io/image/Hexo博客从Gitalk迁移到Giscus评论系统/1780503360842.png">
+    
+<link rel="stylesheet" href="/lib/fancybox/fancybox.css">
+<link rel="stylesheet" href="/lib/justifiedGallery/justifiedGallery.min.css">
+<link rel="stylesheet" href="/lib/mdui_043tiny/mdui.css">
+
+
+    <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1780505731960">
+    
+        <link rel="stylesheet" href="//at.alicdn.com/t/c/font_3495394_enbrz0a58y.css">
+    
+    <link rel="stylesheet" href="/css/style.css?v=1780505731960">
+
+    
+        
+            <link rel="stylesheet" href="/custom.css?v=1780505731960">
+        
+    
+    <!-- <link href="https://cdn.bootcss.com/highlight.js/8.0/styles/monokai_sublime.min.css" rel="stylesheet"> -->
+    <link href="/js/highlight/styles/atom-one-dark.min.css" rel="stylesheet">
+    <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/themes/prism-coy.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/plugins/line-numbers/prism-line-numbers.min.css" rel="stylesheet"> -->
+    <link rel="stylesheet" href="/css/prism.css">
+
+<meta name="generator" content="Hexo 6.1.0"><link rel="alternate" href="/atom.xml" title="一半是火一半是光的博客" type="application/atom+xml">
+</head>
+
+<body class="mdui-drawer-body-left">
+    <div id="nexmoe-background">
+        <div class="nexmoe-bg" style="background-image: url(https://s2.loli.net/2022/11/04/qKEnbHA6geBpthf.png)"></div>
+        <div class="mdui-appbar mdui-shadow-0">
+            <div class="mdui-toolbar">
+                <a mdui-drawer="{target: '#drawer', swipe: true}" title="menu" class="mdui-btn mdui-btn-icon mdui-ripple"><i class="mdui-icon nexmoefont icon-menu"></i></a>
+                <div class="mdui-toolbar-spacer"></div>
+                <!--<a href="javascript:;" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">search</i></a>-->
+                <a href="/" title="chh3213" class="mdui-btn mdui-btn-icon"><img src="https://img.523213.xyz/api/cfile/AgACAgUAAyEGAATLpGrYAAMRafV71Yn_Nk2_i0UZxUq5miCgzRMAAswUaxuaBLBXSblkY-jzoPIBAAMCAAN3AAM7BA" alt="chh3213"></a>
+            </div>
+        </div>
+    </div>
+    <div id="nexmoe-header">
+        <div class="nexmoe-drawer mdui-drawer" id="drawer">
+    <div class="nexmoe-avatar mdui-ripple">
+        <a href="/" title="chh3213">
+            <img src="https://img.523213.xyz/api/cfile/AgACAgUAAyEGAATLpGrYAAMRafV71Yn_Nk2_i0UZxUq5miCgzRMAAswUaxuaBLBXSblkY-jzoPIBAAMCAAN3AAM7BA" alt="chh3213" alt="chh3213">
+        </a>
+    </div>
+    <div class="nexmoe-count">
+        <div><span>文章</span>19</div>
+        <div><span>标签</span>14</div>
+        <div><span>分类</span>7</div>
+    </div>
+    <div class="nexmoe-list mdui-list" mdui-collapse="{accordion: true}">
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/" title="回到首页">
+            <i class="mdui-list-item-icon nexmoefont icon-home"></i>
+            <div class="mdui-list-item-content">
+                回到首页
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/archive.html" title="分类归档">
+            <i class="mdui-list-item-icon nexmoefont icon-container"></i>
+            <div class="mdui-list-item-content">
+                分类归档
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/study/" title="学习之旅">
+            <i class="mdui-list-item-icon nexmoefont icon-battlenet"></i>
+            <div class="mdui-list-item-content">
+                学习之旅
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" target="_blank" rel="noopener" href="https://wbo.ophir.dev/boards/chh3213" title="来涂鸦吧">
+            <i class="mdui-list-item-icon nexmoefont icon-eye-fill"></i>
+            <div class="mdui-list-item-content">
+                来涂鸦吧
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/about.html" title="关于博主">
+            <i class="mdui-list-item-icon nexmoefont icon-info-circle"></i>
+            <div class="mdui-list-item-content">
+                关于博主
+            </div>
+        </a>
+        
+    </div>
+    <aside id="nexmoe-sidebar">
+    
+        
+        <!-- 一言 -->
+<div class="nexmoe-widget-wrap">
+  <h3 class="nexmoe-widget-title">
+    一则言语
+  </h3>
+  <div class="nexmoe-widget">
+    <ul class="hitokoto-box">
+      <li id="hitokoto_text_parent" class="hitokoto-text" hitokotoCategory="">
+        <a href="#" id="hitokoto_text">
+          
+        </a>
+        <a href="#" id="hitokoto_error_text" style="display: none;">
+          
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<script>
+  let hitokotoText = document.getElementById('hitokoto_text')
+  let hitokotoErroText = document.getElementById('hitokoto_error_text')
+  let hitokotoCategory = document.getElementById('hitokoto_text_parent').getAttribute('hitokotoCategory')
+  window.onload = function () {
+    let url = 'https://v1.hitokoto.cn'
+    if (hitokotoCategory) {
+      url += '?c=' + hitokotoCategory
+    }
+    fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        hitokotoText.innerText = "「 " + data.hitokoto + " 」 from " + data.from
+        hitokotoText.href = 'https://hitokoto.cn/?uuid=' + data.uuid
+      })
+      .catch((reason) => {
+        console.error(11, reason)
+        hitokotoText.style.display = 'none'
+        hitokotoErroText.style.display = 'block'
+      })
+  }
+</script>
+    
+        
+        <div class="nexmoe-widget-wrap">
+    <div class="nexmoe-widget nexmoe-search">
+        
+            <form id="search_form">
+                <label><input class="st-default-search-input" id="search_value" name="q" type="search" placeholder="站内搜索" style="
+                    font-size: 15px !important;
+                    height: 56px !important;
+                    background-image: none;
+                "></label>
+            </form>
+         
+    </div>
+</div>
+
+
+	<script async src="/js/search.js?v=1780505731963"></script>
+
+
+
+    
+        
+        <div class="nexmoe-widget-wrap">
+	<div class="nexmoe-widget nexmoe-social">
+		<a
+			class="mdui-ripple"
+			href="https://github.com/CHH3213"
+			target="_blank"
+			mdui-tooltip="{content: 'GitHub'}"
+			style="
+				color: rgb(25, 23, 23);
+				background-color: rgba(25, 23, 23, .1);
+			"
+		>
+			<i
+				class="nexmoefont icon-github"
+			></i> </a
+		><a
+			class="mdui-ripple"
+			href="https://blog.csdn.net/weixin_42301220"
+			target="_blank"
+			mdui-tooltip="{content: 'CSDN'}"
+			style="
+				color: rgb(247, 132, 34);
+				background-color: rgba(247, 132, 34, .1);
+			"
+		>
+			<i
+				class="nexmoefont icon-csdn1"
+			></i> </a
+		><a
+			class="mdui-ripple"
+			href="mailto:1213472983@qq.com"
+			target="_blank"
+			mdui-tooltip="{content: '邮箱'}"
+			style="
+				color: rgb(29, 161, 242);
+				background-color: rgba(29, 161, 242, .1);
+			"
+		>
+			<i
+				class="nexmoefont icon-mail-fill"
+			></i> </a
+		><a
+			class="mdui-ripple"
+			href="/atom.xml"
+			target="_blank"
+			mdui-tooltip="{content: 'RSS'}"
+			style="
+				color: rgb(235, 152, 0);
+				background-color: rgba(235, 152, 0, .15);
+			"
+		>
+			<i
+				class="nexmoefont icon-rss"
+			></i> </a
+		><a
+			class="mdui-ripple"
+			href="https://space.bilibili.com/3493143542499415?spm_id_from=333.999.0.0"
+			target="_blank"
+			mdui-tooltip="{content: '哔哩哔哩'}"
+			style="
+				color: rgb(231, 106, 141);
+				background-color: rgba(231, 106, 141, .1);
+			"
+		>
+			<i
+				class="nexmoefont icon-bilibili"
+			></i> </a
+		>
+	</div>
+</div>
+
+    
+        
+        
+  <div class="nexmoe-widget-wrap">
+    <h3 class="nexmoe-widget-title">文章分类</h3>
+    <div class="nexmoe-widget">
+
+      <ul class="category-list">
+
+        
+
+
+        
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/AI/">AI</a>
+          <span class="category-list-count">4</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/Obsidian/">Obsidian</a>
+          <span class="category-list-count">1</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/Ubuntu/">Ubuntu</a>
+          <span class="category-list-count">1</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/VPN教程/">VPN教程</a>
+          <span class="category-list-count">4</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/hexo博客/">hexo博客</a>
+          <span class="category-list-count">3</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/实用技巧/">实用技巧</a>
+          <span class="category-list-count">12</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/页面美化/">页面美化</a>
+          <span class="category-list-count">3</span>
+        </li>
+
+        
+      </ul>
+
+    </div>
+  </div>
+
+
+    
+        
+        
+  <div class="nexmoe-widget-wrap">
+    <div id="randomtagcloud" class="nexmoe-widget tagcloud nexmoe-rainbow">
+      <a href="/tags/AI/" style="font-size: 20px;">AI</a> <a href="/tags/Obsidian/" style="font-size: 10px;">Obsidian</a> <a href="/tags/Remote/" style="font-size: 10px;">Remote</a> <a href="/tags/VPN/" style="font-size: 15px;">VPN</a> <a href="/tags/chatgpt/" style="font-size: 10px;">chatgpt</a> <a href="/tags/clash/" style="font-size: 10px;">clash</a> <a href="/tags/hexo%E5%8D%9A%E5%AE%A2/" style="font-size: 10px;">hexo博客</a> <a href="/tags/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/" style="font-size: 15px;">内网穿透</a> <a href="/tags/%E5%8D%9A%E5%AE%A2/" style="font-size: 20px;">博客</a> <a href="/tags/%E5%B7%A5%E5%85%B7/" style="font-size: 20px;">工具</a> <a href="/tags/%E6%8F%92%E4%BB%B6/" style="font-size: 10px;">插件</a> <a href="/tags/%E6%95%88%E7%8E%87/" style="font-size: 10px;">效率</a> <a href="/tags/%E7%AC%94%E8%AE%B0%E7%AE%A1%E7%90%86/" style="font-size: 10px;">笔记管理</a> <a href="/tags/%E7%BE%8E%E5%8C%96/" style="font-size: 20px;">美化</a>
+    </div>
+    
+      <script>
+        var maxTagcloud = parseInt(17);
+        var tags_length = parseInt(14);
+        var tags_arr = [];
+        for(var i = 0; i < tags_length; i++){
+          tags_arr.push(i);
+        }
+        tags_arr.sort(function (l, r) {
+          return Math.random() > 0.5 ? -1 : 1;
+        });
+        tags_arr = tags_arr.slice(0, maxTagcloud < tags_length ? tags_length - maxTagcloud : 0);
+        for(var tag_i = 0; tag_i < tags_arr.length; tag_i++){
+          document.getElementById("randomtagcloud").children[tags_arr[tag_i]].style.display = 'none';
+        }
+      </script>
+    
+  </div>
+
+    
+        
+        
+  <div class="nexmoe-widget-wrap">
+    <h3 class="nexmoe-widget-title">文章归档</h3>
+    <div class="nexmoe-widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/">2026</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/">2025</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/">2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/">2023</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/">2022</a><span class="archive-list-count">7</span></li></ul>
+    </div>
+  </div>
+
+
+
+    
+        
+        
+  <div class="nexmoe-widget-wrap">
+    <h3 class="nexmoe-widget-title">最新文章</h3>
+    <div class="nexmoe-widget">
+      <ul>
+        
+          <li>
+            <a href="/2026/06/04/github-zhu-ye-mei-hua/">Github主页美化</a>
+          </li>
+        
+          <li>
+            <a href="/2026/06/02/hexo-bo-ke-cong-gitalk-qian-yi-dao-giscus-ping-lun-xi-tong/">Hexo 博客从 Gitalk 迁移到 Giscus 评论系统</a>
+          </li>
+        
+          <li>
+            <a href="/2026/05/12/obsidian-custom-file-explorer-sorting-pei-zhi-zhi-nan/">Obsidian Custom File Explorer Sorting 插件配置指南</a>
+          </li>
+        
+          <li>
+            <a href="/2026/05/02/zhong-duan-an-xu-dai-li-pei-zhi-zhi-nan-windows-mac-linux-quan-ping-tai/">终端按需代理配置指南：Windows、Mac、Linux 全平台</a>
+          </li>
+        
+          <li>
+            <a href="/2026/01/02/comfyui-yuan-sheng-gong-zuo-liu-shi-yong/">ComfyUI 原生工作流使用</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+    
+        
+</aside>
+    <div class="nexmoe-copyright">
+        &copy; 2026 chh3213
+        Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+        & <a href="https://github.com/theme-nexmoe/hexo-theme-nexmoe" target="_blank">Nexmoe</a>
+        
+        <!-- 添加访问数 -->
+        <div style="font-size: 13px">
+            <link rel="stylesheet" href="https://widget.heweather.net/standard/static/css/he-standard.css?v=1.4.0">
+            <script src="https://widget.heweather.net/standard/static/js/he-standard.js?v=1.4.0"></script>
+            <script async="" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            本站总访问量 <a id="busuanzi_value_site_pv"></a> 次<br>
+            本站访客数<a id="busuanzi_value_site_uv"></a>人次
+        </div>
+    </div>
+
+<!--自定义看板娘-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<script src="/live2d-widget/autoload.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css" />
+
+</div><!-- .nexmoe-drawer -->
+    </div>
+    <div id="nexmoe-content">
+        <div class="nexmoe-primary">
+            <div class="nexmoe-post">
+
+  <article>
+      
+          <div class="nexmoe-post-cover" style="padding-bottom: 62.5%;"> 
+              <img src="http://api.mtyqx.cn/tapi/random.php?1523412354561313123" alt="Hexo 博客从 Gitalk 迁移到 Giscus 评论系统" loading="lazy">
+              <h1>Hexo 博客从 Gitalk 迁移到 Giscus 评论系统</h1>
+          </div>
+      
+      
+      <div class="nexmoe-post-meta nexmoe-rainbow" style="margin:10px 0!important;">
+    <a><i class="nexmoefont icon-calendar-fill"></i>2026年06月02日</a>
+</div>
+      
+    <a><i class="nexmoefont icon-areachart"></i>约771字</a>
+    <a><i class="nexmoefont icon-time-circle-fill"></i>预计需要3分钟</a>
+    <a><i class="nexmoefont icon-areachart"></i>
+        <span class="archive-article-date">阅读量
+            <span id="busuanzi_value_page_pv"></span></span></a>
+
+
+      <p>Gitalk 作为老牌的 Hexo 评论方案，长期依赖 GitHub Issues 存储评论数据。但随着 GitHub Discussions 的成熟，基于 Discussions 的 Giscus 成为了更轻量、更现代的替代方案。本文记录将 Nexmoe 主题的评论系统从 Gitalk 完整迁移到 Giscus 的全过程。</p>
+<span id="more"></span>
+<h2 id="为什么选择-Giscus"><a href="#为什么选择-Giscus" class="headerlink" title="为什么选择 Giscus"></a>为什么选择 Giscus</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>Gitalk</th>
+<th>Giscus</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>底层存储</td>
+<td>GitHub Issues</td>
+<td>GitHub Discussions</td>
+</tr>
+<tr>
+<td>加载速度</td>
+<td>较慢（需初始化 Issue）</td>
+<td>更快</td>
+</tr>
+<tr>
+<td>嵌套回复</td>
+<td>不支持</td>
+<td>原生支持</td>
+</tr>
+<tr>
+<td>表情反应</td>
+<td>不支持</td>
+<td>支持</td>
+</tr>
+<tr>
+<td>邮件通知</td>
+<td>依赖 Issues 机制</td>
+<td>Discussions 原生通知</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Giscus 的优势在于：</p>
+<ol>
+<li><strong>Discussions 更适合评论场景</strong> — 支持嵌套回复、投票、分类筛选</li>
+<li><strong>无需预初始化</strong> — Gitalk 首次访问需要创建 Issue，Giscus 自动创建 Discussion</li>
+<li><strong>更轻量的前端</strong> — 直接嵌入 GitHub 的 Discussions 渲染组件</li>
+</ol>
+<h2 id="前置准备"><a href="#前置准备" class="headerlink" title="前置准备"></a>前置准备</h2><h3 id="1-开启仓库-Discussions-功能"><a href="#1-开启仓库-Discussions-功能" class="headerlink" title="1. 开启仓库 Discussions 功能"></a>1. 开启仓库 Discussions 功能</h3><p>进入你的 GitHub Pages 仓库（如 <code>CHH3213.github.io</code>），点击 <strong>Settings</strong> → 勾选 <strong>Discussions</strong>。</p>
+<p><img data-fancybox="gallery" src="/image/Hexo博客从Gitalk迁移到Giscus评论系统/1780503360842.png" alt="1780503360842" data-caption="1780503360842" loading="lazy"><br><img data-fancybox="gallery" src="/image/Hexo博客从Gitalk迁移到Giscus评论系统/1780503390532.png" alt="1780503390532" data-caption="1780503390532" loading="lazy"></p>
+<blockquote>
+<p>注意，需要确保要用于存储评论数据的库是公开的。</p>
+</blockquote>
+<h3 id="2-安装-Giscus-GitHub-App"><a href="#2-安装-Giscus-GitHub-App" class="headerlink" title="2. 安装 Giscus GitHub App"></a>2. 安装 Giscus GitHub App</h3><p>访问 <a target="_blank" rel="noopener" href="https://github.com/apps/giscus">giscus.app</a>，点击 <strong>configure</strong> 按钮，选择你的博客仓库授权。</p>
+<p><img data-fancybox="gallery" src="/image/Hexo博客从Gitalk迁移到Giscus评论系统/1780503518222.png" alt="1780503518222" data-caption="1780503518222" loading="lazy"><br><img data-fancybox="gallery" src="/image/Hexo博客从Gitalk迁移到Giscus评论系统/1780503556826.png" alt="1780503556826" data-caption="1780503556826" loading="lazy"></p>
+<h2 id="获取-Giscus-配置参数"><a href="#获取-Giscus-配置参数" class="headerlink" title="获取 Giscus 配置参数"></a>获取 Giscus 配置参数</h2><p>在 <a target="_blank" rel="noopener" href="https://giscus.app/">giscus.app</a> 页面填写以下信息：</p>
+<ol>
+<li><strong>仓库</strong>：你自己的仓库名字，例如我的是 <code>CHH3213/CHH3213.github.io</code></li>
+<li><strong>页面 ↔ Discussion 映射关系</strong>：选择 <code>pathname</code>（按文章路径映射，最常用）</li>
+<li><strong>Discussion 分类</strong>：选择 <code>Announcements</code>（默认推荐）</li>
+<li><strong>其他选项</strong> 默认即可。</li>
+</ol>
+<p><img data-fancybox="gallery" src="/image/Hexo博客从Gitalk迁移到Giscus评论系统/1780503613963.png" alt="1780503613963" data-caption="1780503613963" loading="lazy"></p>
+<p>填写完成后，页面下方会自动生成一段 <code>&lt;script&gt;</code> 代码，核心参数如下：</p>
+<p><img data-fancybox="gallery" src="/image/Hexo博客从Gitalk迁移到Giscus评论系统/1780503736742.png" alt="1780503736742" data-caption="1780503736742" loading="lazy"></p>
+<blockquote>
+<p><strong>注意</strong>：<code>data-category-id</code> 是自动生成的，务必从giscus.app 页面复制，不要手动填写。</p>
+</blockquote>
+<h2 id="修改-Hexo-主题配置"><a href="#修改-Hexo-主题配置" class="headerlink" title="修改 Hexo 主题配置"></a>修改 Hexo 主题配置</h2><p>Nexmoe 主题通过 <code>slotComment</code> 插槽注入评论代码。编辑主题配置文件 <code>_config.nexmoe.yml</code>：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-comment"># 评论框插槽</span><br><span class="hljs-attr">slotComment:</span> <span class="hljs-string">&#x27;</span><br><span class="hljs-string">&lt;script src=&quot;https://giscus.app/client.js&quot;</span><br><span class="hljs-string">        data-repo=&quot;你的仓库&quot;</span><br><span class="hljs-string">        data-repo-id=&quot;你的id&quot;</span><br><span class="hljs-string">        data-category=&quot;Announcements&quot;</span><br><span class="hljs-string">        data-category-id=&quot;你的id&quot;</span><br><span class="hljs-string">        data-mapping=&quot;pathname&quot;</span><br><span class="hljs-string">        data-strict=&quot;0&quot;</span><br><span class="hljs-string">        data-reactions-enabled=&quot;1&quot;</span><br><span class="hljs-string">        data-emit-metadata=&quot;0&quot;</span><br><span class="hljs-string">        data-input-position=&quot;bottom&quot;</span><br><span class="hljs-string">        data-theme=&quot;preferred_color_scheme&quot;</span><br><span class="hljs-string">        data-lang=&quot;zh-CN&quot;</span><br><span class="hljs-string">        crossorigin=&quot;anonymous&quot;</span><br><span class="hljs-string">        async&gt;</span><br><span class="hljs-string">&lt;/script&gt;</span><br><span class="hljs-string">&#x27;</span><br></code></pre></td></tr></table></figure>
+<p><img data-fancybox="gallery" src="/image/Hexo博客从Gitalk迁移到Giscus评论系统/1780505000764.png" alt="1780505000764" data-caption="1780505000764" loading="lazy"></p>
+<p>原来的 Gitalk 配置可以注释保留，方便日后回退：</p>
+<h2 id="验证部署"><a href="#验证部署" class="headerlink" title="验证部署"></a>验证部署</h2><p>本地生成静态文件，检查评论脚本是否正确嵌入：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">hexo clean &amp;&amp; hexo g<br></code></pre></td></tr></table></figure>
+<p>查看任意文章的生成 HTML，搜索 <code>giscus</code>，确认脚本已注入。</p>
+<p>确认无误后部署：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">hexo d<br></code></pre></td></tr></table></figure>
+<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>Gitalk 的评论存储在 Issues 中，Giscus 使用 Discussions，两者数据结构不同。<strong>无法自动迁移</strong>。如果旧评论重要，建议：</p>
+<ul>
+<li>保留 Gitalk 配置备份</li>
+<li>或在切换前手动归档重要评论</li>
+</ul>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://weilado.github.io/2025/06/18/%E5%A6%82%E4%BD%95%E4%B8%BA%E5%8D%9A%E5%AE%A2%E6%B7%BB%E5%8A%A0%E8%AF%84%E8%AE%BA%E7%B3%BB%E7%BB%9F%EF%BC%88%E5%9F%BA%E4%BA%8Egiscus%EF%BC%89/#%E5%A6%82%E4%BD%95%E4%B8%BA%E5%8D%9A%E5%AE%A2%E6%B7%BB%E5%8A%A0%E8%AF%84%E8%AE%BA%E7%B3%BB%E7%BB%9F%EF%BC%88%E5%9F%BA%E4%BA%8Egiscus%EF%BC%89">https://weilado.github.io/2025/06/18/%E5%A6%82%E4%BD%95%E4%B8%BA%E5%8D%9A%E5%AE%A2%E6%B7%BB%E5%8A%A0%E8%AF%84%E8%AE%BA%E7%B3%BB%E7%BB%9F%EF%BC%88%E5%9F%BA%E4%BA%8Egiscus%EF%BC%89/#%E5%A6%82%E4%BD%95%E4%B8%BA%E5%8D%9A%E5%AE%A2%E6%B7%BB%E5%8A%A0%E8%AF%84%E8%AE%BA%E7%B3%BB%E7%BB%9F%EF%BC%88%E5%9F%BA%E4%BA%8Egiscus%EF%BC%89</a></p>
+
+      
+  </article>
+
+  
+      
+    <!-- 文章分享 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+    <div class="social-share" data-mode="prepend" data-disabled="tencent,diandian"></div>
+
+    <div class="nexmoe-post-copyright">
+        <strong>本文作者：</strong>chh3213<br>
+        <strong>本文链接：</strong><a href="https://chh3213.github.io/2026/06/02/hexo-bo-ke-cong-gitalk-qian-yi-dao-giscus-ping-lun-xi-tong/" title="https:&#x2F;&#x2F;chh3213.github.io&#x2F;2026&#x2F;06&#x2F;02&#x2F;hexo-bo-ke-cong-gitalk-qian-yi-dao-giscus-ping-lun-xi-tong&#x2F;" target="_blank" rel="noopener">https:&#x2F;&#x2F;chh3213.github.io&#x2F;2026&#x2F;06&#x2F;02&#x2F;hexo-bo-ke-cong-gitalk-qian-yi-dao-giscus-ping-lun-xi-tong&#x2F;</a><br>
+        
+            <strong>版权声明：</strong>本文采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/cn/deed.zh" target="_blank">CC BY-NC-SA 3.0 CN</a> 协议进行许可
+        
+    </div>
+
+
+
+  
+  
+  <div class="nexmoe-post-meta nexmoe-rainbow">
+    
+        <a class="nexmoefont icon-appstore-fill -link" href="/categories/hexo%E5%8D%9A%E5%AE%A2/">hexo博客</a>
+    
+    
+        <a class="nexmoefont icon-tag-fill -none-link" href="/tags/hexo%E5%8D%9A%E5%AE%A2/" rel="tag">hexo博客</a> <a class="nexmoefont icon-tag-fill -none-link" href="/tags/%E5%8D%9A%E5%AE%A2/" rel="tag">博客</a>
+    
+</div>
+
+  
+      <div class="nexmoe-post-footer">
+           <script src="https://giscus.app/client.js" data-repo="CHH3213/CHH3213.github.io" data-repo-id="R_kgDOHLqh1g" data-category="Announcements" data-category-id="DIC_kwDOHLqh1s4C-bvg" data-mapping="pathname" data-strict="0" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="bottom" data-theme="preferred_color_scheme" data-lang="zh-CN" crossorigin="anonymous" async> </script> 
+      </div>
+  
+</div>
+            <div class="nexmoe-post-right">
+              <div class="nexmoe-fixed">
+                  <div class="nexmoe-tool"> 
+                    
+                      
+                        
+                          
+                          
+                              <button class="mdui-fab catalog" style="overflow:unset;">
+                                  <i class="nexmoefont icon-i-catalog"></i>
+                                  <div class="nexmoe-toc">
+                                      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%80%89%E6%8B%A9-Giscus"><span class="toc-number">1.</span> <span class="toc-text">为什么选择 Giscus</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E7%BD%AE%E5%87%86%E5%A4%87"><span class="toc-number">2.</span> <span class="toc-text">前置准备</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%BC%80%E5%90%AF%E4%BB%93%E5%BA%93-Discussions-%E5%8A%9F%E8%83%BD"><span class="toc-number">2.1.</span> <span class="toc-text">1. 开启仓库 Discussions 功能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%AE%89%E8%A3%85-Giscus-GitHub-App"><span class="toc-number">2.2.</span> <span class="toc-text">2. 安装 Giscus GitHub App</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96-Giscus-%E9%85%8D%E7%BD%AE%E5%8F%82%E6%95%B0"><span class="toc-number">3.</span> <span class="toc-text">获取 Giscus 配置参数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9-Hexo-%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AE"><span class="toc-number">4.</span> <span class="toc-text">修改 Hexo 主题配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%AA%8C%E8%AF%81%E9%83%A8%E7%BD%B2"><span class="toc-number">5.</span> <span class="toc-text">验证部署</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%8E%E8%AE%B0"><span class="toc-number">6.</span> <span class="toc-text">后记</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">7.</span> <span class="toc-text">参考</span></a></li></ol>
+                                  </div>
+                              </button>
+                          
+                          
+                      
+                    
+                      <a href="#nexmoe-content" class="toc-link" aria-label="Back To Top" title="top"><button class="mdui-fab mdui-ripple"><i class="nexmoefont icon-caret-top"></i></button></a>
+                  </div>
+              </div>
+            </div>
+        </div>
+    </div>
+    <div id="nexmoe-search-space">
+	<div class="search-container">
+		<div class="search-header">
+			<div class="search-input-container">
+				<input
+					class="search-input"
+					type="text"
+					placeholder="站内搜索"
+					oninput="sinput();"
+				/>
+			</div>
+			<a class="search-close" onclick="sclose();">×</a>
+		</div>
+		<div class="search-body"></div>
+	</div>
+</div>
+
+    
+<script src="/lib/mdui_043tiny/mdui.js"></script>
+<script src="/lib/jquery.min.js"></script>
+<script src="/lib/justifiedGallery/jquery.justifiedGallery.min.js"></script>
+<script src="/lib/fancybox/fancybox.umd.js"></script>
+
+
+ 
+
+<script async src="/js/app.js?v=1780505731968"></script>
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2058306854838448" crossorigin="anonymous"></script>
+
+<script>
+	$(".justified-gallery").justifiedGallery({
+		rowHeight: 160,
+		margins: 10,
+	});
+</script>
+
+    <!-- 页面点击小红心-- 20221025-->
+    <script type="text/javascript" src="/js/heart.js"></script>
+    <!--搞笑title-->>
+    <script type="text/javascript" src="/js/funnyTitle.js"></script>
+    <!--人体时钟-->>
+    <!-- <script charset="text/javascript" src="/js/clock.js"></script> -->
+
+    <!--代码复制按钮-->>
+    <script type="text/javascript" src="/js/clipboard-min.js"></script>
+    <script type="text/javascript" src="/js/clipboard-use.js"></script>
+    
+    <!--代码高亮-->>
+    <!-- <script src="https://cdn.bootcss.com/highlight.js/8.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script> -->
+    
+    <script src="/js/highlight/highlight.min.js"></script>
+
+    <!--CDN方式引入-->>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/plugins/line-numbers/prism-line-numbers.min.js"></script> -->
+    <!--直接下载脚本引入-->>
+    <script src="/js/prism.js" async></script>
+    
+    <!--sakana模拟器-->
+    <meta name="viewport" content="width=device-width">
+    <style>
+        html {
+            background: #CCC;
+        }
+
+        html .sakana-box {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+
+            transform-origin: 100% 100%;
+            /* 从右下开始变换 */
+        }
+    </style>
+    <div class="sakana-box"></div>
+    <script src="https://cdn.jsdelivr.net/npm/sakana@1.0.8"></script>
+    <script src="js/sakana.js"></script>
+
+    <!-- <div id="sakana-widget" style="position:fixed ;bottom: 10px; right: 10px;"></div>
+    <script>
+        function initSakanaWidget() {
+            new SakanaWidget().mount('#sakana-widget');
+        }
+    </script>
+    <script async onload="initSakanaWidget()"
+        src="https://cdn.jsdelivr.net/npm/sakana-widget@2.2.2/lib/sakana.min.js"></script> -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<!-- <script src="http://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script> -->
+</body>
+
+</html>
