@@ -10,11 +10,11 @@ function loadData(arg) {
                 searchData = res instanceof Array ? res : res.posts;
                 searchkey(arg);
             } else {
-                console.error(statusText);
+                console.error('search load error:', this.statusText);
             }
         };
         xhr.onerror = function() {
-            console.error(statusText);
+            console.error('search network error');
         };
         xhr.send();
     } else {
@@ -56,22 +56,31 @@ function render(data) {
     document.getElementsByClassName('search-body')[0].appendChild(ele);
 }
 
-// 主程序
-let key = decodeURI(location.search.split('?q=')[1]);
-if (key !== undefined && key !== 'undefined') {
-    document.getElementsByClassName('search-input')[0].value = key;
-    loadData(format(key));
-    document.getElementById('nexmoe-search-space').style.display = 'flex';
-}
+// 主程序 — 等待 DOM 就绪后再执行
+document.addEventListener('DOMContentLoaded', function() {
+    let key = decodeURI(location.search.split('?q=')[1]);
+    if (key !== undefined && key !== 'undefined') {
+        let searchInput = document.getElementsByClassName('search-input')[0];
+        let searchSpace = document.getElementById('nexmoe-search-space');
+        if (searchInput && searchSpace) {
+            searchInput.value = key;
+            loadData(format(key));
+            searchSpace.style.display = 'flex';
+        }
+    }
+});
 
 // 事件
 function sclose() {
-    document.getElementById('nexmoe-search-space').style.display = 'none';
+    let searchSpace = document.getElementById('nexmoe-search-space');
+    if (searchSpace) searchSpace.style.display = 'none';
 }
 
 function sinput() {
-    document.getElementsByClassName('search-body')[0].innerHTML = '';
-    loadData(format(document.getElementsByClassName('search-input')[0].value));
+    let searchBody = document.getElementsByClassName('search-body')[0];
+    let searchInput = document.getElementsByClassName('search-input')[0];
+    if (searchBody) searchBody.innerHTML = '';
+    if (searchInput) loadData(format(searchInput.value));
 }
 
 // 搜索词格式化
