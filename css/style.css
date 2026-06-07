@@ -498,7 +498,7 @@ article .table-container {
   margin: 25px 0;
   border-radius: 10px;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
-  border: 1px solid var(--color-primary-bg);
+  border: 1px solid #eee;
   background: #fff;
 }
 article .table-container::-webkit-scrollbar {
@@ -510,7 +510,7 @@ article .table-container::-webkit-scrollbar-thumb {
   border-radius: 3px;
 }
 article .table-container::-webkit-scrollbar-track {
-  background-color: var(--color-primary-bg);
+  background-color: #f5f5f5;
   border-radius: 3px;
 }
 article .table-container > table {
@@ -523,16 +523,16 @@ article .table-container > table {
   font-size: 0.95em;
 }
 article .table-container > table thead {
-  border-bottom: none;
+  border-bottom: 2px solid var(--color-primary);
 }
 article .table-container > table thead tr {
-  background-color: var(--color-primary);
+  background-color: #f7f8fa;
 }
 article .table-container > table th {
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  border: 1px solid #eee;
   padding: 12px 18px;
   font-weight: 600;
-  color: #fff;
+  color: #333;
   text-align: left;
 }
 article .table-container > table td {
