@@ -494,44 +494,75 @@ article dd {
   margin: 0 0 0 2em;
 }
 article > table {
-  color: #5b6064;
+  color: #444;
   border-spacing: 0;
   border-collapse: collapse;
+  width: 100%;
   max-width: 100%;
   overflow: auto;
   white-space: nowrap;
-  margin: 25px auto;
-  background: transparent;
+  margin: 25px 0;
+  background: #fff;
   display: block;
+  font-size: 0.95em;
+  border-radius: 10px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e8e8e8;
 }
 article > table::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 article > table::-webkit-scrollbar-thumb {
-  background-color: #888;
+  background-color: #ccc;
+  border-radius: 3px;
+}
+article > table::-webkit-scrollbar-track {
+  background-color: #f5f5f5;
+  border-radius: 3px;
 }
 article > table thead {
-  border-bottom: 1px solid #eee;
-  background-color: #f8f8f8;
+  border-bottom: 2px solid #e0e0e0;
 }
 article > table thead tr {
-  background-color: #f8f8f8;
+  background-color: #f7f8fa;
 }
 article > table th {
   border: 1px solid #eee;
-  padding: 13px 26px;
-  font-weight: 400;
+  padding: 12px 18px;
+  font-weight: 600;
+  color: #333;
+  text-align: left;
 }
 article > table td {
   border: 1px solid #eee;
-  padding: 13px 26px;
+  padding: 10px 18px;
+  line-height: 1.6;
 }
 article > table tr {
   background-color: #fff;
+  transition: background-color 0.2s ease;
+}
+article > table tbody tr:hover {
+  background-color: #f0f7ff;
 }
 article > table tr:nth-child(2n) {
-  background-color: #f8f8f8;
+  background-color: #fafbfc;
+}
+article > table tr:nth-child(2n):hover {
+  background-color: #f0f7ff;
+}
+article > table code {
+  background-color: rgba(27, 31, 35, 0.06);
+  padding: 0.15em 0.4em;
+  font-size: 90%;
+}
+@media screen and (max-width: 1023px) {
+  article > table th,
+  article > table td {
+    padding: 8px 12px;
+    font-size: 0.9em;
+  }
 }
 article img,
 article canvas,
